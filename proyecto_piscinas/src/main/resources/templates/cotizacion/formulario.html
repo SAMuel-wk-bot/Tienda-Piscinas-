@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="#{quote.title}">Cotización estimada</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+
+    <main class="container py-5">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-6">
+                <p class="section-kicker mb-2" th:text="#{nav.quote}">Cotizador</p>
+                <h1 class="h2" th:text="#{quote.title}">Cotización estimada para su piscina</h1>
+                <p class="text-muted" th:text="#{quote.subtitle}">Calcule el volumen y una recomendación inicial.</p>
+
+                <div class="alert alert-info" th:text="#{quote.rectangular}">
+                    Esta versión calcula piscinas rectangulares.
+                </div>
+
+                <form class="card border-0 shadow-sm" method="post" th:action="@{/cotizador}"
+                      th:object="${cotizacionForm}">
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="largo" class="form-label" th:text="#{quote.length}">Largo</label>
+                                <input id="largo" type="number" step="0.01" min="0.50" max="50"
+                                       class="form-control" th:field="*{largo}"
+                                       th:classappend="${#fields.hasErrors('largo')} ? 'is-invalid'"/>
+                                <div class="invalid-feedback" th:errors="*{largo}">Error</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ancho" class="form-label" th:text="#{quote.width}">Ancho</label>
+                                <input id="ancho" type="number" step="0.01" min="0.50" max="30"
+                                       class="form-control" th:field="*{ancho}"
+                                       th:classappend="${#fields.hasErrors('ancho')} ? 'is-invalid'"/>
+                                <div class="invalid-feedback" th:errors="*{ancho}">Error</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="profundidad" class="form-label" th:text="#{quote.depth}">Profundidad promedio</label>
+                                <input id="profundidad" type="number" step="0.01" min="0.30" max="5"
+                                       class="form-control" th:field="*{profundidadPromedio}"
+                                       th:classappend="${#fields.hasErrors('profundidadPromedio')} ? 'is-invalid'"/>
+                                <div class="invalid-feedback" th:errors="*{profundidadPromedio}">Error</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="estadoAgua" class="form-label" th:text="#{quote.waterState}">Estado del agua</label>
+                                <select id="estadoAgua" class="form-select" th:field="*{estadoAgua}"
+                                        th:classappend="${#fields.hasErrors('estadoAgua')} ? 'is-invalid'">
+                                    <option value="" th:text="#{action.select}">Seleccione</option>
+                                    <option th:each="estado : ${estadosAgua}" th:value="${estado}"
+                                            th:text="${#messages.msg('agua.' + estado.name())}">Estado</option>
+                                </select>
+                                <div class="invalid-feedback" th:errors="*{estadoAgua}">Error</div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-3 mb-3" th:text="#{quote.method}">Método de cálculo.</p>
+                        <button type="submit" class="btn btn-primary" th:text="#{quote.calculate}">Calcular</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-lg-6" th:if="${cotizacionResultado != null}">
+                <section class="card card-comercial border-0">
+                    <div class="card-body p-4">
+                        <h2 class="h4 mb-4" th:text="#{quote.result}">Resultado</h2>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-6" th:text="#{quote.volumeM3}">Volumen</dt>
+                            <dd class="col-sm-6 text-sm-end fw-bold"
+                                th:text="|${#numbers.formatDecimal(cotizacionResultado.volumenMetrosCubicos, 1, 'COMMA', 2, 'POINT')} m³|">0 m³</dd>
+                            <dt class="col-sm-6" th:text="#{quote.liters}">Litros</dt>
+                            <dd class="col-sm-6 text-sm-end"
+                                th:text="|${#numbers.formatDecimal(cotizacionResultado.volumenLitros, 1, 'COMMA', 0, 'POINT')} L|">0 L</dd>
+                        </dl>
+
+                        <hr/>
+                        <h3 class="h6" th:text="#{quote.recommendation}">Recomendación</h3>
+                        <p th:text="${#messages.msg('quote.recommendation.' + cotizacionResultado.estadoAgua.name())}">Recomendación inicial</p>
+
+                        <div th:if="${cotizacionResultado.servicioRecomendado != null}" class="bg-light rounded p-3">
+                            <p class="small text-uppercase text-muted fw-bold mb-1" th:text="#{quote.recommendedService}">Servicio relacionado</p>
+                            <h3 class="h5" th:text="${cotizacionResultado.servicioRecomendado.nombre}">Servicio</h3>
+                            <p class="mb-2" th:text="${cotizacionResultado.servicioRecomendado.descripcion}">Descripción</p>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span th:text="#{quote.volumeFactor}">Factor volumen</span>
+                                <span th:text="|× ${cotizacionResultado.factorVolumen}|">× 1.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span th:text="#{quote.stateFactor}">Factor estado</span>
+                                <span th:text="|× ${cotizacionResultado.factorEstado}|">× 1.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <strong th:text="#{quote.estimatedPrice}">Precio estimado</strong>
+                                <strong class="fs-4 text-primary"
+                                        th:text="${'₡' + #numbers.formatDecimal(cotizacionResultado.precioEstimado, 1, 'COMMA', 2, 'POINT')}">₡0.00</strong>
+                            </div>
+                        </div>
+                        <div class="alert alert-secondary" th:if="${cotizacionResultado.servicioRecomendado == null}"
+                             th:text="#{quote.noService}">No hay servicio relacionado.</div>
+
+                        <div class="alert alert-warning mt-4 mb-0">
+                            <strong th:text="#{quote.warning}">Importante</strong>
+                            <span th:text="#{quote.warningText}">La estimación no es un diagnóstico.</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

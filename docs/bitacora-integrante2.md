@@ -857,13 +857,93 @@ El controlador consulta las mismas capas Service usadas por los CRUD y entrega u
 7. Suite limpia completa: 50 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 8. Verificación visual automatizada con Browser: **BLOQUEADA POR EL ENTORNO**; el complemento rechazó su módulo interno por restricción de ruta confiable. No se registran resultados visuales inventados.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Mejorar interfaz comercial y navegacion de Tienda Piscinas`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Mejorar interfaz comercial y navegacion de Tienda Piscinas`.
+- **Hash del commit:** `bfe01d50b0bc5c6c1e315117d4c4ba8bc0b80982`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** diseño final — 10%, solución real, internacionalización, temáticas del curso y defensa.
-- **Pendientes:** crear commit, publicar cuando exista permiso remoto y realizar revisión visual manual real en tamaños móvil/escritorio antes de la entrega.
-- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT, PUSH Y QA VISUAL MANUAL**.
+- **Pendientes:** publicar cuando exista permiso remoto y realizar revisión visual manual real en tamaños móvil/escritorio antes de la entrega.
+- **Estado del bloque:** **HECHO, PROBADO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH Y QA VISUAL MANUAL**.
+
+## Bloque 13 — Cotización estimada según volumen y estado del agua
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** incorporar la funcionalidad investigada de la rúbrica mediante una herramienta útil que calcula volumen, orienta al usuario y relaciona la necesidad con servicios activos del catálogo.
+- **Situación antes del cambio:** el sistema permitía consultar y solicitar servicios, pero no ayudaba a estimar el tamaño de la piscina ni a relacionar una condición general con el catálogo. Tampoco existía documento de investigación adicional.
+
+### Archivos creados
+
+- `domain/EstadoAgua.java`.
+- `domain/CotizacionPiscinaForm.java`.
+- `domain/CotizacionPiscinaResultado.java`.
+- `service/CotizacionPiscinaService.java`.
+- `service/CotizacionPiscinaServiceImpl.java`.
+- `controller/CotizacionPiscinaController.java`.
+- `templates/cotizacion/formulario.html`.
+- `CotizacionPiscinaTests.java`.
+- `CotizacionPiscinaWebTests.java`.
+- `docs/investigacion-cotizacion.md`.
+
+### Archivos modificados
+
+- `config/SecurityConfig.java`.
+- `templates/fragmentos/encabezado.html`.
+- `templates/fragmentos/piePagina.html`.
+- `messages_es.properties`.
+- `messages_en.properties`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Ruta pública `/cotizador` integrada a la navegación principal y al pie de página.
+- Formulario validado para largo, ancho, profundidad promedio y estado/necesidad principal.
+- Cálculo servidor de volumen en metros cúbicos y litros para piscinas rectangulares.
+- Clasificación simple de agua clara, turbia, verde o problema de equipo.
+- Recomendación inicial bilingüe según la necesidad elegida.
+- Búsqueda de un servicio activo relacionado a partir de nombre y descripción persistidos.
+- Estimación basada en el precio real del servicio y factores internos centralizados por volumen y estado.
+- Resultado sin precio cuando no hay un servicio relacionado; no se inventan registros ni valores.
+- Advertencia expresa: la herramienta no diagnostica ni prescribe dosificaciones químicas.
+- Documento con fuentes, fórmula, algoritmo, supuestos, limitaciones y casos de prueba.
+- Separación explícita entre hechos sustentados por NatHERS/CDC y reglas comerciales académicas pendientes de validación real.
+
+> Funcionalidad incorporada por requisito explícito de la entrega final; implementación realizada con la alternativa mínima compatible con la estructura estudiada.
+
+### Temas del curso relacionados
+
+- Spring MVC, Controller/Service, formularios, Bean Validation, Thymeleaf, Bootstrap, Spring Security, JPA mediante servicios activos, internacionalización y pruebas MockMvc.
+
+### Explicación sencilla
+
+El usuario ingresa las dimensiones y selecciona el estado general. El servicio calcula `largo × ancho × profundidad promedio`, convierte el resultado a litros y busca un servicio activo relacionado. Si lo encuentra, multiplica su precio base por factores visibles y documentados. La vista presenta el cálculo como estimación, nunca como diagnóstico químico.
+
+### Investigación y fuentes
+
+- NatHERS, *Whole of Home Calculations Method* (ecuación 94): fórmula de volumen a partir de área y profundidad promedio.
+- CDC, *Home Pool and Hot Tub Water Treatment and Testing*: pruebas periódicas de pH/desinfectante y seguimiento de instrucciones del fabricante.
+- CDC, *Guidelines for Keeping Your Pool Safe and Healthy*: importancia de pH/desinfectante y manejo seguro conforme a etiquetas.
+- Fecha de consulta: 18 de agosto de 2026.
+- Detalle completo y enlaces: `docs/investigacion-cotizacion.md`.
+
+### Pruebas ejecutadas y resultados
+
+1. Piscina de 10 × 4 × 1.25 m: 50 m³ y 50 000 L: **PASA**.
+2. Agua verde, servicio base ₡20 000 y factores 1.25 × 1.30: total estimado ₡32 500: **PASA**.
+3. Límite de 30 m³ conserva factor de volumen 1.00: **PASA**.
+4. Ausencia de servicio conserva volumen y no inventa precio: **PASA**.
+5. Invitado abre el cotizador público: **PASA**.
+6. Envío válido renderiza resultado y advertencia: **PASA**.
+7. Dimensiones inválidas muestran validaciones: **PASA**.
+8. Vista del cotizador en inglés: **PASA**.
+9. Suite limpia completa: 57 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar cotizacion inteligente para piscinas`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** investigación adicional — 7%, solución real, uso de base de datos, internacionalización, diseño y temáticas del curso.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto, validar los factores de precio con un cliente real y ampliar a otras formas solamente si el equipo lo requiere.
+- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
 
@@ -930,10 +1010,10 @@ El controlador consulta las mismas capas Service usadas por los CRUD y entrega u
 - [ ] `messages_en.properties`. Implementado y probado localmente; pendiente push.
 - [ ] Navegación, formularios, validaciones y estados traducidos. Aprobado localmente; pendiente push.
 - [ ] Selector de idioma. Persistencia en sesión aprobada localmente; pendiente push.
-- [ ] Cotización inteligente.
-- [ ] Fuente de investigación real.
-- [ ] Algoritmo, supuestos y limitaciones documentados.
-- [ ] Pruebas del cotizador.
+- [ ] Cotización inteligente. Implementada y aprobada localmente; pendiente push.
+- [ ] Fuente de investigación real. NatHERS y CDC documentados con enlaces y fecha; pendiente push.
+- [ ] Algoritmo, supuestos y limitaciones documentados. Completos localmente; factores comerciales pendientes de validación real y push.
+- [ ] Pruebas del cotizador. Siete pruebas nuevas aprobadas dentro de la suite de 57; pendiente push.
 
 ### Prioridad 5 — Entrega
 
