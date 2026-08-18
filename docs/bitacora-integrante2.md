@@ -238,12 +238,67 @@ La base de datos guarda hashes BCrypt, no las contraseñas anteriores en texto p
 7. Segundo registro con el mismo correo: **RECHAZADO como se esperaba**.
 8. Resultado Maven: 4 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Configurar autenticacion registro y control de acceso por roles`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Configurar autenticacion registro y control de acceso por roles`.
+- **Hash del commit:** `b6b2fb6e89ba917531ba54b83b7a0a2f7bc7d2c4`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; GitHub volvió a responder HTTP `403` porque la cuenta autenticada `Erian158` no tiene permiso de escritura en el repositorio de `SAMuel-wk-bot`.
 - **Criterio de rúbrica relacionado:** autenticación y roles (10%), uso efectivo de BD, temáticas del curso y diseño consistente.
 - **Pendientes:** pruebas MockMvc de rutas/login por cada rol, completar módulos administrativos enlazados, incorporar los hashes demo al script SQL final y publicar cuando exista permiso remoto.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 3 — Pruebas de autenticación y autorización
+
+- **Fecha:** 17 de agosto de 2026.
+- **Objetivo:** demostrar automáticamente que las restricciones de Spring Security funcionan en servidor y que el login consulta usuarios reales de la base de datos.
+- **Situación antes del cambio:** el bloque de seguridad compilaba y el registro tenía pruebas, pero aún no existían pruebas HTTP para invitado, CLIENTE y ADMINISTRADOR.
+
+### Archivos creados
+
+- `src/main/java/com/piscinas/gestion_piscinas/controller/ClienteController.java`.
+- `src/main/resources/templates/cliente/inicio.html`.
+- `src/test/java/com/piscinas/gestion_piscinas/SeguridadAccesoTests.java`.
+
+### Archivos modificados
+
+- `pom.xml` para agregar `spring-security-test` únicamente con alcance de prueba.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Zona `/cliente` protegida para completar un destino real de la regla CLIENTE.
+- Suite MockMvc que ejecuta peticiones a través de toda la cadena de filtros de seguridad.
+- Prueba de login con correo y contraseña demo reales, token CSRF y autenticación desde H2.
+- Usuarios simulados se adjuntan directamente a la petición para comprobar cada autoridad sin depender de la sesión de otra prueba.
+
+### Temas del curso relacionados
+
+- Spring Security, MockMvc, autenticación, autorización, roles, CSRF, MVC y pruebas de integración.
+
+### Explicación sencilla
+
+MockMvc se comporta como un navegador dentro de la prueba: solicita rutas sin sesión o con un rol definido y comprueba el código HTTP, la redirección y la vista. Para el login válido no se simula la contraseña: Security consulta el usuario demo en H2 y BCrypt verifica la clave.
+
+### Pruebas ejecutadas y resultados
+
+Primera ejecución: 11 pruebas, 5 fallos. La causa fue que `@WithMockUser` no se aplicó a las peticiones con la configuración de pruebas de Spring Security 7, por lo que todas llegaron como anónimas. Se corrigió usando el procesador oficial `user(...)` directamente en cada petición MockMvc y se repitió la suite completa.
+
+Ejecución final:
+
+1. Ruta pública `/` sin login: **200 / PASA**.
+2. Ruta `/administracion` sin login: **redirección a `/login` / PASA**.
+3. CLIENTE solicita `/administracion`: **403 / PASA**.
+4. ADMINISTRADOR solicita `/administracion`: **200 / PASA**.
+5. CLIENTE solicita `/cliente`: **200 / PASA**.
+6. Invitado solicita `/cliente`: **redirección a `/login` / PASA**.
+7. Login con cuenta CLIENTE persistida y BCrypt: **autenticado y redirigido a `/` / PASA**.
+8. Suite completa: 11 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar pruebas de autenticacion y autorizacion`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** autenticación y roles (10%), temáticas del curso, evidencia comprobable y calidad para la defensa.
+- **Pendientes:** publicar commits al obtener permisos; ampliar pruebas cuando existan carrito, pedidos y solicitudes.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -252,21 +307,21 @@ La base de datos guarda hashes BCrypt, no las contraseñas anteriores en texto p
 
 - [ ] Integrar Spring Security. Implementado y probado localmente; pendiente push.
 - [ ] Implementar registro. Implementado y probado localmente; pendiente push.
-- [ ] Implementar inicio de sesión. Implementado localmente; pendiente prueba MockMvc y push.
-- [ ] Implementar cierre de sesión. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Implementar inicio de sesión. Implementado y probado con MockMvc localmente; pendiente push.
+- [ ] Implementar cierre de sesión. Implementado localmente; pendiente prueba MockMvc de logout y push.
 - [ ] Usar BCrypt. Implementado y probado localmente; pendiente push.
 - [ ] Crear rol ADMINISTRADOR. Implementado y probado localmente; pendiente push.
 - [ ] Crear rol CLIENTE. Implementado y probado localmente; pendiente push.
 - [ ] Restringir menú. Implementado localmente; pendiente prueba de vista y push.
-- [ ] Restringir rutas. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Restringir rutas. Implementado y probado con MockMvc localmente; pendiente push.
 - [ ] Restringir acciones. Implementado localmente; pendiente completar los CRUD y push.
-- [ ] Administración solo ADMINISTRADOR. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Administración solo ADMINISTRADOR. Implementado y probado con MockMvc localmente; pendiente push.
 - [ ] Compra para CLIENTE.
 - [ ] Historial para CLIENTE.
 - [ ] Usuarios de prueba. Implementados con BCrypt localmente; pendiente push y SQL final.
 - [ ] Credenciales demo documentadas. Documentadas localmente; pendiente push.
-- [ ] Pruebas de acceso permitido.
-- [ ] Pruebas de acceso denegado.
+- [ ] Pruebas de acceso permitido. Implementadas y aprobadas localmente; pendiente push.
+- [ ] Pruebas de acceso denegado. Implementadas y aprobadas localmente; pendiente push.
 
 ### Prioridad 2 — CRUD y persistencia
 
