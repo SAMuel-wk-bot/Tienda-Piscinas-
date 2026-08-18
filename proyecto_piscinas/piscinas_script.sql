@@ -1,5 +1,6 @@
--- Script oficial de desarrollo para MySQL 8.
--- No crea usuarios de MySQL ni contiene credenciales personales.
+-- SCRIPT OFICIAL Y ÚNICA FUENTE DEL ESQUEMA DE DEMOSTRACIÓN.
+-- Compatible con MySQL 8. No crea usuarios de MySQL ni contiene credenciales personales.
+-- ADVERTENCIA: elimina y vuelve a crear las tablas de gestion_piscinas.
 CREATE DATABASE IF NOT EXISTS gestion_piscinas
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
@@ -172,6 +173,35 @@ INSERT INTO roles (nombre) VALUES
     ('ADMINISTRADOR'),
     ('CLIENTE');
 
+-- Credenciales ficticias exclusivas para demostración académica.
+-- admin@tiendapiscinas.test / AdminPiscinas2026!
+-- cliente@tiendapiscinas.test / ClientePiscinas2026!
+-- La columna contrasena contiene hashes BCrypt, nunca las claves anteriores en texto plano.
+INSERT INTO usuarios
+    (nombre, apellido, email, telefono, contrasena, activo)
+VALUES
+    ('Administrador', 'Demostración', 'admin@tiendapiscinas.test', '8888-0001',
+     '$2a$10$vQvJ0TwYKZgldp9KE6oUpegAbKmJ6/cew8X56DGFyhPFaRhTtj6Oi', TRUE),
+    ('Cliente', 'Demostración', 'cliente@tiendapiscinas.test', '8888-0002',
+     '$2a$10$Hcx7qW8tBKax01nkjbwDqeFctBN/NIG7pHmq9PMsqcoZAzBPcVgB2', TRUE);
+
+INSERT INTO usuarios_roles (id_usuario, id_rol)
+SELECT u.id_usuario, r.id_rol
+FROM usuarios u
+JOIN roles r ON r.nombre = 'ADMINISTRADOR'
+WHERE u.email = 'admin@tiendapiscinas.test';
+
+INSERT INTO usuarios_roles (id_usuario, id_rol)
+SELECT u.id_usuario, r.id_rol
+FROM usuarios u
+JOIN roles r ON r.nombre = 'CLIENTE'
+WHERE u.email = 'cliente@tiendapiscinas.test';
+
+INSERT INTO clientes (id_usuario, direccion)
+SELECT id_usuario, 'Dirección ficticia para demostración académica'
+FROM usuarios
+WHERE email = 'cliente@tiendapiscinas.test';
+
 INSERT INTO categorias (nombre_categoria, descripcion) VALUES
     ('Químicos', 'Productos para el tratamiento y equilibrio del agua.'),
     ('Limpieza', 'Herramientas y accesorios para limpieza.'),
@@ -191,10 +221,41 @@ INSERT INTO servicios (nombre, descripcion, precio_base, activo) VALUES
     ('Tratamiento de agua', 'Evaluación y tratamiento básico del agua.', 30000.00, TRUE),
     ('Revisión de bomba', 'Diagnóstico básico del equipo de bombeo.', 20000.00, TRUE);
 
+INSERT INTO solicitudes_servicio
+    (id_cliente, id_servicio, direccion_servicio, observaciones, estado)
+SELECT c.id_cliente, s.id_servicio,
+       'Dirección ficticia para demostración académica',
+       'Solicitud ficticia exclusiva para demostrar el flujo académico.',
+       'PENDIENTE'
+FROM clientes c
+JOIN usuarios u ON u.id_usuario = c.id_usuario
+JOIN servicios s ON s.nombre = 'Mantenimiento'
+WHERE u.email = 'cliente@tiendapiscinas.test';
+
 INSERT INTO piscinas
     (nombre_piscina, tipo, capacidad_max, precio_hora, estado)
 VALUES
     ('Piscina demostrativa', 'Familiar', 12, 15000.00, 'Disponible');
 
--- Los usuarios demo con BCrypt se incorporan en el bloque de seguridad.
--- Las credenciales serán ficticias y exclusivas para demostración académica.
+-- Pedido histórico ficticio para demostrar la tabla transaccional y el precio conservado.
+START TRANSACTION;
+
+INSERT INTO pedidos (id_cliente, subtotal, impuesto, total, estado)
+SELECT c.id_cliente, 6500.00, 845.00, 7345.00, 'PENDIENTE'
+FROM clientes c
+JOIN usuarios u ON u.id_usuario = c.id_usuario
+WHERE u.email = 'cliente@tiendapiscinas.test';
+
+SET @pedido_demo = LAST_INSERT_ID();
+
+INSERT INTO detalles_pedido
+    (id_pedido, id_producto, cantidad, precio_unitario, subtotal_linea)
+SELECT @pedido_demo, id_producto, 1, precio, precio
+FROM productos
+WHERE nombre_producto = 'Cloro granulado 1 kg';
+
+UPDATE productos
+SET stock = stock - 1
+WHERE nombre_producto = 'Cloro granulado 1 kg';
+
+COMMIT;

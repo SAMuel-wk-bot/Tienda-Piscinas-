@@ -937,13 +937,79 @@ El usuario ingresa las dimensiones y selecciona el estado general. El servicio c
 8. Vista del cotizador en inglés: **PASA**.
 9. Suite limpia completa: 57 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar cotizacion inteligente para piscinas`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Implementar cotizacion inteligente para piscinas`.
+- **Hash del commit:** `1bb90862e7d8af08aa3671271ad1e2a6cfba514b`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** investigación adicional — 7%, solución real, uso de base de datos, internacionalización, diseño y temáticas del curso.
-- **Pendientes:** crear commit, publicar cuando exista permiso remoto, validar los factores de precio con un cliente real y ampliar a otras formas solamente si el equipo lo requiere.
-- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
+- **Pendientes:** publicar cuando exista permiso remoto, validar los factores de precio con un cliente real y ampliar a otras formas solamente si el equipo lo requiere.
+- **Estado del bloque:** **HECHO, PROBADO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 14 — Configuración segura y script oficial de MySQL
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** retirar credenciales fijas, hacer reproducible la conexión local y consolidar un esquema MySQL coherente con las entidades finales y datos demostrativos seguros.
+- **Situación antes del cambio:** `application.properties` guardaba `usuario/contrasenna`, usaba el puerto 80 y mostraba SQL; no existía `.gitignore`; había dos scripts fuente y una copia antigua dentro de `target` que creaba un usuario MySQL con contraseña fija. Además, 24 archivos generados de `target` estaban rastreados por Git.
+
+### Archivos creados
+
+- `.gitignore`.
+- `proyecto_piscinas/.env.example`.
+- `docs/configuracion-mysql.md`.
+- `ConfiguracionMySqlTests.java`.
+
+### Archivos modificados
+
+- `src/main/resources/application.properties`.
+- `proyecto_piscinas/piscinas_script.sql`.
+- `docs/bitacora-integrante2.md`.
+
+### Archivos retirados del código fuente o del índice
+
+- `src/main/resources/piscinas_script.sql`: copia duplicada eliminada para mantener una sola fuente oficial.
+- 24 archivos de `proyecto_piscinas/target`: retirados únicamente del índice con `git rm --cached`; los archivos físicos existentes se preservaron y la carpeta queda ignorada en adelante.
+
+### Funcionalidad implementada
+
+- `DB_URL`, `DB_USER`, `DB_PASSWORD` y `SERVER_PORT` configurables mediante variables de entorno.
+- Contraseña MySQL sin valor fijo en el repositorio.
+- Puerto local predeterminado 8080 y SQL de Hibernate oculto en ejecución normal.
+- `.env` real ignorado y `.env.example` conservado como referencia, con advertencia de que Spring no lo carga automáticamente.
+- Único script oficial: `proyecto_piscinas/piscinas_script.sql`.
+- 13 tablas funcionales con claves primarias, foráneas, validaciones e índices.
+- Roles, usuarios demo con hashes BCrypt, cliente, categorías, productos, servicios, piscina, solicitud y pedido con detalle ficticios.
+- Pedido demostrativo insertado dentro de una transacción SQL y ajuste coherente de stock.
+- El script no crea usuarios MySQL, no concede privilegios y no guarda credenciales personales.
+- Guía PowerShell, ejecución con Workbench, variables, usuarios demo y consultas de comprobación.
+
+### Temas del curso relacionados
+
+- MySQL, SQL, JPA/Hibernate, relaciones, transacciones, configuración Spring Boot, Spring Security y BCrypt.
+
+### Explicación sencilla
+
+Cada integrante define su propia conexión MySQL en variables de entorno. La aplicación usa esos valores al iniciar y el repositorio no conoce la contraseña personal. El script oficial reconstruye una base demostrativa coherente, mientras que las salidas generadas por Maven dejan de formar parte del historial Git.
+
+### Pruebas ejecutadas y resultados
+
+1. Propiedades principales usan variables y no contienen `spring.datasource.password=contrasenna`: **PASA**.
+2. Script contiene exactamente 13 sentencias `CREATE TABLE`: **PASA**.
+3. Script no contiene `CREATE USER` ni `IDENTIFIED BY`: **PASA**.
+4. Hash BCrypt de ADMINISTRADOR coincide con su clave demo: **PASA**.
+5. Hash BCrypt de CLIENTE coincide con su clave demo: **PASA**.
+6. Los 24 archivos físicos de `target` permanecen en disco después de retirarlos del índice: **PASA**.
+7. Reglas de `.gitignore` excluyen `target` y `.env`, pero permiten `.env.example`: **PASA**.
+8. Suite limpia completa: 60 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+9. Conexión de solo lectura a MySQL 8.4 local sin contraseña: **NO EJECUTADA CON ÉXITO**; el servidor respondió `Access denied for user 'root'@'localhost'`. No se intentó adivinar ni solicitar una clave personal.
+10. Ejecución destructiva del script sobre `gestion_piscinas`: **PENDIENTE**; no se sobrescribió una base local potencialmente perteneciente al equipo sin una copia o instancia aislada autorizada.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Actualizar configuracion MySQL y script de base de datos`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** almacenamiento — 10%, uso efectivo de base de datos — 10%, autenticación, solución reproducible y GitHub.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto y ejecutar el script en una instancia MySQL limpia o respaldada con una credencial proporcionada por el equipo.
+- **Estado del bloque:** **HECHO Y PROBADO ESTÁTICAMENTE / PENDIENTE COMMIT, PUSH Y PRUEBA MYSQL LIMPIA**.
 
 ## Checklist oficial del Integrante 2
 
@@ -1017,10 +1083,10 @@ El usuario ingresa las dimensiones y selecciona el estado general. El servicio c
 
 ### Prioridad 5 — Entrega
 
-- [ ] MySQL mediante variables de entorno.
-- [ ] Script/respaldo reproducible.
+- [ ] MySQL mediante variables de entorno. Implementado y probado estáticamente; pendiente push y conexión con credencial local real.
+- [ ] Script/respaldo reproducible. Script único de 13 tablas validado estáticamente; pendiente ejecución en instancia MySQL limpia y push.
 - [ ] Guía de instalación y README.
-- [ ] Usuarios demo.
+- [ ] Usuarios demo. Incorporados al SQL con BCrypt y hashes validados; pendiente push.
 - [ ] Evidencia real/mercado preparada.
 - [ ] Pruebas de usabilidad preparadas.
 - [ ] Resultados reales incorporados cuando sean proporcionados.

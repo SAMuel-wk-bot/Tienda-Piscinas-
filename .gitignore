@@ -1,0 +1,17 @@
+# Salidas generadas por Maven
+**/target/
+
+# Variables y archivos locales con posibles secretos
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Configuración privada de herramientas y sistema operativo
+.idea/
+.vscode/
+**/nbproject/private/
+.DS_Store
+Thumbs.db
