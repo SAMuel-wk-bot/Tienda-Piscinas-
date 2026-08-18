@@ -16,4 +16,6 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     Optional<Pedido> findByIdPedidoAndClienteUsuarioEmailUsuario(
             Long idPedido, String emailUsuario);
+
+    List<Pedido> findAllByOrderByFechaPedidoDesc();
 }

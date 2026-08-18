@@ -97,6 +97,36 @@ public class PedidoServiceImpl implements PedidoService {
         return detalleRepository.findByPedidoIdPedido(idPedido);
     }
 
+    @Override
+    public List<Pedido> listarPedidosDelCliente(String correoUsuario) {
+        return pedidoRepository
+                .findByClienteUsuarioEmailUsuarioOrderByFechaPedidoDesc(correoUsuario);
+    }
+
+    @Override
+    public List<Pedido> listarPedidos(EstadoPedido estado) {
+        return estado == null
+                ? pedidoRepository.findAllByOrderByFechaPedidoDesc()
+                : pedidoRepository.findByEstadoOrderByFechaPedidoDesc(estado);
+    }
+
+    @Override
+    public Pedido obtenerPedidoPorId(Long idPedido) {
+        return pedidoRepository.findById(idPedido)
+                .orElseThrow(() -> new IllegalArgumentException("El pedido no existe."));
+    }
+
+    @Override
+    @Transactional
+    public Pedido actualizarEstado(Long idPedido, EstadoPedido estado) {
+        if (estado == null) {
+            throw new IllegalArgumentException("Debe seleccionar un estado.");
+        }
+        Pedido pedido = obtenerPedidoPorId(idPedido);
+        pedido.setEstado(estado);
+        return pedidoRepository.save(pedido);
+    }
+
     private List<ItemCarrito> validarYPrepararLineas(CarritoSesion carrito) {
         List<ItemCarrito> lineas = new ArrayList<>();
         for (Map.Entry<Long, Integer> entrada : carrito.getCantidades().entrySet()) {

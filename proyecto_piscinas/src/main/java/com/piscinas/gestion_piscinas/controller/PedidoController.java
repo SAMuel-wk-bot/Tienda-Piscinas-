@@ -25,6 +25,13 @@ public class PedidoController {
         this.carritoService = carritoService;
     }
 
+    @GetMapping
+    public String historial(Principal principal, Model model) {
+        model.addAttribute("pedidos",
+                pedidoService.listarPedidosDelCliente(principal.getName()));
+        return "pedidos/cliente-listado";
+    }
+
     @PostMapping("/confirmar")
     public String confirmar(HttpSession session, Principal principal,
             RedirectAttributes mensajes) {
@@ -50,7 +57,7 @@ public class PedidoController {
             return "pedidos/detalle";
         } catch (IllegalArgumentException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
-            return "redirect:/cliente";
+            return "redirect:/cliente/pedidos";
         }
     }
 }

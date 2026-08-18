@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mis pedidos - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 mb-0">Mis pedidos</h1>
+            <a class="btn btn-primary" th:href="@{/productos}">Comprar productos</a>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div class="table-responsive shadow-sm" th:if="${!#lists.isEmpty(pedidos)}">
+            <table class="table table-hover bg-white mb-0 align-middle">
+                <thead class="table-primary"><tr><th>Número</th><th>Fecha</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+                <tbody>
+                    <tr th:each="pedido : ${pedidos}">
+                        <td th:text="${'#' + pedido.idPedido}">#1</td>
+                        <td th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}">Fecha</td>
+                        <td th:text="${'₡' + #numbers.formatDecimal(pedido.total, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
+                        <td><span class="badge text-bg-primary" th:text="${pedido.estado}">PENDIENTE</span></td>
+                        <td><a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/cliente/pedidos/{id}(id=${pedido.idPedido})}">Ver detalle</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="alert alert-info" th:if="${#lists.isEmpty(pedidos)}">Aún no tiene pedidos registrados.</div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

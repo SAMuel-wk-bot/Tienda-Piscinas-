@@ -17,6 +17,12 @@
             </div>
             <span class="badge text-bg-primary fs-6" th:text="${pedido.estado}">PENDIENTE</span>
         </div>
+        <div class="mb-3">
+            <a class="btn btn-outline-secondary" th:if="${vistaAdministrativa}"
+               th:href="@{/administracion/pedidos}">Volver a pedidos</a>
+            <a class="btn btn-outline-secondary" th:unless="${vistaAdministrativa}"
+               th:href="@{/cliente/pedidos}">Volver a mis pedidos</a>
+        </div>
 
         <div class="table-responsive shadow-sm mb-4">
             <table class="table table-hover bg-white mb-0 align-middle">

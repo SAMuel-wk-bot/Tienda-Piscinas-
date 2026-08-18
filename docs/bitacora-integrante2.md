@@ -618,12 +618,75 @@ Antes de guardar, el servicio bloquea y revisa todos los productos. Si cualquier
 9. Confirmación web vacía carrito solo tras éxito y renderiza detalle: **PASA**.
 10. Suite limpia completa: 37 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar creacion transaccional de pedidos e inventario`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Implementar creacion transaccional de pedidos e inventario`.
+- **Hash del commit:** `e055b16b368015e967b0c2eaa58fc564a15e6f85`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** tabla transaccional real, uso medular de BD, transacciones/rollback, solución real y temáticas del curso.
 - **Pendientes:** historial completo y administración de estados en el siguiente bloque; validación tributaria comercial; publicación remota.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 9 — Historial de pedidos y gestión administrativa de estados
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** permitir que cada cliente consulte únicamente sus compras y que el administrador revise todos los pedidos y actualice su estado.
+- **Situación antes del cambio:** el pedido podía crearse y mostrarse al finalizar la compra, pero no existía un historial persistente accesible ni una gestión administrativa de estados.
+
+### Archivos creados
+
+- `controller/PedidoAdministracionController.java`.
+- `templates/pedidos/cliente-listado.html`.
+- `templates/pedidos/administracion.html`.
+- `PedidoHistorialTests.java`.
+- `PedidoHistorialWebTests.java`.
+
+### Archivos modificados
+
+- `controller/PedidoController.java`.
+- `repository/PedidoRepository.java`.
+- `service/PedidoService.java` y `PedidoServiceImpl.java`.
+- `templates/pedidos/detalle.html`.
+- `templates/fragmentos/encabezado.html`.
+- `templates/cliente/inicio.html`.
+- `templates/administracion/inicio.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Historial del CLIENTE ordenado por fecha, obtenido siempre a partir de su correo autenticado.
+- Detalle protegido por pertenencia: un cliente no puede consultar el pedido de otra cuenta modificando el ID.
+- Listado administrativo de todos los pedidos.
+- Filtro administrativo por estado mediante consulta JPA.
+- Vista administrativa del detalle del pedido.
+- Actualización de estado mediante POST y únicamente bajo ruta ADMINISTRADOR.
+- Enlaces de navegación para “Mis pedidos” y “Gestionar pedidos” según rol.
+- Estados disponibles limitados al enum del dominio: PENDIENTE, CONFIRMADO, PREPARANDO, COMPLETADO y CANCELADO.
+
+### Temas del curso relacionados
+
+- Spring MVC, Spring Security, JPA, Service, consultas derivadas, Thymeleaf, formularios POST, CSRF y Bootstrap.
+
+### Explicación sencilla
+
+El controlador nunca acepta como verdad la identidad enviada por el navegador. Para el cliente toma el correo de la sesión autenticada y solicita al servicio solamente sus pedidos. La administración utiliza una ruta protegida distinta, puede filtrar todos los pedidos y cambiar el estado mediante una operación POST.
+
+### Pruebas ejecutadas y resultados
+
+1. Cliente obtiene únicamente su propio historial: **PASA**.
+2. Cliente abre el detalle de un pedido propio: **PASA**.
+3. Pedido ajeno continúa protegido: **PASA** dentro de la regresión completa.
+4. Administrador lista todos los pedidos: **PASA**.
+5. Administrador filtra por estado: **PASA**.
+6. Administrador actualiza el estado a CONFIRMADO: **PASA**.
+7. Vistas web de historial de cliente y administración: **200 / PASA**.
+8. Suite limpia completa: 41 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar historial de pedidos y gestion administrativa de estados`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** autenticación y roles, base de datos medular, transacciones reales, seguridad de acciones, diseño usable y temática Spring MVC/JPA.
+- **Pendientes:** crear el commit, publicar cuando la cuenta tenga permiso y documentar en el bloque de errores la experiencia ante accesos o recursos inválidos.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -641,8 +704,8 @@ Antes de guardar, el servicio bloquea y revisa todos los productos. Si cualquier
 - [ ] Restringir rutas. Implementado y probado con MockMvc localmente; pendiente push.
 - [ ] Restringir acciones. Implementado localmente; pendiente completar los CRUD y push.
 - [ ] Administración solo ADMINISTRADOR. Implementado y probado con MockMvc localmente; pendiente push.
-- [ ] Compra para CLIENTE.
-- [ ] Historial para CLIENTE.
+- [ ] Compra para CLIENTE. Implementada y probada localmente; pendiente push.
+- [ ] Historial para CLIENTE. Implementado y probado localmente; pendiente push.
 - [ ] Usuarios de prueba. Implementados con BCrypt localmente; pendiente push y SQL final.
 - [ ] Credenciales demo documentadas. Documentadas localmente; pendiente push.
 - [ ] Pruebas de acceso permitido. Implementadas y aprobadas localmente; pendiente push.
@@ -655,8 +718,8 @@ Antes de guardar, el servicio bloquea y revisa todos los productos. Si cualquier
 - [ ] Cliente.
 - [ ] Servicio. Módulo completo y probado localmente; pendiente push.
 - [ ] SolicitudServicio. Flujo completo y probado localmente; pendiente push.
-- [ ] Pedido.
-- [ ] DetallePedido.
+- [ ] Pedido. Persistencia, flujo e historial implementados localmente; pendiente push.
+- [ ] DetallePedido. Persistencia con precio histórico implementada localmente; pendiente push.
 - [ ] CRUD Categoria. Implementado y probado localmente; pendiente push.
 - [ ] CRUD Producto. Implementado y probado localmente; pendiente push.
 - [ ] Validaciones. Implementadas y probadas localmente; pendiente push.
@@ -679,8 +742,8 @@ Antes de guardar, el servicio bloquea y revisa todos los productos. Si cualquier
 - [ ] Transacción y rollback. Aprobado sin registros parciales localmente; pendiente push.
 - [ ] Descontar inventario. Implementado y probado localmente; pendiente push.
 - [ ] Calcular subtotal, impuesto y total. Implementado y probado localmente; pendiente push.
-- [ ] Historial cliente.
-- [ ] Gestión de estados.
+- [ ] Historial cliente. Implementado y probado localmente; pendiente push.
+- [ ] Gestión de estados. Implementada y probada para ADMINISTRADOR localmente; pendiente push.
 - [ ] Prueba compra exitosa. Aprobada localmente; pendiente push.
 - [ ] Prueba stock insuficiente. Aprobada localmente; pendiente push.
 - [ ] Prueba rollback. Aprobada sin registros parciales localmente; pendiente push.
