@@ -266,6 +266,7 @@ La última ejecución documentada aprobó las 64 pruebas con 0 fallos y 0 errore
 - [Protocolo de usabilidad](docs/pruebas-usabilidad.md).
 - [Borrador de artículo IEEE](docs/borrador-articulo-ieee.md).
 - [Guion de defensa](docs/guion-defensa.md).
+- [Informe final del Integrante 2](docs/informe-final-integrante2.md).
 
 ## Contribuciones
 

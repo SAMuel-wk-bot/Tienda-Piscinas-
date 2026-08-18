@@ -1161,13 +1161,55 @@ La capa Service entrega una clave en vez de una frase fija. La vista consulta es
 6. Todas las claves `business.*` usadas existen en ambos archivos: **PASA**.
 7. Suite limpia completa: 64 pruebas, 0 fallos, 0 errores, 0 omitidas, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar pruebas finales de seguridad e internacionalizacion`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Completar pruebas finales de seguridad e internacionalizacion`.
+- **Hash del commit:** `9452b0bc0f52299731c072dae8ae92364758332c`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** autenticación y roles — 10%, internacionalización — 8%, calidad, pruebas y defensa.
-- **Pendientes:** crear commit, publicar y completar las validaciones externas (MySQL limpio, QA visual y evidencia humana).
-- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
+- **Pendientes:** publicar y completar las validaciones externas (MySQL limpio, QA visual y evidencia humana).
+- **Estado del bloque:** **HECHO, PROBADO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 18 — Revisión Git e informe final de entrega
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** revisar el historial completo, cuantificar la contribución y reunir el informe A–M solicitado con pendientes transparentes.
+- **Situación antes del cambio:** existían bitácora, README y matriz, pero faltaba un informe consolidado y la revisión final del diff desde la rama base.
+
+### Archivos creados
+
+- `docs/informe-final-integrante2.md`.
+
+### Archivos modificados
+
+- `README.md`.
+- `docs/bitacora-integrante2.md`.
+
+### Evidencia reunida
+
+- Resumen ejecutivo, módulos, archivos, base, roles, compra, temas, investigación, i18n, pruebas, Git, rúbrica y pendientes.
+- Rama y base exactas.
+- Lista de 18 commits con hashes completos.
+- Estadística del diff antes del commit de cierre: 157 archivos, 9617 inserciones y 1316 eliminaciones.
+- Estado del push y PR sin afirmar publicación inexistente.
+- Ausencia de rama `codex/tienda-piscinas` y necesidad de acordar destino entre `samuel` y `main`.
+
+### Comandos de revisión y resultados
+
+1. `git status --short`: **LIMPIO** antes de crear este informe.
+2. `git branch -a`: rama local correcta y ramas remotas verificadas.
+3. `git remote -v`: repositorio oficial confirmado.
+4. `git log --oneline --decorate 8c3fdeb..HEAD`: 18 commits funcionales.
+5. `git diff 8c3fdeb --stat` con el informe preparado: 157 archivos, 9617 inserciones y 1316 eliminaciones.
+6. Revisión de secretos: sin contraseña MySQL fija, claves privadas ni API keys; solamente credenciales ficticias demo documentadas.
+7. Rastreables: un SQL oficial; ningún `target` ni `.env` real.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar informe final y evidencias de entrega`.
+- **Hash del commit:** se registrará después de crear el commit.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** GitHub — 10%, presentación/defensa — 10% y trazabilidad completa.
+- **Pendientes:** crear commit, intentar push, resolver permiso, acordar rama destino y abrir PR con revisión entre pares.
+- **Estado del bloque:** **INFORME PREPARADO LOCALMENTE / COMMIT, PUSH Y PR PENDIENTES**.
 
 ## Checklist oficial del Integrante 2
 
