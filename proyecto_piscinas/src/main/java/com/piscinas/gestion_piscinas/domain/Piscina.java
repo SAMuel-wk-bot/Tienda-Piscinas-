@@ -7,6 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,32 +21,38 @@ public class Piscina implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_piscina")
-    private Integer idPiscina;
+    private Long idPiscina;
 
     @Column(name = "nombre_piscina", nullable = false, length = 50)
+    @NotBlank(message = "El nombre de la piscina es obligatorio.")
     private String nombrePiscina;
 
     @Column(name = "tipo", nullable = false, length = 30)
+    @NotBlank(message = "El tipo de piscina es obligatorio.")
     private String tipo;
 
     @Column(name = "capacidad_max", nullable = false)
+    @NotNull(message = "La capacidad es obligatoria.")
+    @Min(value = 1, message = "La capacidad debe ser mayor a cero.")
     private Integer capacidadMax;
 
-    @Column(name = "precio_hora", precision=10, scale=2)
+    @Column(name = "precio_hora", nullable = false, precision=10, scale=2)
+    @NotNull(message = "El precio por hora es obligatorio.")
     @DecimalMin(value="0.00", inclusive=true)
     private BigDecimal precio_hora;
 
-    @Column(name = "estado", length = 20)
+    @Column(name = "estado", nullable = false, length = 20)
+    @NotBlank(message = "El estado es obligatorio.")
     private String estado;
 
     public Piscina() {
     }
 
-    public Integer getIdPiscina() {
+    public Long getIdPiscina() {
         return idPiscina;
     }
 
-    public void setIdPiscina(Integer idPiscina) {
+    public void setIdPiscina(Long idPiscina) {
         this.idPiscina = idPiscina;
     }
 

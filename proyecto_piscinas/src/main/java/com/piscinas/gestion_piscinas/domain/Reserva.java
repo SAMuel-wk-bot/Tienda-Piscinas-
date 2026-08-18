@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,26 +24,32 @@ public class Reserva implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reserva")
-    private int idReserva;
+    private Long idReserva;
 
-    @Column(name = "fecha_reserva")
+    @Column(name = "fecha_reserva", nullable = false)
+    @NotNull(message = "La fecha de reserva es obligatoria.")
     private LocalDate fechaReserva;
 
-    @Column(name = "hora_inicio")
+    @Column(name = "hora_inicio", nullable = false)
+    @NotNull(message = "La hora de inicio es obligatoria.")
     private LocalTime horaInicio;
 
-    @Column(name = "hora_fin")
+    @Column(name = "hora_fin", nullable = false)
+    @NotNull(message = "La hora de finalización es obligatoria.")
     private LocalTime horaFin;
 
     @Column(name = "estado_reserva", nullable = false, length = 20)
+    @NotBlank(message = "El estado de la reserva es obligatorio.")
     private String estadoReserva;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    @NotNull(message = "El usuario es obligatorio.")
     private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "id_piscina")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_piscina", nullable = false)
+    @NotNull(message = "La piscina es obligatoria.")
     private Piscina piscina;
 
     @OneToOne(mappedBy = "reserva")
@@ -50,11 +58,11 @@ public class Reserva implements Serializable {
     public Reserva() {
     }
 
-    public int getIdReserva() {
+    public Long getIdReserva() {
         return idReserva;
     }
 
-    public void setIdReserva(int idReserva) {
+    public void setIdReserva(Long idReserva) {
         this.idReserva = idReserva;
     }
 

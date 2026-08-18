@@ -70,8 +70,8 @@ Total inicial: **6 tablas reales**. No existen todavía `roles`, `clientes`, `se
 
 #### Servicios
 
-- `CategoriaService` + `CategoriaServiceImpl`: listado simple.
-- `ProductoService` + `ProductoServiceImpl`: listado simple.
+- `CategoriaService` + `CategoriaServiceImpl`: operaciones básicas de listar, guardar, obtener y eliminar; no existía controlador para exponerlas.
+- `ProductoService` + `ProductoServiceImpl`: operaciones básicas de listar, guardar, obtener y eliminar; el controlador solo utilizaba el listado.
 - Usuario, Piscina, Reserva y Pago no tienen capa de servicio.
 
 #### Controladores y vistas
@@ -115,13 +115,54 @@ Total inicial: **6 tablas reales**. No existen todavía `roles`, `clientes`, `se
 5. Arranque y navegación manual: **BLOQUEADO** por las credenciales MySQL fijas.
 
 - **Resultado general:** compilación correcta; pruebas y aplicación no funcionales con la configuración inicial.
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Documentar estado inicial del segundo 50 por ciento`.
-- **Hash del commit:** se registrará en la próxima actualización.
+- **Commit realizado:** `Documentar estado inicial del segundo 50 por ciento`.
+- **Hash del commit:** `33723b0e113206f5bfc0a22cec6c47613345a268`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**. Intento fallido por `403`.
 - **Criterio de rúbrica relacionado:** almacenamiento, uso efectivo de base de datos, GitHub colaborativo y temáticas del curso.
 - **Pendientes inmediatos:** crear un perfil de pruebas reproducible; externalizar credenciales; corregir seguimiento de `target`; implementar el modelo de seguridad; resolver permiso de escritura en GitHub; acordar si el PR final apunta a `main` o a `samuel`.
 - **Estado del bloque:** **HECHO LOCAL / PENDIENTE PUSH**.
+
+## Bloque 1 — modelo de seguridad y entidades transaccionales
+
+- **Fecha:** 17 de agosto de 2026.
+- **Objetivo:** extender el modelo existente sin borrar Piscina, Reserva ni Pago; superar ocho tablas útiles y preparar persistencia real para seguridad, servicios y compras.
+- **Situación antes del cambio:** 6 entidades, 6 tablas y 6 repositorios. Usuario no tenía contraseña ni roles. No existían Cliente, Servicio, SolicitudServicio, Pedido o DetallePedido. Las pruebas dependían de las credenciales MySQL locales.
+- **Archivos creados:** `Rol.java`, `Cliente.java`, `Servicio.java`, `SolicitudServicio.java`, `Pedido.java`, `DetallePedido.java`, `EstadoSolicitudServicio.java`, `EstadoPedido.java`; repositorios de las seis entidades nuevas; `ModeloPersistenciaTests.java`; `src/test/resources/application.properties`.
+- **Archivos modificados:** `pom.xml`; Usuario, Producto, Categoria, Piscina, Reserva y Pago; UsuarioRepository; las dos copias de `piscinas_script.sql`; esta bitácora.
+- **Funcionalidad implementada:** modelo JPA de roles y usuarios, perfil de cliente, catálogo, solicitudes de servicio, cabecera/detalle de compra y estados simples. Se añadieron validaciones de entidad, restricciones de nulidad y repositorios con consultas derivadas iniciales.
+- **Temas del curso relacionados:** entidades JPA, Hibernate, validaciones Jakarta, Repository, `ManyToOne`, `OneToOne`, `ManyToMany`, claves foráneas, SQL, consultas derivadas y pruebas de persistencia.
+- **Explicación sencilla:** Usuario se relaciona con Rol mediante `usuarios_roles`; Cliente agrega la dirección necesaria para compras/servicios; una Solicitud conecta Cliente y Servicio; un Pedido pertenece al Cliente y cada Detalle conserva producto, cantidad y precio histórico.
+
+### Modelo resultante
+
+- Entidades JPA: 12.
+- Tablas físicas: 13, porque `usuarios_roles` representa la relación real entre usuarios y roles.
+- Tablas transaccionales: `reservas`, `pagos`, `solicitudes_servicio`, `pedidos` y `detalles_pedido`.
+- Roles previstos: `ADMINISTRADOR` y `CLIENTE`.
+- Estados de solicitud: `PENDIENTE`, `EN_PROCESO`, `COMPLETADA`, `CANCELADA`.
+- Estados de pedido: `PENDIENTE`, `CONFIRMADO`, `PREPARANDO`, `COMPLETADO`, `CANCELADO`.
+- Las dos copias del SQL tienen el mismo SHA-256 en este bloque.
+- El script ya no elimina la base ni crea/elimina usuarios MySQL; deja las credenciales fuera del SQL.
+- Los usuarios demo BCrypt se posponen al bloque de seguridad, para no insertar contraseñas en texto plano ni hashes ficticios inválidos.
+
+### Pruebas ejecutadas y resultados
+
+1. `mvn clean test` sobre una copia aislada sin el `target` versionado: **PASA**.
+2. Compilación: 32 fuentes principales y 2 fuentes de prueba: **PASA**.
+3. `GestionPiscinasApplicationTests.contextLoads`: **PASA** con H2 de alcance de prueba.
+4. `ModeloPersistenciaTests.persisteRelacionesDelSegundoCincuentaPorCiento`: **PASA**.
+5. Resultado Maven: 2 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+6. Validación SQL: ambas copias sincronizadas: **PASA**.
+
+- **Resultado general:** modelo y relaciones funcionales en prueba automatizada. MySQL real sigue pendiente de credenciales/autorización para ejecutar el script en una base limpia.
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar modelo de usuarios roles y entidades transaccionales`.
+- **Hash del commit:** se registrará en la próxima actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; el permiso remoto continúa bloqueado por HTTP `403`.
+- **Criterio de rúbrica relacionado:** almacenamiento (más de 8 tablas y tablas transaccionales), uso efectivo de BD, temáticas JPA/relaciones/validación y base para autenticación.
+- **Pendientes:** servicios/controladores/vistas de las entidades; seguridad; BCrypt; registro; transacción de compra; ejecutar el SQL contra MySQL limpio cuando existan credenciales autorizadas.
+- **Estado del bloque:** **HECHO LOCAL / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
 
