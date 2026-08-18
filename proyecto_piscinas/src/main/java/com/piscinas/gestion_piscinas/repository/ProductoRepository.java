@@ -2,7 +2,10 @@ package com.piscinas.gestion_piscinas.repository;
 
 import com.piscinas.gestion_piscinas.domain.Producto;
 import java.util.List;
+import java.util.Optional;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -26,4 +29,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> buscarConFiltros(@Param("nombre") String nombre,
             @Param("idCategoria") Long idCategoria,
             @Param("soloDisponibles") boolean soloDisponibles);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT p FROM Producto p WHERE p.idProducto = :idProducto")
+    Optional<Producto> buscarPorIdParaActualizar(@Param("idProducto") Long idProducto);
 }

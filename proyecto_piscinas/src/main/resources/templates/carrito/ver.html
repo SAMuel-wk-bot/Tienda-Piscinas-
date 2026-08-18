@@ -65,7 +65,10 @@
                             <span th:text="${'₡' + #numbers.formatDecimal(resumen.subtotal, 1, 'COMMA', 2, 'POINT')}">₡0.00</span>
                         </div>
                         <p class="small text-muted">Impuestos y total se calculan en el servidor al confirmar el pedido.</p>
-                        <button class="btn btn-primary w-100" type="button" disabled>Finalizar compra</button>
+                        <form method="post" th:action="@{/cliente/pedidos/confirmar}">
+                            <button class="btn btn-primary w-100" type="submit"
+                                    th:disabled="${!resumen.stockValido}">Finalizar compra</button>
+                        </form>
                         <form method="post" th:action="@{/carrito/vaciar}" class="mt-2">
                             <button class="btn btn-outline-danger w-100" type="submit">Vaciar carrito</button>
                         </form>

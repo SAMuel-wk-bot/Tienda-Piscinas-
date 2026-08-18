@@ -546,12 +546,84 @@ La sesión conserva únicamente identificadores y cantidades. Cada vez que se mu
 6. Vista del carrito renderizada para CLIENTE: **200 / PASA**.
 7. Suite limpia completa: 33 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar carrito de compras basado en sesion`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Implementar carrito de compras basado en sesion`.
+- **Hash del commit:** `c9f5ea48f0017f372cbbda17d6eb34d7cc22f193`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** carrito de compras como temática del curso, autenticación por rol, diseño y base para la transacción real de pedido.
 - **Pendientes:** habilitar finalizar compra en el siguiente bloque, mostrar contador global y publicar remotamente.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 8 — Creación transaccional de pedidos e inventario
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** convertir el carrito en una compra persistida y atómica, guardando precio histórico, calculando totales y descontando inventario sin resultados parciales.
+- **Situación antes del cambio:** el carrito estaba completo, pero el botón de compra estaba deshabilitado y no existía servicio transaccional ni confirmación de pedido.
+
+### Archivos creados
+
+- `service/PedidoService.java` y `PedidoServiceImpl.java`.
+- `controller/PedidoController.java`.
+- `templates/pedidos/detalle.html`.
+- `PedidoTransaccionTests.java`.
+- `PedidoWebTests.java`.
+
+### Archivos modificados
+
+- `ProductoRepository.java`.
+- `PedidoRepository.java`.
+- `application.properties` principal y de prueba.
+- `templates/carrito/ver.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Finalización completa dentro de un método `@Transactional` en la capa Service.
+- Cliente obtenido desde el correo autenticado.
+- Validación integral del carrito antes de crear registros.
+- Productos consultados nuevamente con bloqueo de escritura durante la transacción.
+- Validación de cantidades y existencias actuales.
+- Precio unitario recuperado desde BD y conservado en `DetallePedido`.
+- Subtotal de línea, subtotal del pedido, impuesto y total calculados en servidor con redondeo a dos decimales.
+- Creación de `Pedido` en estado PENDIENTE y sus `DetallePedido`.
+- Descuento de stock dentro de la misma transacción.
+- El carrito se vacía únicamente después de que el servicio retorna con éxito.
+- Vista de confirmación/detalle y verificación de pertenencia en servidor.
+- Un cliente no puede obtener un pedido ajeno cambiando el ID de la URL.
+
+### Supuesto tributario centralizado
+
+Se configuró `tienda.impuesto.tasa=0.13`. La fuente oficial consultada fue [Tarifas del Impuesto sobre el Valor Agregado — Ministerio de Hacienda de Costa Rica](https://www.hacienda.go.cr/docs/TarifasdelIVA.pdf), consultada el 18 de agosto de 2026, que identifica el 13% como tarifa general.
+
+Este proyecto académico aplica esa tarifa general a los productos del catálogo. Bienes exentos o con tarifa reducida requieren validación fiscal antes de un uso comercial real.
+
+### Temas del curso relacionados
+
+- Transacciones Spring, JPA/Hibernate, relaciones, carrito, Service, inventario, persistencia, seguridad, Thymeleaf y reglas de negocio.
+
+### Explicación sencilla
+
+Antes de guardar, el servicio bloquea y revisa todos los productos. Si cualquiera falla, lanza una excepción y la transacción no crea pedido, detalles ni descuentos parciales. Si todo es válido, guarda la cabecera, las líneas con el precio de ese momento y reduce el stock. El controlador elimina el carrito de sesión solamente tras recibir el pedido creado.
+
+### Pruebas ejecutadas y resultados
+
+1. Compra exitosa con dos productos: **PASA**.
+2. Pedido en estado PENDIENTE y dos detalles creados: **PASA**.
+3. Precio histórico guardado: **PASA**.
+4. Subtotal `₡25.000,00`, IVA `₡3.250,00`, total `₡28.250,00`: **PASA**.
+5. Inventario descontado exactamente: **PASA**.
+6. Stock insuficiente: **RECHAZADO / PASA**.
+7. Sin pedido ni detalles parciales y stock sin alteración: **PASA**.
+8. Pedido ajeno por ID: **RECHAZADO / PASA**.
+9. Confirmación web vacía carrito solo tras éxito y renderiza detalle: **PASA**.
+10. Suite limpia completa: 37 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar creacion transaccional de pedidos e inventario`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** tabla transaccional real, uso medular de BD, transacciones/rollback, solución real y temáticas del curso.
+- **Pendientes:** historial completo y administración de estados en el siguiente bloque; validación tributaria comercial; publicación remota.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -603,15 +675,15 @@ La sesión conserva únicamente identificadores y cantidades. Cada vez que se mu
 
 - [ ] Carrito: agregar, incrementar, reducir, eliminar y vaciar. Aprobado localmente; pendiente push.
 - [ ] Validar existencias, cantidades y precios en servidor. Aprobado localmente; pendiente push.
-- [ ] Crear Pedido y DetallePedido.
-- [ ] Transacción y rollback.
-- [ ] Descontar inventario.
-- [ ] Calcular subtotal, impuesto y total.
+- [ ] Crear Pedido y DetallePedido. Implementado y probado localmente; pendiente push.
+- [ ] Transacción y rollback. Aprobado sin registros parciales localmente; pendiente push.
+- [ ] Descontar inventario. Implementado y probado localmente; pendiente push.
+- [ ] Calcular subtotal, impuesto y total. Implementado y probado localmente; pendiente push.
 - [ ] Historial cliente.
 - [ ] Gestión de estados.
-- [ ] Prueba compra exitosa.
-- [ ] Prueba stock insuficiente.
-- [ ] Prueba rollback.
+- [ ] Prueba compra exitosa. Aprobada localmente; pendiente push.
+- [ ] Prueba stock insuficiente. Aprobada localmente; pendiente push.
+- [ ] Prueba rollback. Aprobada sin registros parciales localmente; pendiente push.
 
 ### Prioridad 4 — Internacionalización e investigación
 
