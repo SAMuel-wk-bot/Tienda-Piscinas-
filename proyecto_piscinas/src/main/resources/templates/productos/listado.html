@@ -64,6 +64,13 @@
                                   th:text="${prod.stock + ' disponibles'}">Disponible</span>
                             <span th:if="${prod.stock == 0}" class="badge text-bg-secondary">Agotado</span>
                         </p>
+                        <form sec:authorize="hasRole('CLIENTE')" method="post"
+                              th:action="@{/carrito/agregar/{id}(id=${prod.idProducto})}">
+                            <input type="hidden" name="cantidad" value="1"/>
+                            <button class="btn btn-primary w-100" type="submit" th:disabled="${prod.stock == 0}">
+                                Agregar al carrito
+                            </button>
+                        </form>
                         <a sec:authorize="isAnonymous()" class="btn btn-outline-primary" th:href="@{/login}">
                             Ingrese para comprar
                         </a>

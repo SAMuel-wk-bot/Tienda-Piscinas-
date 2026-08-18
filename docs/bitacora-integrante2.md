@@ -486,12 +486,72 @@ El formulario del cliente solo contiene los datos que le corresponde decidir. Al
 7. Vistas administrativas de servicios y solicitudes: **200 / PASA**.
 8. Suite limpia completa: 28 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar gestion de servicios y solicitudes`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Implementar gestion de servicios y solicitudes`.
+- **Hash del commit:** `a1942325a41a006fcd7db9312f54b44c32187ab2`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** almacenamiento transaccional, uso efectivo de BD, autenticación/roles, temáticas del curso y solución para un cliente potencial.
 - **Pendientes:** cancelar solicitud por su propio cliente si se define como necesario, internacionalizar estados y publicar remotamente.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 7 — Carrito de compras basado en sesión
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** implementar el carrito por sesión visto en el curso, validando productos, cantidades, existencias y precios exclusivamente en el servidor.
+- **Situación antes del cambio:** la navegación mencionaba el carrito, pero no existían modelo de sesión, servicio, controlador, vista ni operaciones.
+
+### Archivos creados
+
+- `domain/CarritoSesion.java`.
+- `domain/ItemCarrito.java`.
+- `domain/ResumenCarrito.java`.
+- `service/CarritoService.java` y `CarritoServiceImpl.java`.
+- `controller/CarritoController.java`.
+- `templates/carrito/ver.html`.
+- `CarritoTests.java`.
+- `CarritoWebTests.java`.
+
+### Archivos modificados
+
+- `templates/productos/listado.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Carrito almacenado como atributo de sesión con mapa `idProducto -> cantidad`.
+- Agregar, aumentar, reducir, eliminar y vaciar mediante operaciones POST con CSRF.
+- Validación de producto existente, cantidad mayor a cero y cantidad acumulada no superior al stock.
+- El carrito no almacena ni recibe precios del navegador; reconstruye cada resumen desde la base de datos.
+- Subtotales por línea, cantidad total de unidades y subtotal general calculados en servidor.
+- Detección de cambios de stock posteriores a la adición.
+- Productos eliminados de la base se retiran de forma segura del resumen de sesión.
+- Catálogo con botón real de agregar únicamente para CLIENTE y deshabilitado cuando no hay stock.
+- Vista responsiva con controles de cantidad, estado de inventario, lista vacía y mensajes.
+
+### Temas del curso relacionados
+
+- Variables de sesión HTTP, carrito de compras, MVC, Service, JPA, Thymeleaf, formularios POST, CSRF, Bootstrap y validaciones de negocio.
+
+### Explicación sencilla
+
+La sesión conserva únicamente identificadores y cantidades. Cada vez que se muestra o cambia el carrito, el servicio consulta el producto real. De esta manera, un usuario no puede enviar un precio falso desde HTML, agregar cantidades negativas ni superar las existencias conocidas.
+
+### Pruebas ejecutadas y resultados
+
+1. Adición y subtotal con precio de BD: **PASA**.
+2. Cantidad cero o mayor al stock: **RECHAZADA / PASA**.
+3. Aumentar, reducir, eliminar y vaciar: **PASA**.
+4. Cambio de stock posterior detectado: **PASA**.
+5. Petición web incluye `precio=0.01`, pero el subtotal conserva `₡7.250,00` de BD: **PASA**.
+6. Vista del carrito renderizada para CLIENTE: **200 / PASA**.
+7. Suite limpia completa: 33 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar carrito de compras basado en sesion`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** carrito de compras como temática del curso, autenticación por rol, diseño y base para la transacción real de pedido.
+- **Pendientes:** habilitar finalizar compra en el siguiente bloque, mostrar contador global y publicar remotamente.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -541,8 +601,8 @@ El formulario del cliente solo contiene los datos que le corresponde decidir. Al
 
 ### Prioridad 3 — Transacciones
 
-- [ ] Carrito: agregar, incrementar, reducir, eliminar y vaciar.
-- [ ] Validar existencias, cantidades y precios en servidor.
+- [ ] Carrito: agregar, incrementar, reducir, eliminar y vaciar. Aprobado localmente; pendiente push.
+- [ ] Validar existencias, cantidades y precios en servidor. Aprobado localmente; pendiente push.
 - [ ] Crear Pedido y DetallePedido.
 - [ ] Transacción y rollback.
 - [ ] Descontar inventario.
