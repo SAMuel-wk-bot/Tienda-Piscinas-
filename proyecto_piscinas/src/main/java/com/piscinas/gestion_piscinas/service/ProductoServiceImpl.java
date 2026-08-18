@@ -30,6 +30,25 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
+    public List<Producto> buscarProductos(String nombre, Long idCategoria,
+            boolean soloDisponibles) {
+        String nombreNormalizado = nombre == null || nombre.isBlank()
+                ? null : nombre.trim();
+
+        if (nombreNormalizado != null && idCategoria == null && !soloDisponibles) {
+            return productoRepository
+                    .findByNombreProductoContainingIgnoreCaseOrderByNombreProductoAsc(
+                            nombreNormalizado);
+        }
+        if (nombreNormalizado == null && idCategoria != null && !soloDisponibles) {
+            return productoRepository
+                    .findByCategoriaIdCategoriaOrderByNombreProductoAsc(idCategoria);
+        }
+        return productoRepository.buscarConFiltros(
+                nombreNormalizado, idCategoria, soloDisponibles);
+    }
+
+    @Override
     @Transactional
     public Producto guardarProducto(Producto producto) {
         Long idCategoria = producto.getCategoria() == null

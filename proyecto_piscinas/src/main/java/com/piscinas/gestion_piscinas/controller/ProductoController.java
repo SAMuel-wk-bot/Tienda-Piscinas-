@@ -6,6 +6,7 @@ import com.piscinas.gestion_piscinas.service.ProductoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -22,10 +23,18 @@ public class ProductoController {
     }
 
     @GetMapping
-    public String listarProductos(Model model) {
+    public String listarProductos(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) Long categoria,
+            @RequestParam(defaultValue = "false") boolean disponibles,
+            Model model) {
         model.addAttribute("titulo", "Catálogo de productos");
-        model.addAttribute("listaProductos", productoService.listarProductos());
+        model.addAttribute("listaProductos",
+                productoService.buscarProductos(nombre, categoria, disponibles));
         model.addAttribute("listaCategorias", categoriaService.listarCategorias());
+        model.addAttribute("nombreBuscado", nombre);
+        model.addAttribute("categoriaSeleccionada", categoria);
+        model.addAttribute("soloDisponibles", disponibles);
         return "productos/listado";
     }
 }

@@ -360,12 +360,69 @@ El controlador recibe y valida el formulario. El servicio aplica las reglas del 
 7. Formularios inválidos devuelven errores de campo: **PASA**.
 8. Suite limpia completa: 18 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar CRUD de categorias y productos con validaciones`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Completar CRUD de categorias y productos con validaciones`.
+- **Hash del commit:** `4890e386668990c7be830ad0fd2a16fe9094d9d3`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** uso medular de BD, temáticas del curso, autenticación/roles y diseño final.
 - **Pendientes:** búsquedas/filtros JPQL, botones funcionales del carrito y publicación remota.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 5 — Búsquedas, filtros y consulta JPQL
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** agregar búsquedas útiles al catálogo y dejar evidencia diferenciada de consultas derivadas de Spring Data y una consulta JPQL explícita.
+- **Situación antes del cambio:** el catálogo mostraba todos los productos, pero no permitía buscar por nombre, filtrar por categoría ni ocultar agotados.
+
+### Archivos creados
+
+- `src/test/java/com/piscinas/gestion_piscinas/BusquedaProductoTests.java`.
+
+### Archivos modificados
+
+- `src/main/java/com/piscinas/gestion_piscinas/repository/ProductoRepository.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/service/ProductoService.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/service/ProductoServiceImpl.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/controller/ProductoController.java`.
+- `src/main/resources/templates/productos/listado.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Búsqueda de productos por parte del nombre, sin distinguir mayúsculas/minúsculas.
+- Filtro por categoría.
+- Opción para mostrar solamente productos con stock mayor a cero.
+- Combinación de nombre, categoría y disponibilidad desde un único formulario GET.
+- Conservación visual de los filtros seleccionados.
+- Botón para limpiar filtros.
+
+### Consultas que evidencian el tema
+
+- **Consulta derivada por nombre:** `findByNombreProductoContainingIgnoreCaseOrderByNombreProductoAsc`.
+- **Consulta derivada por categoría:** `findByCategoriaIdCategoriaOrderByNombreProductoAsc`.
+- **JPQL:** `ProductoRepository.buscarConFiltros`, con parámetros opcionales para nombre, categoría y productos disponibles, más ordenamiento alfabético.
+
+### Temas del curso relacionados
+
+- Spring Data JPA, consultas derivadas, JPQL, Repository, Service, MVC, formularios GET, Thymeleaf y Bootstrap.
+
+### Explicación sencilla
+
+El controlador recibe los filtros y los entrega al servicio. Cuando solo se busca por nombre o por categoría, el servicio usa métodos derivados. Cuando hay que combinar condiciones, utiliza una consulta JPQL pequeña que activa cada condición únicamente si el usuario la seleccionó.
+
+### Pruebas ejecutadas y resultados
+
+1. Búsqueda `cloro` devuelve dos coincidencias en orden alfabético mediante consulta derivada: **PASA**.
+2. Filtro por categoría devuelve únicamente el producto relacionado mediante consulta derivada: **PASA**.
+3. Filtro combinado JPQL devuelve el cloro disponible y excluye el agotado: **PASA**.
+4. Suite limpia completa: 21 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar busquedas y filtros con consultas JPA y JPQL`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** uso efectivo de BD, temáticas del curso y diseño/experiencia del catálogo.
+- **Pendientes:** filtros administrativos de pedidos y solicitudes cuando esos módulos estén completos; publicación remota.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -404,9 +461,9 @@ El controlador recibe y valida el formulario. El servicio aplica las reglas del 
 - [ ] Validaciones. Implementadas y probadas localmente; pendiente push.
 - [ ] Servicios.
 - [ ] Solicitudes.
-- [ ] Búsqueda.
-- [ ] Filtros.
-- [ ] JPQL/consultas.
+- [ ] Búsqueda. Implementada y probada localmente; pendiente push.
+- [ ] Filtros. Implementados y probados localmente; pendiente push.
+- [ ] JPQL/consultas. Consulta JPQL y derivadas aprobadas localmente; pendiente push.
 - [x] Separación Controller/Service/Repository existente parcialmente.
 - [ ] Separación Controller/Service/Repository completa.
 - [ ] 403.
