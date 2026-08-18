@@ -681,12 +681,66 @@ El controlador nunca acepta como verdad la identidad enviada por el navegador. P
 7. Vistas web de historial de cliente y administración: **200 / PASA**.
 8. Suite limpia completa: 41 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar historial de pedidos y gestion administrativa de estados`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Agregar historial de pedidos y gestion administrativa de estados`.
+- **Hash del commit:** `2c5dfc4e0c329aee55a8d51ec33db3aadeda877d`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** autenticación y roles, base de datos medular, transacciones reales, seguridad de acciones, diseño usable y temática Spring MVC/JPA.
 - **Pendientes:** crear el commit, publicar cuando la cuenta tenga permiso y documentar en el bloque de errores la experiencia ante accesos o recursos inválidos.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 10 — Manejo de errores y páginas de estado
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** ofrecer respuestas comprensibles y coherentes para acceso denegado, recursos inexistentes y errores inesperados, sin introducir una arquitectura de excepciones innecesaria.
+- **Situación antes del cambio:** existía una página 403 básica, pero no había páginas 404/500, prueba explícita del recurso inexistente ni verificación del despacho de acceso denegado.
+
+### Archivos creados
+
+- `templates/error/404.html`.
+- `templates/error/500.html`.
+- `ManejoErroresTests.java`.
+
+### Archivos modificados
+
+- `controller/InicioController.java`.
+- `application.properties`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Página personalizada 403 para acciones sin permiso.
+- Página personalizada 404 para rutas o recursos inexistentes.
+- Página personalizada 500 para errores inesperados.
+- Desactivación de la página blanca genérica mediante `server.error.whitelabel.enabled=false`.
+- Accesos de demostración a las vistas de error para comprobar su presentación.
+- Conservación de los mensajes de negocio ya controlados para producto inexistente, categoría asociada, stock insuficiente y pedido ajeno.
+- Uso del resolvedor de errores de Spring Boot y plantillas Thymeleaf, como alternativa mínima compatible con la estructura del curso.
+
+### Temas del curso relacionados
+
+- Spring MVC, Spring Security, controladores, Thymeleaf, fragmentos, Bootstrap y pruebas MockMvc.
+
+### Explicación sencilla
+
+Spring Boot selecciona automáticamente una plantilla según el código HTTP. La aplicación aporta las páginas `403`, `404` y `500` con navegación segura para que el usuario no vea la pantalla genérica. Los errores esperados de negocio siguen convirtiéndose en mensajes específicos en sus controladores, sin mostrar detalles internos.
+
+### Pruebas ejecutadas y resultados
+
+1. CLIENTE abre `/administracion`: **403 / PASA**.
+2. El despacho de seguridad utiliza `/error/403`: **PASA**.
+3. Usuario autenticado abre una ruta inexistente: **404 / PASA**.
+4. Página 403 renderiza mensaje comprensible: **PASA**.
+5. Página 404 renderiza mensaje y navegación: **PASA**.
+6. Página 500 renderiza mensaje seguro: **PASA**.
+7. Suite limpia completa: 44 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar manejo de errores y paginas de estado`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** diseño final, seguridad, solución usable, pruebas y temáticas Spring MVC/Thymeleaf.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto e internacionalizar los textos de error.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -730,9 +784,9 @@ El controlador nunca acepta como verdad la identidad enviada por el navegador. P
 - [ ] JPQL/consultas. Consulta JPQL y derivadas aprobadas localmente; pendiente push.
 - [x] Separación Controller/Service/Repository existente parcialmente.
 - [ ] Separación Controller/Service/Repository completa.
-- [ ] 403.
-- [ ] 404.
-- [ ] 500.
+- [ ] 403. Página y prueba aprobadas localmente; pendiente push.
+- [ ] 404. Página y prueba aprobadas localmente; pendiente push.
+- [ ] 500. Página y renderizado aprobados localmente; pendiente push.
 
 ### Prioridad 3 — Transacciones
 
