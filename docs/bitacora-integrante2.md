@@ -1003,13 +1003,63 @@ Cada integrante define su propia conexión MySQL en variables de entorno. La apl
 9. Conexión de solo lectura a MySQL 8.4 local sin contraseña: **NO EJECUTADA CON ÉXITO**; el servidor respondió `Access denied for user 'root'@'localhost'`. No se intentó adivinar ni solicitar una clave personal.
 10. Ejecución destructiva del script sobre `gestion_piscinas`: **PENDIENTE**; no se sobrescribió una base local potencialmente perteneciente al equipo sin una copia o instancia aislada autorizada.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Actualizar configuracion MySQL y script de base de datos`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Actualizar configuracion MySQL y script de base de datos`.
+- **Hash del commit:** `28b00da6ba9c9065457ef37a363cfc032084adac`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** almacenamiento — 10%, uso efectivo de base de datos — 10%, autenticación, solución reproducible y GitHub.
-- **Pendientes:** crear commit, publicar cuando exista permiso remoto y ejecutar el script en una instancia MySQL limpia o respaldada con una credencial proporcionada por el equipo.
-- **Estado del bloque:** **HECHO Y PROBADO ESTÁTICAMENTE / PENDIENTE COMMIT, PUSH Y PRUEBA MYSQL LIMPIA**.
+- **Pendientes:** publicar cuando exista permiso remoto y ejecutar el script en una instancia MySQL limpia o respaldada con una credencial proporcionada por el equipo.
+- **Estado del bloque:** **HECHO, PROBADO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH Y PRUEBA MYSQL LIMPIA**.
+
+## Bloque 15 — README definitivo e instalación
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** reemplazar el README mínimo por una guía verificable de instalación, arquitectura, módulos, roles, demostración, pruebas y contribuciones.
+- **Situación antes del cambio:** `README.md` tenía únicamente un título con error tipográfico y una línea que indicaba que era un proyecto de programación web; no permitía instalar, ejecutar ni defender el sistema.
+
+### Archivos modificados
+
+- `README.md`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad documentada
+
+- Descripción de la necesidad y alcance académico.
+- Tecnologías y versiones leídas del proyecto.
+- Diagrama sencillo `Thymeleaf ↔ Controller → Service → Repository → MySQL`.
+- Explicación de autenticación, roles, CRUD, filtros JPQL, servicios, solicitudes, carrito, pedidos, inventario, cotizador e internacionalización.
+- Inventario y finalidad de las 13 tablas.
+- Requisitos, script oficial y advertencia destructiva.
+- Variables de entorno e instrucciones PowerShell.
+- Usuarios ficticios de demostración.
+- Permisos de invitado, CLIENTE y ADMINISTRADOR.
+- Procedimiento para demostrar español/inglés.
+- Alcance de las 60 pruebas y resultados reales.
+- Separación de aportes existentes del equipo y del Integrante 2 sin reasignar autoría.
+- Pendientes reales: MySQL limpio, QA visual, evidencia humana y permisos GitHub.
+
+### Temas del curso relacionados
+
+- Documentación técnica, MVC, Spring Boot, Thymeleaf, JPA, MySQL, Spring Security, Bootstrap, pruebas e internacionalización.
+
+### Explicación sencilla
+
+Una persona que recibe el repositorio puede identificar qué hace la aplicación, configurar su propia conexión, crear la base, ejecutar pruebas, iniciar el servidor y recorrer cada rol sin depender de información externa no documentada.
+
+### Pruebas ejecutadas y resultados
+
+1. Seis enlaces Markdown internos del README apuntan a archivos existentes: **PASA**.
+2. Encabezados y estructura Markdown revisados: **PASA**.
+3. `git diff --check`: **PASA**, sin errores de espacios.
+4. Suite limpia completa posterior a la documentación: 60 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar README y documentacion de instalacion`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** presentación y defensa — 10%, uso colaborativo de GitHub, solución real y reproducibilidad.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto y enlazar desde el README los documentos de rúbrica/usabilidad cuando se creen.
+- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
 
@@ -1085,7 +1135,7 @@ Cada integrante define su propia conexión MySQL en variables de entorno. La apl
 
 - [ ] MySQL mediante variables de entorno. Implementado y probado estáticamente; pendiente push y conexión con credencial local real.
 - [ ] Script/respaldo reproducible. Script único de 13 tablas validado estáticamente; pendiente ejecución en instancia MySQL limpia y push.
-- [ ] Guía de instalación y README.
+- [ ] Guía de instalación y README. Completos, enlaces verificados y suite aprobada localmente; pendiente push.
 - [ ] Usuarios demo. Incorporados al SQL con BCrypt y hashes validados; pendiente push.
 - [ ] Evidencia real/mercado preparada.
 - [ ] Pruebas de usabilidad preparadas.
