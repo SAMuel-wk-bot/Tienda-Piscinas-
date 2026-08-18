@@ -80,4 +80,14 @@ class InternacionalizacionTests {
                 .andExpect(content().string(org.hamcrest.Matchers.containsString(
                         "Cart emptied successfully.")));
     }
+
+    @Test
+    void errorDeNegocioDelCarritoSeTraduceAlIngles() throws Exception {
+        mockMvc.perform(get("/carrito?lang=en")
+                .with(user("cliente@tiendapiscinas.test").roles("CLIENTE"))
+                .flashAttr("error", "business.cart.stockExceeded"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                        "The requested quantity exceeds the available stock.")));
+    }
 }

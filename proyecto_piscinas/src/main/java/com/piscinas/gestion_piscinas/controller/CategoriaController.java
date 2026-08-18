@@ -39,7 +39,7 @@ public class CategoriaController {
             RedirectAttributes mensajes) {
         Categoria categoria = categoriaService.obtenerCategoriaPorId(id);
         if (categoria == null) {
-            mensajes.addFlashAttribute("error", "La categoría solicitada no existe.");
+            mensajes.addFlashAttribute("error", "business.category.notFound");
             return "redirect:/administracion/categorias";
         }
         model.addAttribute("categoria", categoria);
@@ -57,7 +57,7 @@ public class CategoriaController {
             mensajes.addFlashAttribute("exito", "message.category.saved");
             return "redirect:/administracion/categorias";
         } catch (IllegalArgumentException ex) {
-            resultado.rejectValue("nombreCategoria", "categoria.invalida", ex.getMessage());
+            resultado.rejectValue("nombreCategoria", ex.getMessage());
             return "categorias/formulario";
         }
     }

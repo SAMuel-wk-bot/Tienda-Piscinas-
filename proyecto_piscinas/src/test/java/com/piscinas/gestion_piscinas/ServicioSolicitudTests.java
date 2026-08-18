@@ -47,7 +47,7 @@ class ServicioSolicitudTests {
 
         assertThatThrownBy(() -> solicitudService.crearSolicitud(formulario, CORREO_CLIENTE))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("no está activo");
+                .hasMessage("business.request.serviceUnavailable");
     }
 
     @Test
@@ -72,7 +72,7 @@ class ServicioSolicitudTests {
 
         assertThatThrownBy(() -> servicioService.eliminarServicio(servicio.getIdServicio()))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("solicitudes asociadas");
+                .hasMessage("business.service.associated");
     }
 
     private Servicio guardarServicio(String nombre, boolean activo) {

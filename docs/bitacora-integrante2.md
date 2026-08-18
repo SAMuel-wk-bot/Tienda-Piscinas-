@@ -1108,13 +1108,66 @@ La matriz permite mostrar dónde vive cada criterio y cómo comprobarlo. Los pro
 5. `git diff --check`: **PASA**.
 6. Suite limpia completa: 60 pruebas, 0 fallos, 0 errores, 0 omitidas, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Preparar matriz de rubrica y guion de defensa`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Preparar matriz de rubrica y guion de defensa`.
+- **Hash del commit:** `fd3eb38de646e7d81ad95a00ec47f02dc86811d7`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** uso colaborativo de GitHub — 10%, solución real — 10%, presentación y defensa — 10%, investigación adicional — 7%.
-- **Pendientes:** crear commit, publicar, ejecutar entrevista/usabilidad reales, maquetar artículo en la plantilla solicitada y ensayar la defensa con ambos integrantes.
-- **Estado del bloque:** **MATERIAL PREPARADO Y VERIFICADO LOCALMENTE / EVIDENCIA HUMANA, COMMIT Y PUSH PENDIENTES**.
+- **Pendientes:** publicar, ejecutar entrevista/usabilidad reales, maquetar artículo en la plantilla solicitada y ensayar la defensa con ambos integrantes.
+- **Estado del bloque:** **MATERIAL PREPARADO Y CONFIRMADO LOCALMENTE / EVIDENCIA HUMANA Y PUSH PENDIENTES**.
+
+## Bloque 17 — Revisión final de calidad y pruebas complementarias
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** cerrar huecos concretos detectados en la revisión final sin realizar refactors amplios: logout no probado, menú por rol no probado y errores de negocio no internacionalizados.
+- **Situación antes del cambio:** login, autorización y logout estaban configurados, pero MockMvc no comprobaba la salida ni la visibilidad de menús. Las páginas, validaciones y confirmaciones tenían traducción, mientras varios errores de carrito, CRUD, solicitudes y pedidos llegaban como texto fijo en español.
+
+### Archivos modificados
+
+- Servicios de carrito, categorías, productos, servicios, solicitudes, pedidos y usuarios.
+- Controladores de categorías, productos, servicios y solicitud de cliente.
+- Vistas administrativas, carrito e historial que muestran errores.
+- `messages_es.properties` y `messages_en.properties`.
+- Pruebas de seguridad, i18n, carrito, CRUD, servicios, pedidos y registro.
+- `README.md`, matriz, borrador IEEE, guion y bitácora.
+
+### Funcionalidad implementada
+
+- Errores de negocio representados por claves `business.*` estables desde la capa Service.
+- Resolución de esas claves por Thymeleaf en español o inglés.
+- 24 mensajes de negocio equivalentes en ambos idiomas.
+- Corrección de errores de categoría, producto, servicio, carrito, solicitud, pedido, estado y usuario.
+- Prueba explícita de logout POST, redirección e invalidación de autenticación.
+- Prueba de menú CLIENTE: muestra carrito y oculta administración.
+- Prueba de menú ADMINISTRADOR: muestra administración y oculta carrito.
+- Prueba de error de stock mostrado en inglés.
+- Conservación de tipos `IllegalArgumentException` e `IllegalStateException`, sin crear una jerarquía de excepciones innecesaria.
+
+### Temas del curso relacionados
+
+- Spring Security, logout, MockMvc, Thymeleaf Security, internacionalización, archivos `messages`, Service y manejo de errores.
+
+### Explicación sencilla
+
+La capa Service entrega una clave en vez de una frase fija. La vista consulta esa clave en el archivo del idioma activo. La regla de negocio y el tipo de excepción no cambian, pero el usuario recibe el mensaje correcto según su locale.
+
+### Pruebas ejecutadas y resultados
+
+1. Logout invalida autenticación y redirige a `/?logout`: **PASA**.
+2. CLIENTE ve carrito y no ve enlace administrativo: **PASA**.
+3. ADMINISTRADOR ve administración y no ve enlace de carrito: **PASA**.
+4. Error de stock se muestra en inglés: **PASA**.
+5. Paridad de archivos de mensajes: 303 claves ES y 303 claves EN, sin diferencias: **PASA**.
+6. Todas las claves `business.*` usadas existen en ambos archivos: **PASA**.
+7. Suite limpia completa: 64 pruebas, 0 fallos, 0 errores, 0 omitidas, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar pruebas finales de seguridad e internacionalizacion`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** autenticación y roles — 10%, internacionalización — 8%, calidad, pruebas y defensa.
+- **Pendientes:** crear commit, publicar y completar las validaciones externas (MySQL limpio, QA visual y evidencia humana).
+- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
 
@@ -1123,11 +1176,11 @@ La matriz permite mostrar dónde vive cada criterio y cómo comprobarlo. Los pro
 - [ ] Integrar Spring Security. Implementado y probado localmente; pendiente push.
 - [ ] Implementar registro. Implementado y probado localmente; pendiente push.
 - [ ] Implementar inicio de sesión. Implementado y probado con MockMvc localmente; pendiente push.
-- [ ] Implementar cierre de sesión. Implementado localmente; pendiente prueba MockMvc de logout y push.
+- [ ] Implementar cierre de sesión. Implementado y aprobado con MockMvc localmente; pendiente push.
 - [ ] Usar BCrypt. Implementado y probado localmente; pendiente push.
 - [ ] Crear rol ADMINISTRADOR. Implementado y probado localmente; pendiente push.
 - [ ] Crear rol CLIENTE. Implementado y probado localmente; pendiente push.
-- [ ] Restringir menú. Implementado localmente; pendiente prueba de vista y push.
+- [ ] Restringir menú. CLIENTE/ADMINISTRADOR aprobados con MockMvc localmente; pendiente push.
 - [ ] Restringir rutas. Implementado y probado con MockMvc localmente; pendiente push.
 - [ ] Restringir acciones. Implementado localmente; pendiente completar los CRUD y push.
 - [ ] Administración solo ADMINISTRADOR. Implementado y probado con MockMvc localmente; pendiente push.

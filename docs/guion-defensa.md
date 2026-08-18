@@ -124,7 +124,7 @@ Prueba MySQL limpia, QA visual manual, usabilidad y cliente reales, push/PR y re
 
 - [ ] Base MySQL de demostración lista.
 - [ ] Aplicación inicia sin errores.
-- [ ] 60 o más pruebas aprobadas con resultado actual.
+- [ ] 64 o más pruebas aprobadas con resultado actual.
 - [ ] Invitado, CLIENTE y ADMINISTRADOR comprobados.
 - [ ] Stock inicial conocido.
 - [ ] Selector de idioma comprobado.

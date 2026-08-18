@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -75,5 +77,36 @@ class SeguridadAccesoTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"))
                 .andExpect(authenticated().withUsername("cliente@tiendapiscinas.test"));
+    }
+
+    @Test
+    void logoutInvalidaAutenticacionYRedirigeAlInicio() throws Exception {
+        mockMvc.perform(post("/logout")
+                .with(user("cliente@tiendapiscinas.test").roles("CLIENTE"))
+                .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/?logout"))
+                .andExpect(unauthenticated());
+    }
+
+    @Test
+    void menuClienteOcultaAdministracionYMuestraCarrito() throws Exception {
+        mockMvc.perform(get("/")
+                .with(user("cliente@tiendapiscinas.test").roles("CLIENTE")))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("/carrito")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(
+                        org.hamcrest.Matchers.containsString("/administracion"))));
+    }
+
+    @Test
+    void menuAdministradorMuestraAdministracionYOcultaCarrito() throws Exception {
+        mockMvc.perform(get("/")
+                .with(user("admin@tiendapiscinas.test").roles("ADMINISTRADOR")))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString(
+                        "/administracion")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(
+                        org.hamcrest.Matchers.containsString("/carrito"))));
     }
 }

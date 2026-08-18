@@ -10,7 +10,7 @@
 
 ## Resumen
 
-Este trabajo presenta una aplicación web académica que integra catálogo, inventario, autenticación por roles, solicitudes de servicio, carrito por sesión y pedidos transaccionales para el dominio de piscinas. La solución utiliza Spring Boot, Spring MVC, Thymeleaf, JPA/Hibernate, MySQL, Bootstrap y Spring Security, siguiendo la arquitectura estudiada durante el curso. El flujo de compra valida cantidades y precios en el servidor, conserva el precio unitario en el detalle, descuenta inventario y utiliza rollback ante stock insuficiente. Además, incluye internacionalización español/inglés y un cotizador orientativo que calcula el volumen de piscinas rectangulares y relaciona la necesidad indicada con servicios activos. La evaluación automatizada local comprende 60 pruebas aprobadas; la validación con MySQL limpio, la usabilidad con participantes y la evidencia de cliente permanecen pendientes y no se sustituyen por resultados simulados.
+Este trabajo presenta una aplicación web académica que integra catálogo, inventario, autenticación por roles, solicitudes de servicio, carrito por sesión y pedidos transaccionales para el dominio de piscinas. La solución utiliza Spring Boot, Spring MVC, Thymeleaf, JPA/Hibernate, MySQL, Bootstrap y Spring Security, siguiendo la arquitectura estudiada durante el curso. El flujo de compra valida cantidades y precios en el servidor, conserva el precio unitario en el detalle, descuenta inventario y utiliza rollback ante stock insuficiente. Además, incluye internacionalización español/inglés y un cotizador orientativo que calcula el volumen de piscinas rectangulares y relaciona la necesidad indicada con servicios activos. La evaluación automatizada local comprende 64 pruebas aprobadas; la validación con MySQL limpio, la usabilidad con participantes y la evidencia de cliente permanecen pendientes y no se sustituyen por resultados simulados.
 
 ## Palabras clave
 
@@ -54,7 +54,7 @@ Los factores de precio por volumen y estado son supuestos académicos internos, 
 
 ## VII. Evaluación
 
-La última ejecución local de `mvn clean test` completó 60 pruebas con cero fallos y cero errores. La suite cubre seguridad, registro BCrypt, CRUD, consultas, carrito, pedido exitoso, stock insuficiente, rollback, propiedad de historiales, i18n, páginas de error, diseño, cotizador y configuración SQL.
+La última ejecución local de `mvn clean test` completó 64 pruebas con cero fallos y cero errores. La suite cubre seguridad, registro BCrypt, CRUD, consultas, carrito, pedido exitoso, stock insuficiente, rollback, propiedad de historiales, i18n, páginas de error, diseño, cotizador y configuración SQL.
 
 No se reportan resultados de clientes ni usabilidad porque todavía no se han recopilado con participantes reales. Tampoco se afirma una ejecución completa del script sobre una base MySQL limpia: esa comprobación requiere una instancia respaldada o descartable y una credencial autorizada.
 

@@ -45,11 +45,11 @@ public class PedidoServiceImpl implements PedidoService {
     @Transactional
     public Pedido finalizarCompra(CarritoSesion carrito, String correoUsuario) {
         if (carrito == null || carrito.estaVacio()) {
-            throw new IllegalStateException("El carrito está vacío.");
+            throw new IllegalStateException("business.order.emptyCart");
         }
         Cliente cliente = clienteRepository.findByUsuarioEmailUsuario(correoUsuario)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "No existe un perfil de cliente para el usuario autenticado."));
+                        "business.customer.profileNotFound"));
 
         List<ItemCarrito> lineas = validarYPrepararLineas(carrito);
         BigDecimal subtotal = lineas.stream().map(ItemCarrito::getSubtotal)
@@ -89,7 +89,7 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository
                 .findByIdPedidoAndClienteUsuarioEmailUsuario(idPedido, correoUsuario)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "El pedido no existe o no pertenece al cliente autenticado."));
+                        "business.order.notOwned"));
     }
 
     @Override
@@ -113,14 +113,14 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Pedido obtenerPedidoPorId(Long idPedido) {
         return pedidoRepository.findById(idPedido)
-                .orElseThrow(() -> new IllegalArgumentException("El pedido no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.order.notFound"));
     }
 
     @Override
     @Transactional
     public Pedido actualizarEstado(Long idPedido, EstadoPedido estado) {
         if (estado == null) {
-            throw new IllegalArgumentException("Debe seleccionar un estado.");
+            throw new IllegalArgumentException("business.status.required");
         }
         Pedido pedido = obtenerPedidoPorId(idPedido);
         pedido.setEstado(estado);
@@ -132,15 +132,14 @@ public class PedidoServiceImpl implements PedidoService {
         for (Map.Entry<Long, Integer> entrada : carrito.getCantidades().entrySet()) {
             Integer cantidad = entrada.getValue();
             if (cantidad == null || cantidad <= 0) {
-                throw new IllegalArgumentException("El carrito contiene una cantidad inválida.");
+                throw new IllegalArgumentException("business.order.invalidQuantity");
             }
             Producto producto = productoRepository
                     .buscarPorIdParaActualizar(entrada.getKey())
                     .orElseThrow(() -> new IllegalArgumentException(
-                            "Uno de los productos del carrito ya no existe."));
+                            "business.order.productGone"));
             if (producto.getStock() < cantidad) {
-                throw new IllegalStateException(
-                        "Inventario insuficiente para " + producto.getNombreProducto() + ".");
+                throw new IllegalStateException("business.order.insufficientStock");
             }
             lineas.add(new ItemCarrito(producto, cantidad));
         }

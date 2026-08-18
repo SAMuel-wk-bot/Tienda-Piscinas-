@@ -78,7 +78,7 @@ class PedidoTransaccionTests {
 
         assertThatThrownBy(() -> pedidoService.finalizarCompra(carrito, CORREO_CLIENTE))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("Inventario insuficiente");
+                .hasMessage("business.order.insufficientStock");
 
         assertThat(pedidoRepository.count()).isEqualTo(pedidosAntes);
         assertThat(detalleRepository.count()).isEqualTo(detallesAntes);
@@ -98,7 +98,7 @@ class PedidoTransaccionTests {
         assertThatThrownBy(() -> pedidoService.obtenerPedidoDelCliente(
                 pedido.getIdPedido(), "otro@tiendapiscinas.test"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("no pertenece");
+                .hasMessage("business.order.notOwned");
     }
 
     private Producto guardarProducto(String nombre, String precio, int stock,

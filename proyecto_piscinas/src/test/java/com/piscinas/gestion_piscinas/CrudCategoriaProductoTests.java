@@ -35,7 +35,7 @@ class CrudCategoriaProductoTests {
         assertThatThrownBy(() -> categoriaService.guardarCategoria(
                 new Categoria("limpieza", "Nombre repetido")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("existe");
+                .hasMessage("business.category.duplicate");
     }
 
     @Test
@@ -47,7 +47,7 @@ class CrudCategoriaProductoTests {
 
         assertThatThrownBy(() -> categoriaService.eliminarCategoria(categoria.getIdCategoria()))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("productos asociados");
+                .hasMessage("business.category.associated");
     }
 
     @Test
@@ -78,6 +78,6 @@ class CrudCategoriaProductoTests {
 
         assertThatThrownBy(() -> productoService.guardarProducto(producto))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("categoría");
+                .hasMessage("business.product.categoryNotFound");
     }
 }

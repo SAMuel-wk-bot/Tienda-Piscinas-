@@ -39,7 +39,7 @@ public class ServicioAdministracionController {
             RedirectAttributes mensajes) {
         Servicio servicio = servicioService.obtenerServicioPorId(id);
         if (servicio == null) {
-            mensajes.addFlashAttribute("error", "El servicio solicitado no existe.");
+            mensajes.addFlashAttribute("error", "business.service.notFound");
             return "redirect:/administracion/servicios";
         }
         model.addAttribute("servicio", servicio);
@@ -57,7 +57,7 @@ public class ServicioAdministracionController {
             mensajes.addFlashAttribute("exito", "message.service.saved");
             return "redirect:/administracion/servicios";
         } catch (IllegalArgumentException ex) {
-            resultado.reject("servicio.invalido", ex.getMessage());
+            resultado.reject(ex.getMessage());
             return "servicios/formulario";
         }
     }

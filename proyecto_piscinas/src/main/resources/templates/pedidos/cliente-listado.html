@@ -14,7 +14,7 @@
             <h1 class="h2 mb-0" th:text="#{order.mine}">Mis pedidos</h1>
             <a class="btn btn-primary" th:href="@{/productos}" th:text="#{order.buyProducts}">Comprar productos</a>
         </div>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${#messages.msg(error)}"></div>
         <div class="table-responsive shadow-sm" th:if="${!#lists.isEmpty(pedidos)}">
             <table class="table table-hover bg-white mb-0 align-middle">
                 <thead class="table-primary"><tr><th th:text="#{order.numberHeader}">Número</th><th th:text="#{common.date}">Fecha</th><th th:text="#{common.total}">Total</th><th th:text="#{common.status}">Estado</th><th></th></tr></thead>

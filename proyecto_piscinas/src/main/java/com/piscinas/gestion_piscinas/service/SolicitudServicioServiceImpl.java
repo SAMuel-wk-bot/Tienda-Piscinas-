@@ -32,11 +32,11 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
             String correoUsuario) {
         Cliente cliente = clienteRepository.findByUsuarioEmailUsuario(correoUsuario)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "No existe un perfil de cliente para el usuario autenticado."));
+                        "business.customer.profileNotFound"));
         Servicio servicio = servicioRepository.findById(formulario.getIdServicio())
                 .filter(Servicio::isActivo)
                 .orElseThrow(() -> new IllegalArgumentException(
-                        "El servicio seleccionado no existe o no está activo."));
+                        "business.request.serviceUnavailable"));
 
         SolicitudServicio solicitud = new SolicitudServicio();
         solicitud.setCliente(cliente);
@@ -66,10 +66,10 @@ public class SolicitudServicioServiceImpl implements SolicitudServicioService {
     public SolicitudServicio actualizarEstado(Long idSolicitud,
             EstadoSolicitudServicio estado) {
         if (estado == null) {
-            throw new IllegalArgumentException("Debe seleccionar un estado.");
+            throw new IllegalArgumentException("business.status.required");
         }
         SolicitudServicio solicitud = solicitudRepository.findById(idSolicitud)
-                .orElseThrow(() -> new IllegalArgumentException("La solicitud no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.request.notFound"));
         solicitud.setEstado(estado);
         return solicitudRepository.save(solicitud);
     }

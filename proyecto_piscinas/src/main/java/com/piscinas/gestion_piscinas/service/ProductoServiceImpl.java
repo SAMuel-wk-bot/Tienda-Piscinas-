@@ -54,10 +54,10 @@ public class ProductoServiceImpl implements ProductoService {
         Long idCategoria = producto.getCategoria() == null
                 ? null : producto.getCategoria().getIdCategoria();
         if (idCategoria == null) {
-            throw new IllegalArgumentException("La categoría seleccionada no existe.");
+            throw new IllegalArgumentException("business.product.categoryNotFound");
         }
         Categoria categoria = categoriaRepository.findById(idCategoria)
-                .orElseThrow(() -> new IllegalArgumentException("La categoría seleccionada no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.product.categoryNotFound"));
 
         if (producto.getIdProducto() == null) {
             producto.setNombreProducto(producto.getNombreProducto().trim());
@@ -84,14 +84,13 @@ public class ProductoServiceImpl implements ProductoService {
     public void eliminarProducto(Long id) {
         Producto producto = obtenerProductoObligatorio(id);
         if (detallePedidoRepository.existsByProductoIdProducto(id)) {
-            throw new IllegalStateException(
-                    "No se puede eliminar el producto porque forma parte de un pedido.");
+            throw new IllegalStateException("business.product.associated");
         }
         productoRepository.delete(producto);
     }
 
     private Producto obtenerProductoObligatorio(Long id) {
         return productoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("El producto no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.product.notFound"));
     }
 }

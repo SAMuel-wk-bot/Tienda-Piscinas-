@@ -238,7 +238,7 @@ Comando principal:
 mvn clean test
 ```
 
-La suite actual incluye 60 pruebas y cubre, entre otros:
+La suite actual incluye 64 pruebas y cubre, entre otros:
 
 - persistencia y relaciones;
 - registro BCrypt y correo duplicado;
@@ -254,7 +254,7 @@ La suite actual incluye 60 pruebas y cubre, entre otros:
 - cotizador y validaciones;
 - variables de entorno, conteo de tablas y hashes del SQL.
 
-La última ejecución documentada aprobó las 60 pruebas con 0 fallos y 0 errores. La ejecución sobre una base MySQL limpia debe repetirse en el equipo de entrega con una instancia respaldada o descartable.
+La última ejecución documentada aprobó las 64 pruebas con 0 fallos y 0 errores. La ejecución sobre una base MySQL limpia debe repetirse en el equipo de entrega con una instancia respaldada o descartable.
 
 ## Documentación
 

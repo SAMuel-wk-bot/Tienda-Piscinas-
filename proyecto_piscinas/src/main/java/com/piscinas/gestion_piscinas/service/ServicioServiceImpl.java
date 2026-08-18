@@ -56,14 +56,13 @@ public class ServicioServiceImpl implements ServicioService {
     public void eliminarServicio(Long id) {
         Servicio servicio = obtenerObligatorio(id);
         if (solicitudRepository.existsByServicioIdServicio(id)) {
-            throw new IllegalStateException(
-                    "No se puede eliminar el servicio porque tiene solicitudes asociadas; puede desactivarlo.");
+            throw new IllegalStateException("business.service.associated");
         }
         servicioRepository.delete(servicio);
     }
 
     private Servicio obtenerObligatorio(Long id) {
         return servicioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("El servicio no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.service.notFound"));
     }
 }

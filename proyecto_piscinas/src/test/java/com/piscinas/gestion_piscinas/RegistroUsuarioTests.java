@@ -50,7 +50,7 @@ class RegistroUsuarioTests {
 
         assertThatThrownBy(() -> usuarioService.registrarCliente(registro))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("correo");
+                .hasMessage("business.user.emailDuplicate");
         assertThat(usuarioRepository.findAll()).filteredOn(usuario ->
                 usuario.getEmailUsuario().equals(registro.getCorreo())).hasSize(1);
     }

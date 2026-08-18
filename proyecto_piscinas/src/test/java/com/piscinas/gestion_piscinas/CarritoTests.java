@@ -63,7 +63,7 @@ class CarritoTests {
         assertThatThrownBy(() -> carritoService.agregarProducto(
                 producto.getIdProducto(), 4, session))
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessageContaining("existencias");
+                .hasMessage("business.cart.stockExceeded");
         assertThat(carritoService.obtenerResumen(session).isVacio()).isTrue();
     }
 

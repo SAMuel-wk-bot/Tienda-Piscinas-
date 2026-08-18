@@ -44,7 +44,7 @@ public class ProductoAdministracionController {
             RedirectAttributes mensajes) {
         Producto producto = productoService.obtenerProductoPorId(id);
         if (producto == null) {
-            mensajes.addFlashAttribute("error", "El producto solicitado no existe.");
+            mensajes.addFlashAttribute("error", "business.product.notFound");
             return "redirect:/administracion/productos";
         }
         model.addAttribute("producto", producto);
@@ -64,7 +64,7 @@ public class ProductoAdministracionController {
             mensajes.addFlashAttribute("exito", "message.product.saved");
             return "redirect:/administracion/productos";
         } catch (IllegalArgumentException ex) {
-            resultado.rejectValue("categoria", "categoria.invalida", ex.getMessage());
+            resultado.rejectValue("categoria", ex.getMessage());
             cargarCategorias(model);
             return "productos/formulario";
         }

@@ -33,7 +33,7 @@ public class CategoriaServiceImpl implements CategoriaService {
                 : categoriaRepository.existsByNombreCategoriaIgnoreCaseAndIdCategoriaNot(
                         nombre, categoria.getIdCategoria());
         if (nombreDuplicado) {
-            throw new IllegalArgumentException("Ya existe una categoría con ese nombre.");
+            throw new IllegalArgumentException("business.category.duplicate");
         }
 
         if (categoria.getIdCategoria() == null) {
@@ -57,14 +57,13 @@ public class CategoriaServiceImpl implements CategoriaService {
     public void eliminarCategoria(Long id) {
         Categoria categoria = obtenerCategoriaObligatoria(id);
         if (productoRepository.existsByCategoriaIdCategoria(id)) {
-            throw new IllegalStateException(
-                    "No se puede eliminar la categoría porque tiene productos asociados.");
+            throw new IllegalStateException("business.category.associated");
         }
         categoriaRepository.delete(categoria);
     }
 
     private Categoria obtenerCategoriaObligatoria(Long id) {
         return categoriaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("La categoría no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.category.notFound"));
     }
 }

@@ -53,7 +53,7 @@ public class CarritoServiceImpl implements CarritoService {
     @Override
     public void agregarProducto(Long idProducto, int cantidad, HttpSession session) {
         if (cantidad <= 0) {
-            throw new IllegalArgumentException("La cantidad debe ser mayor a cero.");
+            throw new IllegalArgumentException("business.cart.quantityPositive");
         }
         Producto producto = obtenerProducto(idProducto);
         CarritoSesion carrito = obtenerCarrito(session);
@@ -73,7 +73,7 @@ public class CarritoServiceImpl implements CarritoService {
         CarritoSesion carrito = obtenerCarrito(session);
         Integer cantidad = carrito.getCantidades().get(idProducto);
         if (cantidad == null) {
-            throw new IllegalArgumentException("El producto no está en el carrito.");
+            throw new IllegalArgumentException("business.cart.notInCart");
         }
         if (cantidad <= 1) {
             carrito.getCantidades().remove(idProducto);
@@ -94,16 +94,15 @@ public class CarritoServiceImpl implements CarritoService {
 
     private Producto obtenerProducto(Long idProducto) {
         return productoRepository.findById(idProducto)
-                .orElseThrow(() -> new IllegalArgumentException("El producto no existe."));
+                .orElseThrow(() -> new IllegalArgumentException("business.product.notFound"));
     }
 
     private void validarStock(Producto producto, int cantidad) {
         if (producto.getStock() <= 0) {
-            throw new IllegalStateException("El producto está agotado.");
+            throw new IllegalStateException("business.cart.outOfStock");
         }
         if (cantidad > producto.getStock()) {
-            throw new IllegalStateException(
-                    "La cantidad solicitada supera las existencias disponibles.");
+            throw new IllegalStateException("business.cart.stockExceeded");
         }
     }
 }

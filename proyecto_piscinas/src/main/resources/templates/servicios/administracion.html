@@ -15,7 +15,7 @@
             <a class="btn btn-primary" th:href="@{/administracion/servicios/nuevo}" th:text="#{service.new}">Nuevo servicio</a>
         </div>
         <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${#messages.msg(error)}"></div>
         <div class="table-responsive shadow-sm">
             <table class="table table-striped table-hover bg-white mb-0 align-middle">
                 <thead class="table-primary"><tr><th th:text="#{common.service}">Servicio</th><th th:text="#{common.basePrice}">Precio base</th><th th:text="#{common.status}">Estado</th><th th:text="#{common.actions}">Acciones</th></tr></thead>

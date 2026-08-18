@@ -40,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario registrarCliente(RegistroUsuario registro) {
         String correoNormalizado = registro.getCorreo().trim().toLowerCase();
         if (usuarioRepository.existsByEmailUsuarioIgnoreCase(correoNormalizado)) {
-            throw new IllegalArgumentException("Ya existe un usuario con ese correo.");
+            throw new IllegalArgumentException("business.user.emailDuplicate");
         }
 
         Rol rolCliente = rolRepository.findByNombre("CLIENTE")
