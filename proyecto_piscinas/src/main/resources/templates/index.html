@@ -1,317 +1,166 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <title th:text="#{app.brand}">Piscinas Santamaría</title>
-
-    <!-- Bootstrap -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-          rel="stylesheet"/>
-
-    <!-- Estilos propios -->
-    <link th:href="@{/css/estilos.css}"
-          rel="stylesheet"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
 </head>
-
 <body>
-
-    <!-- Fragmento del encabezado -->
     <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
 
     <main>
-
-        <!-- Sección principal -->
-        <section class="bg-primary text-white text-center py-5">
-            <div class="container py-5">
-
-                <h1 class="display-4 fw-bold" th:text="#{home.title}">Todo para el cuidado de su piscina</h1>
-
-                <p class="lead mt-3" th:text="#{home.subtitle}">Productos y servicios para su piscina.</p>
-
-                <a th:href="@{/productos}"
-                   class="btn btn-light btn-lg mt-3" th:text="#{home.products}">
-                    Ver productos
-                </a>
-
-                <a th:href="@{/servicios}"
-                   class="btn btn-outline-light btn-lg mt-3" th:text="#{home.services}">Consultar servicios</a>
-
-            </div>
-        </section>
-
-        <!-- Sección de servicios -->
-        <section id="servicios" class="py-5">
-            <div class="container">
-
-                <div class="text-center mb-5">
-                    <h2 class="fw-bold">Nuestros servicios</h2>
-
-                    <p class="text-muted">
-                        Le ayudamos a mantener su piscina limpia, segura y en excelentes condiciones.
-                    </p>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-md-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body p-4">
-
-                                <h3 class="h5">
-                                    Mantenimiento de piscinas
-                                </h3>
-
-                                <p class="card-text">
-                                    Limpieza, revisión y mantenimiento general para piscinas.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body p-4">
-
-                                <h3 class="h5">
-                                    Productos químicos
-                                </h3>
-
-                                <p class="card-text">
-                                    Cloro, floculante y productos para el tratamiento del agua.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body p-4">
-
-                                <h3 class="h5">
-                                    Accesorios para piscinas
-                                </h3>
-
-                                <p class="card-text">
-                                    Equipos y accesorios necesarios para el cuidado de su piscina.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de productos -->
-        <section id="productos" class="bg-light py-5">
-            <div class="container">
-
-                <div class="text-center mb-5">
-                    <h2 class="fw-bold">Productos destacados</h2>
-
-                    <p class="text-muted">
-                        Encuentre productos de calidad para el mantenimiento de su piscina.
-                    </p>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card h-100 shadow-sm">
-
-                            <div class="card-body text-center">
-                                <h3 class="h5">Cloro</h3>
-
-                                <p class="card-text">
-                                    Producto para mantener el agua limpia y desinfectada.
-                                </p>
-
-                                <a href="#contacto"
-                                   class="btn btn-primary">
-                                    Consultar
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card h-100 shadow-sm">
-
-                            <div class="card-body text-center">
-                                <h3 class="h5">Floculante</h3>
-
-                                <p class="card-text">
-                                    Ayuda a eliminar partículas y mejorar la claridad del agua.
-                                </p>
-
-                                <a href="#contacto"
-                                   class="btn btn-primary">
-                                    Consultar
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card h-100 shadow-sm">
-
-                            <div class="card-body text-center">
-                                <h3 class="h5">Arena para filtro</h3>
-
-                                <p class="card-text">
-                                    Arena especial para sistemas de filtración de piscinas.
-                                </p>
-
-                                <a href="#contacto"
-                                   class="btn btn-primary">
-                                    Consultar
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card h-100 shadow-sm">
-
-                            <div class="card-body text-center">
-                                <h3 class="h5">Accesorios</h3>
-
-                                <p class="card-text">
-                                    Herramientas y accesorios para la limpieza de piscinas.
-                                </p>
-
-                                <a href="#contacto"
-                                   class="btn btn-primary">
-                                    Consultar
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección de contacto -->
-        <section id="contacto" class="py-5">
-            <div class="container">
-
+        <section class="hero-piscina text-white py-5">
+            <div class="container py-4 py-lg-5">
                 <div class="row align-items-center">
-
-                    <div class="col-lg-6 mb-4 mb-lg-0">
-
-                        <h2 class="fw-bold">
-                            Contáctenos
-                        </h2>
-
-                        <p>
-                            Solicite información sobre nuestros productos y servicios.
-                        </p>
-
-                        <p>
-                            <strong>Teléfono:</strong>
-                            8804-1005
-                        </p>
-
-                        <p>
-                            <strong>Ubicación:</strong>
-                            Costa Rica
-                        </p>
-
-                        <a href="https://wa.me/50688041005"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="btn btn-success">
-                            Contactar por WhatsApp
-                        </a>
-
-                    </div>
-
-                    <div class="col-lg-6">
-
-                        <div class="card shadow-sm">
-                            <div class="card-body p-4">
-
-                                <h3 class="h5 mb-4">
-                                    Envíenos un mensaje
-                                </h3>
-
-                                <form>
-
-                                    <div class="mb-3">
-                                        <label for="nombre"
-                                               class="form-label">
-                                            Nombre
-                                        </label>
-
-                                        <input type="text"
-                                               class="form-control"
-                                               id="nombre"
-                                               name="nombre"
-                                               required/>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="correo"
-                                               class="form-label">
-                                            Correo electrónico
-                                        </label>
-
-                                        <input type="email"
-                                               class="form-control"
-                                               id="correo"
-                                               name="correo"
-                                               required/>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="mensaje"
-                                               class="form-label">
-                                            Mensaje
-                                        </label>
-
-                                        <textarea class="form-control"
-                                                  id="mensaje"
-                                                  name="mensaje"
-                                                  rows="4"
-                                                  required></textarea>
-                                    </div>
-
-                                    <button type="submit"
-                                            class="btn btn-primary w-100">
-                                        Enviar mensaje
-                                    </button>
-
-                                </form>
-
-                            </div>
+                    <div class="col-lg-8 col-xl-7">
+                        <span class="badge rounded-pill text-bg-light text-primary mb-3" th:text="#{app.title}">Tienda Piscinas</span>
+                        <h1 class="display-4 fw-bold" th:text="#{home.title}">Todo para el cuidado de su piscina</h1>
+                        <p class="lead mt-3 mb-4" th:text="#{home.subtitle}">Productos y servicios para su piscina.</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a th:href="@{/productos}" class="btn btn-light btn-lg" th:text="#{home.products}">Ver productos</a>
+                            <a th:href="@{/servicios}" class="btn btn-outline-light btn-lg" th:text="#{home.services}">Consultar servicios</a>
                         </div>
-
                     </div>
-
                 </div>
             </div>
         </section>
 
+        <section class="py-5" th:if="${!#lists.isEmpty(categoriasDestacadas)}">
+            <div class="container">
+                <div class="mb-4">
+                    <p class="section-kicker mb-2" th:text="#{nav.products}">Productos</p>
+                    <h2 class="h3" th:text="#{home.categories}">Categorías destacadas</h2>
+                    <p class="text-muted" th:text="#{home.categories.subtitle}">Explore el catálogo.</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-sm-6 col-lg-3" th:each="categoria : ${categoriasDestacadas}">
+                        <a class="categoria-chip h-100" th:href="@{/productos(categoria=${categoria.idCategoria})}">
+                            <span th:text="${categoria.nombreCategoria}">Categoría</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-light py-5">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+                    <div>
+                        <p class="section-kicker mb-2" th:text="#{product.catalog}">Catálogo</p>
+                        <h2 class="h3" th:text="#{home.featuredProducts}">Productos disponibles</h2>
+                        <p class="text-muted mb-0" th:text="#{home.featuredProducts.subtitle}">Selección del catálogo.</p>
+                    </div>
+                    <a class="btn btn-outline-primary" th:href="@{/productos}" th:text="#{home.products}">Ver productos</a>
+                </div>
+
+                <div class="row g-4" th:if="${!#lists.isEmpty(productosDestacados)}">
+                    <div class="col-md-6 col-lg-4" th:each="producto : ${productosDestacados}">
+                        <article class="card card-comercial h-100">
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="badge text-bg-info align-self-start mb-3"
+                                      th:text="${producto.categoria.nombreCategoria}">Categoría</span>
+                                <h3 class="h5" th:text="${producto.nombreProducto}">Producto</h3>
+                                <p class="text-muted flex-grow-1" th:text="${producto.descripcion}">Descripción</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <strong class="fs-5 text-primary"
+                                            th:text="${'₡' + #numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</strong>
+                                    <span class="badge text-bg-success" th:text="#{product.stockAvailable(${producto.stock})}">Disponible</span>
+                                </div>
+                                <form sec:authorize="hasRole('CLIENTE')" method="post"
+                                      th:action="@{/carrito/agregar/{id}(id=${producto.idProducto})}">
+                                    <input type="hidden" name="cantidad" value="1"/>
+                                    <button class="btn btn-primary w-100" type="submit" th:text="#{product.addCart}">Agregar al carrito</button>
+                                </form>
+                                <a sec:authorize="isAnonymous()" class="btn btn-outline-primary"
+                                   th:href="@{/login}" th:text="#{product.loginBuy}">Ingrese para comprar</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="alert alert-info" th:if="${#lists.isEmpty(productosDestacados)}" th:text="#{home.emptyProducts}">
+                    Todavía no hay productos disponibles.
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+                    <div>
+                        <p class="section-kicker mb-2" th:text="#{nav.services}">Servicios</p>
+                        <h2 class="h3" th:text="#{home.featuredServices}">Servicios para su piscina</h2>
+                        <p class="text-muted mb-0" th:text="#{home.featuredServices.subtitle}">Atención especializada.</p>
+                    </div>
+                    <a class="btn btn-outline-primary" th:href="@{/servicios}" th:text="#{home.services}">Consultar servicios</a>
+                </div>
+                <div class="row g-4" th:if="${!#lists.isEmpty(serviciosDestacados)}">
+                    <div class="col-md-6 col-lg-4" th:each="servicio : ${serviciosDestacados}">
+                        <article class="card card-comercial h-100">
+                            <div class="card-body d-flex flex-column p-4">
+                                <span class="beneficio-icono mb-3">~</span>
+                                <h3 class="h5" th:text="${servicio.nombre}">Servicio</h3>
+                                <p class="text-muted flex-grow-1" th:text="${servicio.descripcion}">Descripción</p>
+                                <strong class="text-primary mb-3"
+                                        th:text="|#{common.from} ₡${#numbers.formatDecimal(servicio.precioBase, 1, 'COMMA', 2, 'POINT')}|">Desde ₡0</strong>
+                                <a sec:authorize="hasRole('CLIENTE')" class="btn btn-primary"
+                                   th:href="@{/cliente/solicitudes/nueva}" th:text="#{service.request}">Solicitar servicio</a>
+                                <a sec:authorize="isAnonymous()" class="btn btn-outline-primary"
+                                   th:href="@{/login}" th:text="#{service.loginRequest}">Ingrese para solicitar</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="alert alert-info" th:if="${#lists.isEmpty(serviciosDestacados)}" th:text="#{home.emptyServices}">
+                    Todavía no hay servicios activos.
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white py-5">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <p class="section-kicker mb-2" th:text="#{app.title}">Tienda Piscinas</p>
+                    <h2 class="h3" th:text="#{home.benefits}">Una experiencia sencilla y segura</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="text-center px-3"><span class="beneficio-icono mb-3">1</span>
+                            <h3 class="h5" th:text="#{home.benefit.stock}">Inventario verificado</h3>
+                            <p class="text-muted" th:text="#{home.benefit.stockText}">Las cantidades se validan.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center px-3"><span class="beneficio-icono mb-3">2</span>
+                            <h3 class="h5" th:text="#{home.benefit.security}">Cuenta protegida</h3>
+                            <p class="text-muted" th:text="#{home.benefit.securityText}">Permisos por rol.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center px-3"><span class="beneficio-icono mb-3">3</span>
+                            <h3 class="h5" th:text="#{home.benefit.service}">Productos y servicios</h3>
+                            <p class="text-muted" th:text="#{home.benefit.serviceText}">Todo en un mismo sitio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container py-5">
+            <div class="cta-piscina p-4 p-lg-5 d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div>
+                    <h2 class="h3 mb-2" th:text="#{home.cta}">Prepare su piscina para disfrutarla</h2>
+                    <p class="mb-0 opacity-75" th:text="#{home.ctaText}">Consulte el catálogo o solicite un servicio.</p>
+                </div>
+                <a class="btn btn-light btn-lg" th:href="@{/productos}" th:text="#{home.products}">Ver productos</a>
+            </div>
+        </section>
     </main>
 
-    <!-- Fragmento del pie de página -->
     <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
-
-    <!-- Bootstrap JavaScript -->
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
 </body>
 </html>

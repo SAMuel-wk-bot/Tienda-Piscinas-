@@ -799,13 +799,71 @@ Al seleccionar un idioma, un interceptor guarda el locale en la sesión. Thymele
 7. Renderizado de vistas administrativas y de cliente dentro de la regresión: **PASA**.
 8. Suite limpia completa: 48 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Integrar internacionalizacion en español e ingles`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Integrar internacionalizacion en español e ingles`.
+- **Hash del commit:** `5d0bc4dda6f4d35ed56a37b04fcb6ceedc439ca0`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** internacionalización — 8%, diseño final, temáticas del curso y presentación/defensa.
 - **Pendientes:** crear commit, publicar cuando exista permiso remoto y ampliar en el bloque visual los textos comerciales secundarios de la portada.
-- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 12 — Interfaz comercial y navegación de Tienda Piscinas
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** transformar la portada estática en una entrada comercial conectada a los módulos reales, conservar Bootstrap/Thymeleaf y aplicar una identidad visual coherente con piscinas.
+- **Situación antes del cambio:** la portada contenía productos y un formulario de contacto decorativos sin conexión al backend; enlazaba `/css/estilos.css`, pero el archivo y la carpeta `static` no existían.
+
+### Archivos creados
+
+- `static/css/estilos.css`.
+- `DisenoComercialTests.java`.
+
+### Archivos modificados
+
+- `controller/InicioController.java`.
+- `templates/index.html`.
+- Archivos `messages_es.properties` y `messages_en.properties`.
+- Vistas principales para cargar la hoja de estilos compartida.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Portada con hero, llamados a acción, categorías, productos, servicios, beneficios y cierre comercial.
+- Categorías, productos disponibles y servicios activos recuperados desde sus capas Service y limitados a una selección destacada.
+- Cards responsivas Bootstrap con precio, stock, categoría y acciones según rol.
+- Agregar al carrito visible para CLIENTE e inicio de sesión para invitado.
+- Se eliminaron el formulario y los elementos estáticos que aparentaban operaciones no implementadas.
+- Paleta azul, celeste y turquesa, contrastes, sombras discretas y estados visuales.
+- Hoja de estilos compartida en todas las vistas principales.
+- Navegación y contenido comercial conservan traducción español/inglés.
+- Corrección del enlace roto preexistente a `/css/estilos.css`.
+
+### Temas del curso relacionados
+
+- HTML5, CSS, Bootstrap, Spring MVC, Service, Thymeleaf, fragmentos, JPA, Spring Security visual e internacionalización.
+
+### Explicación sencilla
+
+El controlador consulta las mismas capas Service usadas por los CRUD y entrega una selección a Thymeleaf. La portada ya no presenta productos inventados: si existen registros disponibles los muestra; si no, muestra un estado vacío. Bootstrap organiza las secciones y el CSS compartido aporta la identidad acuática.
+
+### Pruebas ejecutadas y resultados
+
+1. Compilación limpia y regresión completa: **PASA**.
+2. Portada con producto, categoría y servicio persistidos dentro de una prueba: **PASA**.
+3. Acción “Agregar al carrito” visible para CLIENTE: **PASA**.
+4. Enlace a `/css/estilos.css`: **PASA**.
+5. Recurso CSS accesible públicamente y contiene estilos del hero: **PASA**.
+6. Inicio temporal real con H2 en puerto 8087: **PASA**.
+7. Suite limpia completa: 50 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+8. Verificación visual automatizada con Browser: **BLOQUEADA POR EL ENTORNO**; el complemento rechazó su módulo interno por restricción de ruta confiable. No se registran resultados visuales inventados.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Mejorar interfaz comercial y navegacion de Tienda Piscinas`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** diseño final — 10%, solución real, internacionalización, temáticas del curso y defensa.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto y realizar revisión visual manual real en tamaños móvil/escritorio antes de la entrega.
+- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT, PUSH Y QA VISUAL MANUAL**.
 
 ## Checklist oficial del Integrante 2
 

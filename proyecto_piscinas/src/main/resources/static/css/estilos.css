@@ -1,0 +1,101 @@
+:root {
+    --piscina-azul: #075985;
+    --piscina-celeste: #0ea5e9;
+    --piscina-turquesa: #14b8a6;
+    --piscina-claro: #ecfeff;
+    --piscina-tinta: #0f172a;
+}
+
+body {
+    color: var(--piscina-tinta);
+    background: #f8fafc;
+}
+
+.navbar.bg-primary {
+    background: linear-gradient(100deg, var(--piscina-azul), #0369a1 55%, #0f766e) !important;
+}
+
+.hero-piscina {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(125deg, #075985 0%, #0284c7 52%, #14b8a6 100%);
+}
+
+.hero-piscina::after {
+    content: "";
+    position: absolute;
+    width: 28rem;
+    height: 28rem;
+    right: -8rem;
+    bottom: -16rem;
+    border: 4rem solid rgba(255, 255, 255, 0.14);
+    border-radius: 50%;
+}
+
+.hero-piscina .container {
+    position: relative;
+    z-index: 1;
+}
+
+.section-kicker {
+    color: #0e7490;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.card-comercial {
+    border: 0;
+    box-shadow: 0 .45rem 1.25rem rgba(15, 23, 42, .08);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.card-comercial:hover {
+    transform: translateY(-.2rem);
+    box-shadow: 0 .8rem 1.75rem rgba(2, 132, 199, .15);
+}
+
+.categoria-chip {
+    display: block;
+    padding: 1rem;
+    color: var(--piscina-azul);
+    background: var(--piscina-claro);
+    border: 1px solid #a5f3fc;
+    border-radius: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.beneficio-icono {
+    display: inline-grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    color: white;
+    background: linear-gradient(135deg, var(--piscina-celeste), var(--piscina-turquesa));
+    border-radius: .9rem;
+    font-weight: 800;
+}
+
+.cta-piscina {
+    color: white;
+    background: linear-gradient(110deg, #0f766e, #0369a1);
+    border-radius: 1.25rem;
+}
+
+.table-responsive,
+.card {
+    border-radius: .9rem;
+}
+
+.btn-primary {
+    --bs-btn-bg: #0369a1;
+    --bs-btn-border-color: #0369a1;
+    --bs-btn-hover-bg: #075985;
+    --bs-btn-hover-border-color: #075985;
+}
+
+footer.bg-dark {
+    background: #0f2940 !important;
+}
