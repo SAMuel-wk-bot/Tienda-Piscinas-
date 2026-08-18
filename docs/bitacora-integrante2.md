@@ -686,7 +686,7 @@ El controlador nunca acepta como verdad la identidad enviada por el navegador. P
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** autenticación y roles, base de datos medular, transacciones reales, seguridad de acciones, diseño usable y temática Spring MVC/JPA.
-- **Pendientes:** crear el commit, publicar cuando la cuenta tenga permiso y documentar en el bloque de errores la experiencia ante accesos o recursos inválidos.
+- **Pendientes:** publicar cuando la cuenta tenga permiso remoto.
 - **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
 
 ## Bloque 10 — Manejo de errores y páginas de estado
@@ -735,12 +735,76 @@ Spring Boot selecciona automáticamente una plantilla según el código HTTP. La
 6. Página 500 renderiza mensaje seguro: **PASA**.
 7. Suite limpia completa: 44 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar manejo de errores y paginas de estado`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Agregar manejo de errores y paginas de estado`.
+- **Hash del commit:** `3658938f44ec9a3346331998e4f993bb60410594`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** diseño final, seguridad, solución usable, pruebas y temáticas Spring MVC/Thymeleaf.
 - **Pendientes:** crear commit, publicar cuando exista permiso remoto e internacionalizar los textos de error.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 11 — Internacionalización en español e inglés
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** integrar un cambio de idioma visible y persistente que cubra los flujos principales y aporte evidencia directa al 8% de internacionalización de la rúbrica.
+- **Situación antes del cambio:** todos los textos estaban escritos directamente en español, no existían archivos `messages`, selector, configuración de locale ni pruebas bilingües.
+
+### Archivos creados
+
+- `config/InternacionalizacionConfig.java`.
+- `resources/messages.properties`.
+- `resources/messages_es.properties`.
+- `resources/messages_en.properties`.
+- `InternacionalizacionTests.java`.
+
+### Archivos modificados
+
+- Entidades/formularios visibles: `Categoria`, `Producto`, `RegistroUsuario`, `Servicio` y `SolicitudServicioForm`.
+- Controladores con confirmaciones: carrito, categorías, productos, servicios, solicitudes, pedidos y registro.
+- Fragmentos comunes de encabezado y pie de página.
+- Vistas de inicio, seguridad, administración, cliente, categorías, productos, servicios, solicitudes, carrito, pedidos y errores.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Locale español predeterminado mediante `SessionLocaleResolver`.
+- Cambio con parámetro `lang` y `LocaleChangeInterceptor`.
+- Selector Español/English visible en la barra de navegación y persistencia del idioma en sesión.
+- Archivos de mensajes separados para español e inglés, más archivo base según el patrón de clase.
+- Navegación adaptada por rol y traducida.
+- Encabezados, botones, filtros, formularios, listas vacías, confirmaciones y páginas de error traducidos.
+- Login, registro, carrito, categorías, productos, servicios, solicitudes y pedidos traducidos.
+- Estados de pedidos y solicitudes resueltos dinámicamente desde las claves `estado.*`.
+- Validaciones visibles de registro, categorías, productos, servicios y solicitudes trasladadas a claves de mensajes.
+- Confirmaciones de operaciones guardadas como códigos y resueltas según el locale al renderizar.
+
+> Funcionalidad incorporada por requisito explícito de la entrega final; implementación realizada con la alternativa mínima compatible con la estructura estudiada.
+
+### Temas del curso relacionados
+
+- Internacionalización, archivos `messages`, locale, variables de sesión, Thymeleaf, fragmentos, formularios, validaciones y Bootstrap.
+
+### Explicación sencilla
+
+Al seleccionar un idioma, un interceptor guarda el locale en la sesión. Thymeleaf obtiene cada texto desde `messages_es.properties` o `messages_en.properties`; las reglas y rutas permanecen iguales. Los estados y validaciones usan claves para que no dependan de texto fijo en español.
+
+### Pruebas ejecutadas y resultados
+
+1. Español se utiliza de forma predeterminada: **PASA**.
+2. `?lang=en` cambia la página a inglés: **PASA**.
+3. El cambio a inglés permanece al navegar a login: **PASA**.
+4. Navegación y selector muestran textos en inglés: **PASA**.
+5. Validaciones de nombre y contraseña se muestran en inglés: **PASA**.
+6. Confirmación del carrito se muestra en inglés: **PASA**.
+7. Renderizado de vistas administrativas y de cliente dentro de la regresión: **PASA**.
+8. Suite limpia completa: 48 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Integrar internacionalizacion en español e ingles`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** internacionalización — 8%, diseño final, temáticas del curso y presentación/defensa.
+- **Pendientes:** crear commit, publicar cuando exista permiso remoto y ampliar en el bloque visual los textos comerciales secundarios de la portada.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -804,10 +868,10 @@ Spring Boot selecciona automáticamente una plantilla según el código HTTP. La
 
 ### Prioridad 4 — Internacionalización e investigación
 
-- [ ] `messages_es.properties`.
-- [ ] `messages_en.properties`.
-- [ ] Navegación, formularios, validaciones y estados traducidos.
-- [ ] Selector de idioma.
+- [ ] `messages_es.properties`. Implementado y probado localmente; pendiente push.
+- [ ] `messages_en.properties`. Implementado y probado localmente; pendiente push.
+- [ ] Navegación, formularios, validaciones y estados traducidos. Aprobado localmente; pendiente push.
+- [ ] Selector de idioma. Persistencia en sesión aprobada localmente; pendiente push.
 - [ ] Cotización inteligente.
 - [ ] Fuente de investigación real.
 - [ ] Algoritmo, supuestos y limitaciones documentados.

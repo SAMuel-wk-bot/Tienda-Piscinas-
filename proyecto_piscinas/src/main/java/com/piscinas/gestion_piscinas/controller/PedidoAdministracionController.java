@@ -51,7 +51,7 @@ public class PedidoAdministracionController {
             @RequestParam EstadoPedido estado, RedirectAttributes mensajes) {
         try {
             pedidoService.actualizarEstado(id, estado);
-            mensajes.addFlashAttribute("exito", "El estado del pedido se actualizó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.order.status");
         } catch (IllegalArgumentException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
         }

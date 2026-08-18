@@ -25,18 +25,18 @@ public class Servicio implements Serializable {
     private Long idServicio;
 
     @Column(name = "nombre", nullable = false, length = 100)
-    @NotBlank(message = "El nombre del servicio es obligatorio.")
-    @Size(max = 100, message = "El nombre del servicio no puede superar 100 caracteres.")
+    @NotBlank(message = "{validation.required.serviceName}")
+    @Size(max = 100, message = "{validation.size.serviceName}")
     private String nombre;
 
     @Column(name = "descripcion", nullable = false, length = 1000)
-    @NotBlank(message = "La descripción del servicio es obligatoria.")
-    @Size(max = 1000, message = "La descripción no puede superar 1000 caracteres.")
+    @NotBlank(message = "{validation.required.serviceDescription}")
+    @Size(max = 1000, message = "{validation.size.description}")
     private String descripcion;
 
     @Column(name = "precio_base", nullable = false, precision = 12, scale = 2)
-    @NotNull(message = "El precio base es obligatorio.")
-    @DecimalMin(value = "0.00", message = "El precio base no puede ser negativo.")
+    @NotNull(message = "{validation.required.basePrice}")
+    @DecimalMin(value = "0.00", message = "{validation.min.basePrice}")
     private BigDecimal precioBase;
 
     @Column(name = "activo", nullable = false)

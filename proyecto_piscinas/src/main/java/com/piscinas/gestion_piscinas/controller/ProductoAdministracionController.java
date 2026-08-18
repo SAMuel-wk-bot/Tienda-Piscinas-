@@ -61,7 +61,7 @@ public class ProductoAdministracionController {
         }
         try {
             productoService.guardarProducto(producto);
-            mensajes.addFlashAttribute("exito", "El producto se guardó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.product.saved");
             return "redirect:/administracion/productos";
         } catch (IllegalArgumentException ex) {
             resultado.rejectValue("categoria", "categoria.invalida", ex.getMessage());
@@ -74,7 +74,7 @@ public class ProductoAdministracionController {
     public String eliminar(@PathVariable Long id, RedirectAttributes mensajes) {
         try {
             productoService.eliminarProducto(id);
-            mensajes.addFlashAttribute("exito", "El producto se eliminó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.product.deleted");
         } catch (IllegalArgumentException | IllegalStateException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
         }

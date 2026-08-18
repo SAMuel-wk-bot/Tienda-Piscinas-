@@ -6,14 +6,14 @@ import jakarta.validation.constraints.Size;
 
 public class SolicitudServicioForm {
 
-    @NotNull(message = "Debe seleccionar un servicio.")
+    @NotNull(message = "{validation.required.service}")
     private Long idServicio;
 
-    @NotBlank(message = "La dirección del servicio es obligatoria.")
-    @Size(max = 250, message = "La dirección no puede superar 250 caracteres.")
+    @NotBlank(message = "{validation.required.serviceAddress}")
+    @Size(max = 250, message = "{validation.size.address}")
     private String direccionServicio;
 
-    @Size(max = 1000, message = "Las observaciones no pueden superar 1000 caracteres.")
+    @Size(max = 1000, message = "{validation.size.notes}")
     private String observaciones;
 
     public SolicitudServicioForm() {

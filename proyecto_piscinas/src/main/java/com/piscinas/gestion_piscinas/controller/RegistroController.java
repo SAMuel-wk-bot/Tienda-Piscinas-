@@ -30,12 +30,10 @@ public class RegistroController {
     public String registrar(@Valid @ModelAttribute("registro") RegistroUsuario registro,
             BindingResult resultado) {
         if (!Objects.equals(registro.getContrasena(), registro.getConfirmarContrasena())) {
-            resultado.rejectValue("confirmarContrasena", "contrasena.diferente",
-                    "Las contraseñas no coinciden.");
+            resultado.rejectValue("confirmarContrasena", "validation.passwordMismatch");
         }
         if (usuarioService.existeCorreo(registro.getCorreo())) {
-            resultado.rejectValue("correo", "correo.duplicado",
-                    "Ya existe una cuenta con ese correo.");
+            resultado.rejectValue("correo", "validation.emailDuplicate");
         }
         if (resultado.hasErrors()) {
             return "seguridad/registro";

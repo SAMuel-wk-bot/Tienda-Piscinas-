@@ -36,7 +36,7 @@ public class SolicitudAdministracionController {
             RedirectAttributes mensajes) {
         try {
             solicitudService.actualizarEstado(id, estado);
-            mensajes.addFlashAttribute("exito", "El estado se actualizó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.request.status");
         } catch (IllegalArgumentException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
         }

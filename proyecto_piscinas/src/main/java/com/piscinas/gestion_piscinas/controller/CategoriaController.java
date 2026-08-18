@@ -54,7 +54,7 @@ public class CategoriaController {
         }
         try {
             categoriaService.guardarCategoria(categoria);
-            mensajes.addFlashAttribute("exito", "La categoría se guardó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.category.saved");
             return "redirect:/administracion/categorias";
         } catch (IllegalArgumentException ex) {
             resultado.rejectValue("nombreCategoria", "categoria.invalida", ex.getMessage());
@@ -66,7 +66,7 @@ public class CategoriaController {
     public String eliminar(@PathVariable Long id, RedirectAttributes mensajes) {
         try {
             categoriaService.eliminarCategoria(id);
-            mensajes.addFlashAttribute("exito", "La categoría se eliminó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.category.deleted");
         } catch (IllegalArgumentException | IllegalStateException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
         }

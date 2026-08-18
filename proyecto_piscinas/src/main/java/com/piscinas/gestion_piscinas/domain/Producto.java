@@ -30,22 +30,22 @@ public class Producto implements Serializable {
     private Long idProducto;
 
     @Column(name = "nombre_producto", nullable = false, length = 100)
-    @NotBlank(message = "El nombre del producto es obligatorio.")
-    @Size(max = 100, message = "El nombre del producto no puede superar 100 caracteres.")
+    @NotBlank(message = "{validation.required.productName}")
+    @Size(max = 100, message = "{validation.size.productName}")
     private String nombreProducto;
 
     @Column(name = "descripcion", columnDefinition = "TEXT")
-    @Size(max = 1000, message = "La descripción no puede superar 1000 caracteres.")
+    @Size(max = 1000, message = "{validation.size.description}")
     private String descripcion;
 
     @Column(name = "precio", nullable = false, precision = 12, scale = 2)
-    @NotNull(message = "El precio es obligatorio.")
-    @DecimalMin(value = "0.01", message = "El precio debe ser mayor a cero.")
+    @NotNull(message = "{validation.required.price}")
+    @DecimalMin(value = "0.01", message = "{validation.min.price}")
     private BigDecimal precio;
 
     @Column(name = "stock", nullable = false)
-    @NotNull(message = "Las existencias son obligatorias.")
-    @Min(value = 0, message = "Las existencias no pueden ser negativas.")
+    @NotNull(message = "{validation.required.stock}")
+    @Min(value = 0, message = "{validation.min.stock}")
     private Integer stock = 0;
 
     @Column(name = "fecha_ingreso", nullable = false)
@@ -53,7 +53,7 @@ public class Producto implements Serializable {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_categoria", nullable = false)
-    @NotNull(message = "La categoría es obligatoria.")
+    @NotNull(message = "{validation.required.category}")
     private Categoria categoria;
 
     public Producto() {

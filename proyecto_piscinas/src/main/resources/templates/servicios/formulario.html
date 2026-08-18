@@ -11,25 +11,25 @@
     <main class="container py-5">
         <div class="card border-0 shadow-sm mx-auto" style="max-width: 50rem;">
             <div class="card-body p-4">
-                <h1 class="h3" th:text="${servicio.idServicio == null ? 'Nuevo servicio' : 'Modificar servicio'}">Servicio</h1>
+                <h1 class="h3" th:text="${servicio.idServicio == null} ? #{service.new} : #{service.edit}">Servicio</h1>
                 <form method="post" th:action="@{/administracion/servicios/guardar}" th:object="${servicio}">
                     <input type="hidden" th:field="*{idServicio}"/>
                     <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
+                        <label for="nombre" class="form-label" th:text="#{common.name}">Nombre</label>
                         <input id="nombre" type="text" class="form-control" th:field="*{nombre}"
                                th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'"/>
                         <div class="invalid-feedback" th:errors="*{nombre}"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción</label>
+                        <label for="descripcion" class="form-label" th:text="#{common.description}">Descripción</label>
                         <textarea id="descripcion" class="form-control" rows="4" th:field="*{descripcion}"
                                   th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'"></textarea>
                         <div class="invalid-feedback" th:errors="*{descripcion}"></div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="precioBase" class="form-label">Precio base</label>
+                            <label for="precioBase" class="form-label" th:text="#{common.basePrice}">Precio base</label>
                             <input id="precioBase" type="number" min="0" step="0.01" class="form-control" th:field="*{precioBase}"
                                    th:classappend="${#fields.hasErrors('precioBase')} ? 'is-invalid'"/>
                             <div class="invalid-feedback" th:errors="*{precioBase}"></div>
@@ -37,12 +37,12 @@
                         <div class="col-md-6 mb-3 d-flex align-items-end">
                             <div class="form-check mb-2">
                                 <input id="activo" type="checkbox" class="form-check-input" th:field="*{activo}"/>
-                                <label for="activo" class="form-check-label">Servicio activo</label>
+                                <label for="activo" class="form-check-label" th:text="#{service.active}">Servicio activo</label>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Guardar</button>
-                    <a class="btn btn-outline-secondary" th:href="@{/administracion/servicios}">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" th:text="#{action.save}">Guardar</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/administracion/servicios}" th:text="#{action.cancel}">Cancelar</a>
                 </form>
             </div>
         </div>

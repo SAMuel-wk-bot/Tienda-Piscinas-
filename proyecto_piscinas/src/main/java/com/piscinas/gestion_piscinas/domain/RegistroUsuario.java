@@ -6,32 +6,32 @@ import jakarta.validation.constraints.Size;
 
 public class RegistroUsuario {
 
-    @NotBlank(message = "El nombre es obligatorio.")
-    @Size(max = 50, message = "El nombre no puede superar 50 caracteres.")
+    @NotBlank(message = "{validation.required.name}")
+    @Size(max = 50, message = "{validation.size.name}")
     private String nombre;
 
-    @NotBlank(message = "El apellido es obligatorio.")
-    @Size(max = 50, message = "El apellido no puede superar 50 caracteres.")
+    @NotBlank(message = "{validation.required.lastName}")
+    @Size(max = 50, message = "{validation.size.lastName}")
     private String apellido;
 
-    @NotBlank(message = "El correo es obligatorio.")
-    @Email(message = "El correo no tiene un formato válido.")
-    @Size(max = 100, message = "El correo no puede superar 100 caracteres.")
+    @NotBlank(message = "{validation.required.email}")
+    @Email(message = "{validation.email}")
+    @Size(max = 100, message = "{validation.size.email}")
     private String correo;
 
-    @NotBlank(message = "El teléfono es obligatorio.")
-    @Size(max = 20, message = "El teléfono no puede superar 20 caracteres.")
+    @NotBlank(message = "{validation.required.phone}")
+    @Size(max = 20, message = "{validation.size.phone}")
     private String telefono;
 
-    @NotBlank(message = "La dirección es obligatoria.")
-    @Size(max = 250, message = "La dirección no puede superar 250 caracteres.")
+    @NotBlank(message = "{validation.required.address}")
+    @Size(max = 250, message = "{validation.size.address}")
     private String direccion;
 
-    @NotBlank(message = "La contraseña es obligatoria.")
-    @Size(min = 8, max = 72, message = "La contraseña debe tener entre 8 y 72 caracteres.")
+    @NotBlank(message = "{validation.required.password}")
+    @Size(min = 8, max = 72, message = "{validation.size.password}")
     private String contrasena;
 
-    @NotBlank(message = "Debe confirmar la contraseña.")
+    @NotBlank(message = "{validation.required.passwordConfirmation}")
     private String confirmarContrasena;
 
     public RegistroUsuario() {

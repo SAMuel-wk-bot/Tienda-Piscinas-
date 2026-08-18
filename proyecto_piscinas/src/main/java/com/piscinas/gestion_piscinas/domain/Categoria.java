@@ -21,12 +21,12 @@ public class Categoria implements Serializable{
     private Long idCategoria;
 
     @Column(name = "nombre_categoria", nullable = false, unique = true, length = 50)
-    @NotBlank(message = "El nombre de la categoría es obligatorio.")
-    @Size(max = 50, message = "El nombre de la categoría no puede superar 50 caracteres.")
+    @NotBlank(message = "{validation.required.categoryName}")
+    @Size(max = 50, message = "{validation.size.categoryName}")
     private String nombreCategoria;
 
     @Column(name = "descripcion", columnDefinition = "TEXT")
-    @Size(max = 500, message = "La descripción no puede superar 500 caracteres.")
+    @Size(max = 500, message = "{validation.size.description}")
     private String descripcion;
 
     public Categoria() {

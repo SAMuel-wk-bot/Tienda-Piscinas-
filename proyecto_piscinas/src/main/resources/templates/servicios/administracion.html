@@ -10,31 +10,31 @@
     <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h2 mb-0">Gestión de servicios</h1>
-            <a class="btn btn-primary" th:href="@{/administracion/servicios/nuevo}">Nuevo servicio</a>
+            <h1 class="h2 mb-0" th:text="#{service.management}">Gestión de servicios</h1>
+            <a class="btn btn-primary" th:href="@{/administracion/servicios/nuevo}" th:text="#{service.new}">Nuevo servicio</a>
         </div>
-        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
         <div class="table-responsive shadow-sm">
             <table class="table table-striped table-hover bg-white mb-0 align-middle">
-                <thead class="table-primary"><tr><th>Servicio</th><th>Precio base</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <thead class="table-primary"><tr><th th:text="#{common.service}">Servicio</th><th th:text="#{common.basePrice}">Precio base</th><th th:text="#{common.status}">Estado</th><th th:text="#{common.actions}">Acciones</th></tr></thead>
                 <tbody>
                     <tr th:each="servicio : ${servicios}">
                         <td><strong th:text="${servicio.nombre}">Servicio</strong><br/><small th:text="${servicio.descripcion}"></small></td>
                         <td th:text="${'₡' + #numbers.formatDecimal(servicio.precioBase, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
                         <td><span class="badge" th:classappend="${servicio.activo ? 'text-bg-success' : 'text-bg-secondary'}"
-                                  th:text="${servicio.activo ? 'Activo' : 'Inactivo'}">Activo</span></td>
+                                  th:text="${servicio.activo} ? #{common.active} : #{common.inactive}">Activo</span></td>
                         <td class="text-nowrap">
                             <a class="btn btn-sm btn-outline-primary"
-                               th:href="@{/administracion/servicios/editar/{id}(id=${servicio.idServicio})}">Modificar</a>
+                               th:href="@{/administracion/servicios/editar/{id}(id=${servicio.idServicio})}" th:text="#{action.edit}">Modificar</a>
                             <form class="d-inline" method="post"
                                   th:action="@{/administracion/servicios/eliminar/{id}(id=${servicio.idServicio})}">
                                 <button class="btn btn-sm btn-outline-danger" type="submit"
-                                        onclick="return confirm('¿Desea eliminar este servicio?')">Eliminar</button>
+                                        th:onclick="|return confirm('#{service.confirmDelete}')|" th:text="#{action.delete}">Eliminar</button>
                             </form>
                         </td>
                     </tr>
-                    <tr th:if="${#lists.isEmpty(servicios)}"><td colspan="4" class="text-center text-muted">No hay servicios registrados.</td></tr>
+                    <tr th:if="${#lists.isEmpty(servicios)}"><td colspan="4" class="text-center text-muted" th:text="#{service.emptyAdmin}">No hay servicios registrados.</td></tr>
                 </tbody>
             </table>
         </div>

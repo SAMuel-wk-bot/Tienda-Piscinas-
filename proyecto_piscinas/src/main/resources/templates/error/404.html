@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Recurso no encontrado - Tienda Piscinas</title>
+    <title th:text="|404 - #{error.404.title}|">Recurso no encontrado - Tienda Piscinas</title>
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body class="bg-light">
@@ -14,10 +14,10 @@
         <div class="card border-0 shadow-sm mx-auto" style="max-width: 40rem;">
             <div class="card-body p-5">
                 <p class="display-3 fw-bold text-primary mb-2">404</p>
-                <h1 class="h3">No encontramos el recurso solicitado</h1>
-                <p class="text-muted">La dirección puede ser incorrecta o el contenido ya no está disponible.</p>
-                <a class="btn btn-primary" th:href="@{/}">Volver al inicio</a>
-                <a class="btn btn-outline-primary" th:href="@{/productos}">Ver productos</a>
+                <h1 class="h3" th:text="#{error.404.title}">No encontramos el recurso solicitado</h1>
+                <p class="text-muted" th:text="#{error.404.message}">La dirección puede ser incorrecta o el contenido ya no está disponible.</p>
+                <a class="btn btn-primary" th:href="@{/}" th:text="#{error.backHome}">Volver al inicio</a>
+                <a class="btn btn-outline-primary" th:href="@{/productos}" th:text="#{home.products}">Ver productos</a>
             </div>
         </div>
     </main>

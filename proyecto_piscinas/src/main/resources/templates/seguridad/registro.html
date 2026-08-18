@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Registro - Tienda Piscinas</title>
+    <title th:text="|#{nav.register} - #{app.title}|">Registro - Tienda Piscinas</title>
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body class="bg-light">
@@ -15,56 +15,56 @@
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
-                        <h1 class="h3 mb-1">Crear cuenta de cliente</h1>
-                        <p class="text-muted">El rol CLIENTE se asigna de forma segura en el servidor.</p>
+                        <h1 class="h3 mb-1" th:text="#{register.title}">Crear cuenta de cliente</h1>
+                        <p class="text-muted" th:text="#{register.subtitle}">El registro público asigna únicamente CLIENTE.</p>
 
                         <form th:action="@{/registro}" th:object="${registro}" method="post">
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <label for="nombre" class="form-label" th:text="#{register.firstName}">Nombre</label>
                                     <input id="nombre" type="text" class="form-control"
                                            th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{nombre}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <label for="apellido" class="form-label" th:text="#{register.lastName}">Apellido</label>
                                     <input id="apellido" type="text" class="form-control"
                                            th:field="*{apellido}" th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{apellido}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="correo" class="form-label">Correo electrónico</label>
+                                    <label for="correo" class="form-label" th:text="#{register.email}">Correo electrónico</label>
                                     <input id="correo" type="email" class="form-control"
                                            th:field="*{correo}" th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{correo}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <label for="telefono" class="form-label" th:text="#{register.phone}">Teléfono</label>
                                     <input id="telefono" type="text" class="form-control"
                                            th:field="*{telefono}" th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{telefono}"></div>
                                 </div>
                                 <div class="col-12">
-                                    <label for="direccion" class="form-label">Dirección</label>
+                                    <label for="direccion" class="form-label" th:text="#{register.address}">Dirección</label>
                                     <textarea id="direccion" class="form-control" rows="2"
                                               th:field="*{direccion}" th:classappend="${#fields.hasErrors('direccion')} ? 'is-invalid'"></textarea>
                                     <div class="invalid-feedback" th:errors="*{direccion}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="contrasena" class="form-label">Contraseña</label>
+                                    <label for="contrasena" class="form-label" th:text="#{register.password}">Contraseña</label>
                                     <input id="contrasena" type="password" class="form-control"
                                            th:field="*{contrasena}" th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{contrasena}"></div>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="confirmarContrasena" class="form-label">Confirmar contraseña</label>
+                                    <label for="confirmarContrasena" class="form-label" th:text="#{register.confirmPassword}">Confirmar contraseña</label>
                                     <input id="confirmarContrasena" type="password" class="form-control"
                                            th:field="*{confirmarContrasena}" th:classappend="${#fields.hasErrors('confirmarContrasena')} ? 'is-invalid'"/>
                                     <div class="invalid-feedback" th:errors="*{confirmarContrasena}"></div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary mt-4">Crear cuenta</button>
-                            <a class="btn btn-link mt-4" th:href="@{/login}">Ya tengo una cuenta</a>
+                            <button type="submit" class="btn btn-primary mt-4" th:text="#{action.createAccount}">Crear cuenta</button>
+                            <a class="btn btn-link mt-4" th:href="@{/login}" th:text="#{register.existing}">Ya tengo una cuenta</a>
                         </form>
                     </div>
                 </div>

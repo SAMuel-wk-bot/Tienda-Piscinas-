@@ -9,15 +9,15 @@
 <body class="bg-light">
     <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
     <main class="container py-5">
-        <h1 class="h2">Panel administrativo</h1>
-        <p class="text-muted">Acceso exclusivo para el rol ADMINISTRADOR.</p>
+        <h1 class="h2" th:text="#{admin.title}">Panel administrativo</h1>
+        <p class="text-muted" th:text="#{admin.subtitle}">Acceso exclusivo para el rol ADMINISTRADOR.</p>
         <div class="d-flex flex-wrap gap-2">
-            <a class="btn btn-primary" th:href="@{/administracion/usuarios}">Consultar usuarios</a>
-            <a class="btn btn-primary" th:href="@{/administracion/categorias}">Gestionar categorías</a>
-            <a class="btn btn-primary" th:href="@{/administracion/productos}">Gestionar productos</a>
-            <a class="btn btn-primary" th:href="@{/administracion/servicios}">Gestionar servicios</a>
-            <a class="btn btn-primary" th:href="@{/administracion/solicitudes}">Revisar solicitudes</a>
-            <a class="btn btn-primary" th:href="@{/administracion/pedidos}">Gestionar pedidos</a>
+            <a class="btn btn-primary" th:href="@{/administracion/usuarios}" th:text="#{admin.users}">Consultar usuarios</a>
+            <a class="btn btn-primary" th:href="@{/administracion/categorias}" th:text="#{admin.categories}">Gestionar categorías</a>
+            <a class="btn btn-primary" th:href="@{/administracion/productos}" th:text="#{admin.products}">Gestionar productos</a>
+            <a class="btn btn-primary" th:href="@{/administracion/servicios}" th:text="#{admin.services}">Gestionar servicios</a>
+            <a class="btn btn-primary" th:href="@{/administracion/solicitudes}" th:text="#{admin.requests}">Revisar solicitudes</a>
+            <a class="btn btn-primary" th:href="@{/administracion/pedidos}" th:text="#{admin.orders}">Gestionar pedidos</a>
         </div>
     </main>
     <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>

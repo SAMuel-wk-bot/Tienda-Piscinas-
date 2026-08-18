@@ -54,7 +54,7 @@ public class ServicioAdministracionController {
         }
         try {
             servicioService.guardarServicio(servicio);
-            mensajes.addFlashAttribute("exito", "El servicio se guardó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.service.saved");
             return "redirect:/administracion/servicios";
         } catch (IllegalArgumentException ex) {
             resultado.reject("servicio.invalido", ex.getMessage());
@@ -66,7 +66,7 @@ public class ServicioAdministracionController {
     public String eliminar(@PathVariable Long id, RedirectAttributes mensajes) {
         try {
             servicioService.eliminarServicio(id);
-            mensajes.addFlashAttribute("exito", "El servicio se eliminó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.service.deleted");
         } catch (IllegalArgumentException | IllegalStateException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());
         }

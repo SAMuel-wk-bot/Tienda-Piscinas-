@@ -39,7 +39,7 @@ public class PedidoController {
             Pedido pedido = pedidoService.finalizarCompra(
                     carritoService.obtenerCarrito(session), principal.getName());
             carritoService.vaciar(session);
-            mensajes.addFlashAttribute("exito", "El pedido se creó correctamente.");
+            mensajes.addFlashAttribute("exito", "message.order.created");
             return "redirect:/cliente/pedidos/" + pedido.getIdPedido();
         } catch (IllegalArgumentException | IllegalStateException ex) {
             mensajes.addFlashAttribute("error", ex.getMessage());

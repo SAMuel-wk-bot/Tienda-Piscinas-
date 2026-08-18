@@ -10,17 +10,17 @@
     <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
     <main class="container py-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h2 mb-0">Mis solicitudes</h1>
-            <a class="btn btn-primary" th:href="@{/cliente/solicitudes/nueva}">Nueva solicitud</a>
+            <h1 class="h2 mb-0" th:text="#{request.mine}">Mis solicitudes</h1>
+            <a class="btn btn-primary" th:href="@{/cliente/solicitudes/nueva}" th:text="#{request.new}">Nueva solicitud</a>
         </div>
-        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
         <div class="row g-3" th:if="${!#lists.isEmpty(solicitudes)}">
             <div class="col-12" th:each="solicitud : ${solicitudes}">
                 <article class="card border-0 shadow-sm">
                     <div class="card-body">
                         <div class="d-flex flex-wrap justify-content-between gap-2">
                             <h2 class="h5" th:text="${solicitud.servicio.nombre}">Servicio</h2>
-                            <span class="badge text-bg-primary" th:text="${solicitud.estado}">PENDIENTE</span>
+                            <span class="badge text-bg-primary" th:text="${#messages.msg('estado.' + solicitud.estado.name())}">PENDIENTE</span>
                         </div>
                         <p class="mb-1" th:text="${solicitud.direccionServicio}">Dirección</p>
                         <p class="text-muted mb-1" th:text="${solicitud.observaciones}">Observaciones</p>
@@ -29,7 +29,7 @@
                 </article>
             </div>
         </div>
-        <div class="alert alert-info" th:if="${#lists.isEmpty(solicitudes)}">Aún no tiene solicitudes registradas.</div>
+        <div class="alert alert-info" th:if="${#lists.isEmpty(solicitudes)}" th:text="#{request.emptyMine}">Aún no tiene solicitudes registradas.</div>
     </main>
     <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

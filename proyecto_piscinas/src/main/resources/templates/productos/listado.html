@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title th:text="${titulo}">Catálogo de productos</title>
+    <title th:text="#{product.catalog}">Catálogo de productos</title>
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
 <body class="bg-light">
@@ -13,24 +13,24 @@
     <main class="container py-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
             <div>
-                <h1 class="h2 mb-1" th:text="${titulo}">Catálogo de productos</h1>
-                <p class="text-muted mb-0">Productos disponibles para el cuidado de su piscina.</p>
+                <h1 class="h2 mb-1" th:text="#{product.catalog}">Catálogo de productos</h1>
+                <p class="text-muted mb-0" th:text="#{product.catalog.subtitle}">Productos disponibles para el cuidado de su piscina.</p>
             </div>
             <a sec:authorize="hasRole('ADMINISTRADOR')" class="btn btn-primary"
-               th:href="@{/administracion/productos}">Gestionar productos</a>
+               th:href="@{/administracion/productos}" th:text="#{admin.products}">Gestionar productos</a>
         </div>
 
         <form class="card border-0 shadow-sm mb-4" method="get" th:action="@{/productos}">
             <div class="card-body row g-3 align-items-end">
                 <div class="col-md-5">
-                    <label for="nombre" class="form-label">Buscar por nombre</label>
+                    <label for="nombre" class="form-label" th:text="#{product.filter.name}">Buscar por nombre</label>
                     <input id="nombre" name="nombre" type="search" class="form-control"
                            th:value="${nombreBuscado}" placeholder="Ejemplo: cloro"/>
                 </div>
                 <div class="col-md-4">
-                    <label for="categoria" class="form-label">Categoría</label>
+                    <label for="categoria" class="form-label" th:text="#{common.category}">Categoría</label>
                     <select id="categoria" name="categoria" class="form-select">
-                        <option value="">Todas</option>
+                        <option value="" th:text="#{common.all}">Todas</option>
                         <option th:each="categoriaItem : ${listaCategorias}"
                                 th:value="${categoriaItem.idCategoria}"
                                 th:text="${categoriaItem.nombreCategoria}"
@@ -41,10 +41,10 @@
                     <div class="form-check mb-2">
                         <input id="disponibles" name="disponibles" value="true" type="checkbox"
                                class="form-check-input" th:checked="${soloDisponibles}"/>
-                        <label for="disponibles" class="form-check-label">Solo disponibles</label>
+                        <label for="disponibles" class="form-check-label" th:text="#{product.filter.available}">Solo disponibles</label>
                     </div>
-                    <button class="btn btn-primary" type="submit">Filtrar</button>
-                    <a class="btn btn-outline-secondary" th:href="@{/productos}">Limpiar</a>
+                    <button class="btn btn-primary" type="submit" th:text="#{action.filter}">Filtrar</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/productos}" th:text="#{product.clear}">Limpiar</a>
                 </div>
             </div>
         </form>
@@ -61,18 +61,18 @@
                            th:text="${'₡' + #numbers.formatDecimal(prod.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</p>
                         <p class="mb-3">
                             <span th:if="${prod.stock > 0}" class="badge text-bg-success"
-                                  th:text="${prod.stock + ' disponibles'}">Disponible</span>
-                            <span th:if="${prod.stock == 0}" class="badge text-bg-secondary">Agotado</span>
+                                  th:text="#{product.stockAvailable(${prod.stock})}">Disponible</span>
+                            <span th:if="${prod.stock == 0}" class="badge text-bg-secondary" th:text="#{product.outOfStock}">Agotado</span>
                         </p>
                         <form sec:authorize="hasRole('CLIENTE')" method="post"
                               th:action="@{/carrito/agregar/{id}(id=${prod.idProducto})}">
                             <input type="hidden" name="cantidad" value="1"/>
                             <button class="btn btn-primary w-100" type="submit" th:disabled="${prod.stock == 0}">
-                                Agregar al carrito
+                                <span th:text="#{product.addCart}">Agregar al carrito</span>
                             </button>
                         </form>
                         <a sec:authorize="isAnonymous()" class="btn btn-outline-primary" th:href="@{/login}">
-                            Ingrese para comprar
+                            <span th:text="#{product.loginBuy}">Ingrese para comprar</span>
                         </a>
                     </div>
                 </article>
@@ -80,7 +80,7 @@
         </div>
 
         <div class="alert alert-info" th:if="${#lists.isEmpty(listaProductos)}">
-            No hay productos registrados en este momento.
+            <span th:text="#{product.empty}">No hay productos registrados en este momento.</span>
         </div>
     </main>
     <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>

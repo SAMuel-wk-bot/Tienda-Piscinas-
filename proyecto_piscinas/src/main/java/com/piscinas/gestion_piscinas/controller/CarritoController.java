@@ -32,7 +32,7 @@ public class CarritoController {
             @RequestParam(defaultValue = "1") int cantidad,
             HttpSession session, RedirectAttributes mensajes) {
         ejecutarOperacion(() -> carritoService.agregarProducto(id, cantidad, session),
-                "El producto se agregó al carrito.", mensajes);
+                "message.cart.added", mensajes);
         return "redirect:/carrito";
     }
 
@@ -40,7 +40,7 @@ public class CarritoController {
     public String aumentar(@PathVariable Long id, HttpSession session,
             RedirectAttributes mensajes) {
         ejecutarOperacion(() -> carritoService.aumentarProducto(id, session),
-                "La cantidad se actualizó.", mensajes);
+                "message.cart.quantity", mensajes);
         return "redirect:/carrito";
     }
 
@@ -48,7 +48,7 @@ public class CarritoController {
     public String reducir(@PathVariable Long id, HttpSession session,
             RedirectAttributes mensajes) {
         ejecutarOperacion(() -> carritoService.reducirProducto(id, session),
-                "La cantidad se actualizó.", mensajes);
+                "message.cart.quantity", mensajes);
         return "redirect:/carrito";
     }
 
@@ -56,14 +56,14 @@ public class CarritoController {
     public String eliminar(@PathVariable Long id, HttpSession session,
             RedirectAttributes mensajes) {
         carritoService.eliminarProducto(id, session);
-        mensajes.addFlashAttribute("exito", "El producto se eliminó del carrito.");
+        mensajes.addFlashAttribute("exito", "message.cart.removed");
         return "redirect:/carrito";
     }
 
     @PostMapping("/vaciar")
     public String vaciar(HttpSession session, RedirectAttributes mensajes) {
         carritoService.vaciar(session);
-        mensajes.addFlashAttribute("exito", "El carrito se vació correctamente.");
+        mensajes.addFlashAttribute("exito", "message.cart.emptied");
         return "redirect:/carrito";
     }
 

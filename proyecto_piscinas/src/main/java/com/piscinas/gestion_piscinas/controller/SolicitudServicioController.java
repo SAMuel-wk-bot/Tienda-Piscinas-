@@ -50,7 +50,7 @@ public class SolicitudServicioController {
         }
         try {
             solicitudService.crearSolicitud(solicitudForm, principal.getName());
-            mensajes.addFlashAttribute("exito", "La solicitud se registró correctamente.");
+            mensajes.addFlashAttribute("exito", "message.request.created");
             return "redirect:/cliente/solicitudes";
         } catch (IllegalArgumentException ex) {
             resultado.reject("solicitud.invalida", ex.getMessage());

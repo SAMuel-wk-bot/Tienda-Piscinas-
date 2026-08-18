@@ -11,23 +11,23 @@
     <main class="container py-5">
         <div class="card border-0 shadow-sm mx-auto" style="max-width: 44rem;">
             <div class="card-body p-4">
-                <h1 class="h3" th:text="${categoria.idCategoria == null ? 'Nueva categoría' : 'Modificar categoría'}">Categoría</h1>
+                <h1 class="h3" th:text="${categoria.idCategoria == null} ? #{category.new} : #{category.edit}">Categoría</h1>
                 <form method="post" th:action="@{/administracion/categorias/guardar}" th:object="${categoria}">
                     <input type="hidden" th:field="*{idCategoria}"/>
                     <div class="mb-3">
-                        <label for="nombreCategoria" class="form-label">Nombre</label>
+                        <label for="nombreCategoria" class="form-label" th:text="#{common.name}">Nombre</label>
                         <input id="nombreCategoria" type="text" class="form-control" th:field="*{nombreCategoria}"
                                th:classappend="${#fields.hasErrors('nombreCategoria')} ? 'is-invalid'"/>
                         <div class="invalid-feedback" th:errors="*{nombreCategoria}"></div>
                     </div>
                     <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción</label>
+                        <label for="descripcion" class="form-label" th:text="#{common.description}">Descripción</label>
                         <textarea id="descripcion" class="form-control" rows="4" th:field="*{descripcion}"
                                   th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'"></textarea>
                         <div class="invalid-feedback" th:errors="*{descripcion}"></div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Guardar</button>
-                    <a class="btn btn-outline-secondary" th:href="@{/administracion/categorias}">Cancelar</a>
+                    <button class="btn btn-primary" type="submit" th:text="#{action.save}">Guardar</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/administracion/categorias}" th:text="#{action.cancel}">Cancelar</a>
                 </form>
             </div>
         </div>
