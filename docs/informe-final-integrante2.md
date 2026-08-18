@@ -189,7 +189,7 @@ Pruebas externas pendientes: script sobre MySQL limpio, QA visual manual respons
 - Repositorio: `https://github.com/SAMuel-wk-bot/Tienda-Piscinas-.git`.
 - Base usada: `main` en `8c3fdeb4eadaea70be31cb688f9ec5435c6b3c29` (`Avance 2`).
 - Rama local: `feature/samuel-segundo-50`.
-- Commits funcionales desde la base: 18.
+- Commits de desarrollo e informe desde la base al momento de redactar: 19 (18 funcionales y 1 de cierre documental).
 - Diferencia acumulada antes del commit de cierre: 157 archivos, 9617 inserciones y 1316 eliminaciones; gran parte de las eliminaciones corresponde a artefactos generados de `target` y al SQL duplicado.
 - Push: no confirmado; HTTP 403 en todos los intentos.
 - Pull Request: no creado porque la rama no existe en remoto.
@@ -214,6 +214,7 @@ Pruebas externas pendientes: script sobre MySQL limpio, QA visual manual respons
 16. `79d86fe34d558813ced3675b15d5e8d46993700b` — Completar README y documentacion de instalacion.
 17. `fd3eb38de646e7d81ad95a00ec47f02dc86811d7` — Preparar matriz de rubrica y guion de defensa.
 18. `9452b0bc0f52299731c072dae8ae92364758332c` — Completar pruebas finales de seguridad e internacionalizacion.
+19. `0fb13c9c23db31d8f30a3ac6b5cd600225c79008` — Completar informe final y evidencias de entrega.
 
 ### Rama objetivo del PR
 

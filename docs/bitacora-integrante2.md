@@ -1203,13 +1203,13 @@ La capa Service entrega una clave en vez de una frase fija. La vista consulta es
 6. Revisión de secretos: sin contraseña MySQL fija, claves privadas ni API keys; solamente credenciales ficticias demo documentadas.
 7. Rastreables: un SQL oficial; ningún `target` ni `.env` real.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar informe final y evidencias de entrega`.
-- **Hash del commit:** se registrará después de crear el commit.
+- **Commit realizado:** `Completar informe final y evidencias de entrega`.
+- **Hash del commit:** `0fb13c9c23db31d8f30a3ac6b5cd600225c79008`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** GitHub — 10%, presentación/defensa — 10% y trazabilidad completa.
-- **Pendientes:** crear commit, intentar push, resolver permiso, acordar rama destino y abrir PR con revisión entre pares.
-- **Estado del bloque:** **INFORME PREPARADO LOCALMENTE / COMMIT, PUSH Y PR PENDIENTES**.
+- **Pendientes:** intentar push, resolver permiso, acordar rama destino y abrir PR con revisión entre pares.
+- **Estado del bloque:** **INFORME CONFIRMADO LOCALMENTE / PUSH Y PR PENDIENTES**.
 
 ## Checklist oficial del Integrante 2
 
