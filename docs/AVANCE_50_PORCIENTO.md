@@ -1,7 +1,7 @@
 # Informe técnico del avance: 50%
 
 **Fecha de corte:** 17 de agosto de 2026  
-**Rama:** `codex/tienda-piscinas`  
+**Rama:** `samuel`  
 **Objetivo:** construir la base funcional, persistente, visual y reproducible de Tienda Piscinas Santamaría sin ejecutar la mitad asignada al segundo integrante.
 
 ## 1. Problema y alcance

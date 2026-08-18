@@ -1,6 +1,6 @@
 # Segundo 50% — tareas para el compañero
 
-Trabajar en una rama propia (por ejemplo, `feature/segundo-50`) y abrir un pull request hacia `codex/tienda-piscinas` o la rama de integración acordada. Cada bloque debe incluir pruebas, un commit descriptivo y actualización documental.
+Trabajar en una rama propia (por ejemplo, `feature/segundo-50`) y abrir un pull request hacia `samuel` o la rama de integración acordada. Cada bloque debe incluir pruebas, un commit descriptivo y actualización documental.
 
 ## Prioridad 1: seguridad y usuarios
 
