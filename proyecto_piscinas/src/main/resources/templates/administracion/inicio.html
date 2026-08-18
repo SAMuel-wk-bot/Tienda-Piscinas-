@@ -11,7 +11,11 @@
     <main class="container py-5">
         <h1 class="h2">Panel administrativo</h1>
         <p class="text-muted">Acceso exclusivo para el rol ADMINISTRADOR.</p>
-        <a class="btn btn-primary" th:href="@{/administracion/usuarios}">Consultar usuarios</a>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary" th:href="@{/administracion/usuarios}">Consultar usuarios</a>
+            <a class="btn btn-primary" th:href="@{/administracion/categorias}">Gestionar categorías</a>
+            <a class="btn btn-primary" th:href="@{/administracion/productos}">Gestionar productos</a>
+        </div>
     </main>
     <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

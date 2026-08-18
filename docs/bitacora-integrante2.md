@@ -293,12 +293,79 @@ Ejecución final:
 7. Login con cuenta CLIENTE persistida y BCrypt: **autenticado y redirigido a `/` / PASA**.
 8. Suite completa: 11 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar pruebas de autenticacion y autorizacion`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Agregar pruebas de autenticacion y autorizacion`.
+- **Hash del commit:** `beb01504316d1588645fbb345bd55f0e7eee3430`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** autenticación y roles (10%), temáticas del curso, evidencia comprobable y calidad para la defensa.
 - **Pendientes:** publicar commits al obtener permisos; ampliar pruebas cuando existan carrito, pedidos y solicitudes.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 4 — CRUD completo de categorías y productos
+
+- **Fecha:** 17 de agosto de 2026.
+- **Objetivo:** completar altas, consultas, modificaciones y eliminaciones controladas de categorías y productos, respetando la separación MVC estudiada.
+- **Situación antes del cambio:** los repositorios y servicios tenían operaciones básicas; solo existía un listado técnico de productos. No había controladores/vistas administrativos, validación de duplicados ni protección de relaciones al borrar.
+
+### Archivos creados
+
+- `src/main/java/com/piscinas/gestion_piscinas/controller/CategoriaController.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/controller/ProductoAdministracionController.java`.
+- `src/main/resources/templates/categorias/listado.html`.
+- `src/main/resources/templates/categorias/formulario.html`.
+- `src/main/resources/templates/productos/administracion.html`.
+- `src/main/resources/templates/productos/formulario.html`.
+- `src/test/java/com/piscinas/gestion_piscinas/CrudCategoriaProductoTests.java`.
+- `src/test/java/com/piscinas/gestion_piscinas/CrudWebTests.java`.
+
+### Archivos modificados
+
+- `CategoriaRepository.java`, `ProductoRepository.java` y `DetallePedidoRepository.java`.
+- `CategoriaServiceImpl.java` y `ProductoServiceImpl.java`.
+- `ProductoController.java`.
+- `templates/productos/listado.html`.
+- `templates/administracion/inicio.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- CRUD administrativo de categorías y productos bajo `/administracion/**`.
+- Formularios Thymeleaf con validaciones Jakarta y mensajes de campo.
+- Nombres de categoría únicos sin distinguir mayúsculas/minúsculas.
+- Alta y modificación de productos con precio, stock, descripción y categoría existente.
+- Las modificaciones de producto preservan la fecha original de ingreso.
+- La categoría se vuelve a consultar en el servidor; no se confía en un objeto enviado por el navegador.
+- Una categoría con productos asociados no puede eliminarse.
+- Un producto usado en un detalle de pedido no puede eliminarse.
+- Eliminaciones mediante POST protegido por CSRF, no mediante enlaces GET.
+- Catálogo público responsivo con cards, precios, existencias, agotados y listas vacías.
+- Botones administrativos solo dentro de rutas protegidas y, en el catálogo, condicionados por Thymeleaf Security.
+
+### Temas del curso relacionados
+
+- MVC, Controller, Service, ServiceImpl, Repository, JPA/Hibernate, CRUD, `ManyToOne`, validaciones, Thymeleaf, Bootstrap, formularios y Spring Security.
+
+### Explicación sencilla
+
+El controlador recibe y valida el formulario. El servicio aplica las reglas del negocio y busca la categoría real. El repositorio guarda o consulta la información. Al borrar, el servicio pregunta primero si existen relaciones que deban conservarse y devuelve un mensaje claro en lugar de provocar un error de llave foránea.
+
+### Pruebas ejecutadas y resultados
+
+1. Categoría duplicada con diferente combinación de mayúsculas: **RECHAZADA / PASA**.
+2. Eliminación de categoría asociada a un producto: **RECHAZADA / PASA**.
+3. Creación y modificación de producto con fecha preservada: **PASA**.
+4. Producto con categoría inexistente: **RECHAZADO / PASA**.
+5. Catálogo público renderizado con Thymeleaf: **200 / PASA**.
+6. Listados administrativos de categorías y productos: **200 para ADMINISTRADOR / PASA**.
+7. Formularios inválidos devuelven errores de campo: **PASA**.
+8. Suite limpia completa: 18 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar CRUD de categorias y productos con validaciones`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** uso medular de BD, temáticas del curso, autenticación/roles y diseño final.
+- **Pendientes:** búsquedas/filtros JPQL, botones funcionales del carrito y publicación remota.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -332,9 +399,9 @@ Ejecución final:
 - [ ] SolicitudServicio.
 - [ ] Pedido.
 - [ ] DetallePedido.
-- [ ] CRUD Categoria.
-- [ ] CRUD Producto.
-- [ ] Validaciones.
+- [ ] CRUD Categoria. Implementado y probado localmente; pendiente push.
+- [ ] CRUD Producto. Implementado y probado localmente; pendiente push.
+- [ ] Validaciones. Implementadas y probadas localmente; pendiente push.
 - [ ] Servicios.
 - [ ] Solicitudes.
 - [ ] Búsqueda.

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface DetallePedidoRepository extends JpaRepository<DetallePedido, Long> {
 
     List<DetallePedido> findByPedidoIdPedido(Long idPedido);
+
+    boolean existsByProductoIdProducto(Long idProducto);
 }

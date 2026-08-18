@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Formulario de categoría - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="card border-0 shadow-sm mx-auto" style="max-width: 44rem;">
+            <div class="card-body p-4">
+                <h1 class="h3" th:text="${categoria.idCategoria == null ? 'Nueva categoría' : 'Modificar categoría'}">Categoría</h1>
+                <form method="post" th:action="@{/administracion/categorias/guardar}" th:object="${categoria}">
+                    <input type="hidden" th:field="*{idCategoria}"/>
+                    <div class="mb-3">
+                        <label for="nombreCategoria" class="form-label">Nombre</label>
+                        <input id="nombreCategoria" type="text" class="form-control" th:field="*{nombreCategoria}"
+                               th:classappend="${#fields.hasErrors('nombreCategoria')} ? 'is-invalid'"/>
+                        <div class="invalid-feedback" th:errors="*{nombreCategoria}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea id="descripcion" class="form-control" rows="4" th:field="*{descripcion}"
+                                  th:classappend="${#fields.hasErrors('descripcion')} ? 'is-invalid'"></textarea>
+                        <div class="invalid-feedback" th:errors="*{descripcion}"></div>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/administracion/categorias}">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
