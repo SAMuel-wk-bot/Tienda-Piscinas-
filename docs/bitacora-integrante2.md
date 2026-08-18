@@ -1053,13 +1053,68 @@ Una persona que recibe el repositorio puede identificar qué hace la aplicación
 3. `git diff --check`: **PASA**, sin errores de espacios.
 4. Suite limpia completa posterior a la documentación: 60 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Completar README y documentacion de instalacion`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Completar README y documentacion de instalacion`.
+- **Hash del commit:** `79d86fe34d558813ced3675b15d5e8d46993700b`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** presentación y defensa — 10%, uso colaborativo de GitHub, solución real y reproducibilidad.
-- **Pendientes:** crear commit, publicar cuando exista permiso remoto y enlazar desde el README los documentos de rúbrica/usabilidad cuando se creen.
-- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
+- **Pendientes:** publicar cuando exista permiso remoto.
+- **Estado del bloque:** **HECHO, PROBADO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 16 — Evidencias de rúbrica, usabilidad y defensa
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** preparar la documentación académica necesaria para vincular funcionalidades con la rúbrica, recolectar evidencia verdadera y ejecutar una defensa ordenada sin fabricar resultados.
+- **Situación antes del cambio:** la bitácora y el README documentaban el trabajo técnico, pero no existían la matriz solicitada, el protocolo de evidencia real, los diez escenarios de usabilidad, el borrador de artículo ni el guion de demostración.
+
+### Archivos creados
+
+- `docs/matriz-rubrica.md`.
+- `docs/evidencia-cliente.md`.
+- `docs/pruebas-usabilidad.md`.
+- `docs/borrador-articulo-ieee.md`.
+- `docs/guion-defensa.md`.
+
+### Archivos modificados
+
+- `README.md`.
+- `docs/bitacora-integrante2.md`.
+
+### Documentación implementada
+
+- Matriz de los 10 criterios, peso, funcionalidad, archivo, prueba y estado real.
+- Tabla de más de seis temas del curso con forma concreta de demostrarlos.
+- Registro del bloqueo GitHub y de las evidencias que no deben simularse.
+- Consentimiento sugerido, entrevista, encuesta y análisis de mercado pendientes de participantes/fuentes reales.
+- Diez escenarios de usabilidad exigidos y tabla con resultado real, problema y cambio sin completar ficticiamente.
+- Borrador de artículo con resumen, arquitectura, datos, seguridad, transacciones, investigación, resultados automatizados, limitaciones y referencias reales.
+- Guion de 12–15 minutos, reparto sugerido, recorrido por roles, decisiones técnicas y preguntas probables.
+- Enlaces desde README hacia todos los documentos.
+
+### Temas del curso relacionados
+
+- Presentación y defensa, documentación técnica, pruebas, Git colaborativo, solución real, investigación y trazabilidad de requisitos.
+
+### Explicación sencilla
+
+La matriz permite mostrar dónde vive cada criterio y cómo comprobarlo. Los protocolos indican cómo obtener evidencia real sin inventarla. El artículo resume decisiones y resultados comprobados, y el guion ordena una demostración que conecta interfaz, seguridad, base de datos y transacciones.
+
+### Pruebas ejecutadas y resultados
+
+1. README contiene 11 enlaces internos y todos apuntan a archivos existentes: **PASA**.
+2. Protocolo de usabilidad contiene exactamente 10 casos: **PASA**.
+3. Matriz contiene los 10 criterios principales de la rúbrica: **PASA**.
+4. Los campos de resultados humanos permanecen marcados `PENDIENTE`: **PASA**.
+5. `git diff --check`: **PASA**.
+6. Suite limpia completa: 60 pruebas, 0 fallos, 0 errores, 0 omitidas, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Preparar matriz de rubrica y guion de defensa`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** uso colaborativo de GitHub — 10%, solución real — 10%, presentación y defensa — 10%, investigación adicional — 7%.
+- **Pendientes:** crear commit, publicar, ejecutar entrevista/usabilidad reales, maquetar artículo en la plantilla solicitada y ensayar la defensa con ambos integrantes.
+- **Estado del bloque:** **MATERIAL PREPARADO Y VERIFICADO LOCALMENTE / EVIDENCIA HUMANA, COMMIT Y PUSH PENDIENTES**.
 
 ## Checklist oficial del Integrante 2
 
@@ -1137,12 +1192,12 @@ Una persona que recibe el repositorio puede identificar qué hace la aplicación
 - [ ] Script/respaldo reproducible. Script único de 13 tablas validado estáticamente; pendiente ejecución en instancia MySQL limpia y push.
 - [ ] Guía de instalación y README. Completos, enlaces verificados y suite aprobada localmente; pendiente push.
 - [ ] Usuarios demo. Incorporados al SQL con BCrypt y hashes validados; pendiente push.
-- [ ] Evidencia real/mercado preparada.
-- [ ] Pruebas de usabilidad preparadas.
+- [ ] Evidencia real/mercado preparada. Instrumentos listos; evidencia real todavía pendiente y no inventada.
+- [ ] Pruebas de usabilidad preparadas. Diez escenarios y tablas listos; ejecución humana pendiente.
 - [ ] Resultados reales incorporados cuando sean proporcionados.
-- [ ] Borrador IEEE.
-- [ ] Guion de demostración.
-- [ ] Matriz de rúbrica.
+- [ ] Borrador IEEE. Contenido técnico preliminar listo; maquetación y autores reales pendientes.
+- [ ] Guion de demostración. Recorrido, reparto y preguntas preparados; ensayo del equipo pendiente.
+- [ ] Matriz de rúbrica. Diez criterios y temas demostrables documentados; pendiente push.
 - [ ] Push de rama.
 - [ ] Pull Request.
 - [ ] Revisión de compañero.

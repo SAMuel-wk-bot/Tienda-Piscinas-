@@ -261,8 +261,11 @@ La última ejecución documentada aprobó las 60 pruebas con 0 fallos y 0 errore
 - [Bitácora del Integrante 2](docs/bitacora-integrante2.md).
 - [Configuración MySQL](docs/configuracion-mysql.md).
 - [Investigación del cotizador](docs/investigacion-cotizacion.md).
-
-La matriz de rúbrica, evidencia de cliente, pruebas de usabilidad y guion de defensa se incorporan en los siguientes bloques documentales.
+- [Matriz de rúbrica](docs/matriz-rubrica.md).
+- [Plantilla de evidencia de cliente](docs/evidencia-cliente.md).
+- [Protocolo de usabilidad](docs/pruebas-usabilidad.md).
+- [Borrador de artículo IEEE](docs/borrador-articulo-ieee.md).
+- [Guion de defensa](docs/guion-defensa.md).
 
 ## Contribuciones
 
