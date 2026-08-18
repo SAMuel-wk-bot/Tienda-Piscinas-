@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ServicioRepository extends JpaRepository<Servicio, Long> {
 
     List<Servicio> findByActivoTrueOrderByNombreAsc();
+
+    List<Servicio> findAllByOrderByNombreAsc();
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Solicitudes - Administración</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <h1 class="h2">Solicitudes de servicio</h1>
+        <form class="row g-2 align-items-end mb-4" method="get" th:action="@{/administracion/solicitudes}">
+            <div class="col-sm-6 col-md-4">
+                <label for="estadoFiltro" class="form-label">Filtrar por estado</label>
+                <select id="estadoFiltro" name="estado" class="form-select">
+                    <option value="">Todos</option>
+                    <option th:each="estadoItem : ${estados}" th:value="${estadoItem}" th:text="${estadoItem}"
+                            th:selected="${estadoSeleccionado == estadoItem}"></option>
+                </select>
+            </div>
+            <div class="col-auto"><button class="btn btn-primary" type="submit">Filtrar</button></div>
+        </form>
+        <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div class="table-responsive shadow-sm">
+            <table class="table table-striped table-hover bg-white mb-0 align-middle">
+                <thead class="table-primary"><tr><th>Fecha</th><th>Cliente</th><th>Servicio</th><th>Dirección</th><th>Estado</th></tr></thead>
+                <tbody>
+                    <tr th:each="solicitud : ${solicitudes}">
+                        <td th:text="${#temporals.format(solicitud.fechaSolicitud, 'dd/MM/yyyy HH:mm')}">Fecha</td>
+                        <td th:text="${solicitud.cliente.usuario.nombreUsuario + ' ' + solicitud.cliente.usuario.apellidoUsuario}">Cliente</td>
+                        <td th:text="${solicitud.servicio.nombre}">Servicio</td>
+                        <td th:text="${solicitud.direccionServicio}">Dirección</td>
+                        <td>
+                            <form class="d-flex gap-2" method="post"
+                                  th:action="@{/administracion/solicitudes/{id}/estado(id=${solicitud.idSolicitud})}">
+                                <select name="estado" class="form-select form-select-sm">
+                                    <option th:each="estadoItem : ${estados}" th:value="${estadoItem}" th:text="${estadoItem}"
+                                            th:selected="${solicitud.estado == estadoItem}"></option>
+                                </select>
+                                <button class="btn btn-sm btn-outline-primary" type="submit">Actualizar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(solicitudes)}"><td colspan="5" class="text-center text-muted">No hay solicitudes para el filtro seleccionado.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -12,4 +12,8 @@ public interface SolicitudServicioRepository extends JpaRepository<SolicitudServ
     List<SolicitudServicio> findByClienteUsuarioEmailUsuarioOrderByFechaSolicitudDesc(String emailUsuario);
 
     List<SolicitudServicio> findByEstadoOrderByFechaSolicitudDesc(EstadoSolicitudServicio estado);
+
+    List<SolicitudServicio> findAllByOrderByFechaSolicitudDesc();
+
+    boolean existsByServicioIdServicio(Long idServicio);
 }

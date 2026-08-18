@@ -417,12 +417,81 @@ El controlador recibe los filtros y los entrega al servicio. Cuando solo se busc
 3. Filtro combinado JPQL devuelve el cloro disponible y excluye el agotado: **PASA**.
 4. Suite limpia completa: 21 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
 
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Agregar busquedas y filtros con consultas JPA y JPQL`.
-- **Hash del commit:** se registrará en la siguiente actualización.
+- **Commit realizado:** `Agregar busquedas y filtros con consultas JPA y JPQL`.
+- **Hash del commit:** `3f211df301c2e63060a9df6d36b5d270ecbd0469`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
 - **Criterio de rúbrica relacionado:** uso efectivo de BD, temáticas del curso y diseño/experiencia del catálogo.
 - **Pendientes:** filtros administrativos de pedidos y solicitudes cuando esos módulos estén completos; publicación remota.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 6 — Gestión de servicios y solicitudes
+
+- **Fecha:** 18 de agosto de 2026.
+- **Objetivo:** implementar un catálogo real de servicios, su mantenimiento administrativo y una transacción de solicitud controlada por identidad y rol.
+- **Situación antes del cambio:** las entidades y repositorios existían desde el modelo inicial, pero no tenían capa de servicio, controladores, vistas ni flujo utilizable.
+
+### Archivos creados
+
+- `domain/SolicitudServicioForm.java`.
+- `service/ServicioService.java` y `ServicioServiceImpl.java`.
+- `service/SolicitudServicioService.java` y `SolicitudServicioServiceImpl.java`.
+- `controller/ServicioController.java`.
+- `controller/ServicioAdministracionController.java`.
+- `controller/SolicitudServicioController.java`.
+- `controller/SolicitudAdministracionController.java`.
+- `templates/servicios/listado.html`.
+- `templates/servicios/administracion.html`.
+- `templates/servicios/formulario.html`.
+- `templates/solicitudes/formulario.html`.
+- `templates/solicitudes/cliente-listado.html`.
+- `templates/solicitudes/administracion.html`.
+- `ServicioSolicitudTests.java`.
+- `ServicioSolicitudWebTests.java`.
+
+### Archivos modificados
+
+- `ServicioRepository.java` y `SolicitudServicioRepository.java`.
+- Fragmento de encabezado y paneles de cliente/administración.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Catálogo público que muestra únicamente servicios activos.
+- CRUD administrativo de servicios con nombre, descripción, precio base y estado activo.
+- Eliminación bloqueada si el servicio tiene historial de solicitudes; se recomienda desactivarlo.
+- Formulario de solicitud disponible solo para CLIENTE.
+- El servidor obtiene el cliente desde `Principal`, vuelve a consultar el servicio y exige que esté activo.
+- Fecha y estado `PENDIENTE` definidos en servidor; el navegador no puede elegirlos.
+- El cliente consulta exclusivamente solicitudes asociadas a su correo autenticado.
+- El administrador consulta todas las solicitudes, filtra por estado y actualiza estados.
+- Navegación y paneles actualizados según rol.
+
+### Temas del curso relacionados
+
+- MVC, Service/ServiceImpl, JPA, relaciones `ManyToOne`, consultas derivadas, formularios, validación, Thymeleaf, Bootstrap, Spring Security y transacciones.
+
+### Explicación sencilla
+
+El formulario del cliente solo contiene los datos que le corresponde decidir. Al guardar, la capa de servicio usa el correo autenticado para localizar su perfil, comprueba que el servicio exista y esté activo, y crea la solicitud pendiente. El administrador cambia su estado con una operación POST protegida por CSRF.
+
+### Pruebas ejecutadas y resultados
+
+1. Creación con cliente obtenido del servidor y estado PENDIENTE: **PASA**.
+2. Solicitud de servicio inactivo: **RECHAZADA / PASA**.
+3. Cambio y filtro por estado EN_PROCESO: **PASA**.
+4. Eliminación de servicio con solicitudes: **RECHAZADA / PASA**.
+5. Catálogo público de servicios: **200 / PASA**.
+6. Vistas de solicitudes de CLIENTE: **200 / PASA**.
+7. Vistas administrativas de servicios y solicitudes: **200 / PASA**.
+8. Suite limpia completa: 28 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar gestion de servicios y solicitudes`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; permanece el bloqueo HTTP `403` del repositorio remoto.
+- **Criterio de rúbrica relacionado:** almacenamiento transaccional, uso efectivo de BD, autenticación/roles, temáticas del curso y solución para un cliente potencial.
+- **Pendientes:** cancelar solicitud por su propio cliente si se define como necesario, internacionalizar estados y publicar remotamente.
 - **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
@@ -452,15 +521,15 @@ El controlador recibe los filtros y los entrega al servicio. Cuando solo se busc
 - [ ] Usuario.
 - [ ] Rol.
 - [ ] Cliente.
-- [ ] Servicio.
-- [ ] SolicitudServicio.
+- [ ] Servicio. Módulo completo y probado localmente; pendiente push.
+- [ ] SolicitudServicio. Flujo completo y probado localmente; pendiente push.
 - [ ] Pedido.
 - [ ] DetallePedido.
 - [ ] CRUD Categoria. Implementado y probado localmente; pendiente push.
 - [ ] CRUD Producto. Implementado y probado localmente; pendiente push.
 - [ ] Validaciones. Implementadas y probadas localmente; pendiente push.
-- [ ] Servicios.
-- [ ] Solicitudes.
+- [ ] Servicios. CRUD y catálogo aprobados localmente; pendiente push.
+- [ ] Solicitudes. Cliente y administración aprobados localmente; pendiente push.
 - [ ] Búsqueda. Implementada y probada localmente; pendiente push.
 - [ ] Filtros. Implementados y probados localmente; pendiente push.
 - [ ] JPQL/consultas. Consulta JPQL y derivadas aprobadas localmente; pendiente push.
