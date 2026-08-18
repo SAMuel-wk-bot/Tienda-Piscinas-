@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Usuarios - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 mb-0">Usuarios registrados</h1>
+            <a class="btn btn-outline-primary" th:href="@{/administracion}">Volver</a>
+        </div>
+        <div class="table-responsive shadow-sm">
+            <table class="table table-striped table-hover bg-white mb-0">
+                <thead class="table-primary">
+                    <tr><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Rol</th><th>Estado</th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.nombreUsuario + ' ' + usuario.apellidoUsuario}">Nombre</td>
+                        <td th:text="${usuario.emailUsuario}">correo</td>
+                        <td th:text="${usuario.telefonoUsuario}">teléfono</td>
+                        <td>
+                            <span th:each="rol : ${usuario.roles}" class="badge text-bg-primary me-1"
+                                  th:text="${rol.nombre}">ROL</span>
+                        </td>
+                        <td th:text="${usuario.activo ? 'Activo' : 'Inactivo'}">Activo</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(usuarios)}">
+                        <td colspan="5" class="text-center text-muted">No hay usuarios registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

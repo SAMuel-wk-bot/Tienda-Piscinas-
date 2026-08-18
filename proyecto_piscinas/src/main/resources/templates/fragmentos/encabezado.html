@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <body>
 
@@ -45,36 +46,43 @@
 
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="#servicios">
+                               th:href="@{/#servicios}">
                                 Servicios
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="#productos">
+                               th:href="@{/productos}">
                                 Productos
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
                             <a class="nav-link"
-                               href="#contacto">
-                                Contacto
+                               th:href="@{/carrito}">
+                                Carrito
                             </a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasRole('ADMINISTRADOR')">
+                            <a class="nav-link" th:href="@{/administracion}">Administración</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/login}">Ingresar</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/registro}">Registro</a>
                         </li>
 
                     </ul>
 
-                    <!-- Botón de WhatsApp -->
-                    <a href="https://wa.me/50688041005"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="btn btn-success ms-lg-3">
-
-                        WhatsApp
-
-                    </a>
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{/logout}" method="post" class="ms-lg-3">
+                        <button class="btn btn-outline-light" type="submit">Cerrar sesión</button>
+                    </form>
 
                 </div>
 

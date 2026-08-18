@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Registro - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="h3 mb-1">Crear cuenta de cliente</h1>
+                        <p class="text-muted">El rol CLIENTE se asigna de forma segura en el servidor.</p>
+
+                        <form th:action="@{/registro}" th:object="${registro}" method="post">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input id="nombre" type="text" class="form-control"
+                                           th:field="*{nombre}" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="apellido" class="form-label">Apellido</label>
+                                    <input id="apellido" type="text" class="form-control"
+                                           th:field="*{apellido}" th:classappend="${#fields.hasErrors('apellido')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{apellido}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="correo" class="form-label">Correo electrónico</label>
+                                    <input id="correo" type="email" class="form-control"
+                                           th:field="*{correo}" th:classappend="${#fields.hasErrors('correo')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{correo}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <input id="telefono" type="text" class="form-control"
+                                           th:field="*{telefono}" th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{telefono}"></div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="direccion" class="form-label">Dirección</label>
+                                    <textarea id="direccion" class="form-control" rows="2"
+                                              th:field="*{direccion}" th:classappend="${#fields.hasErrors('direccion')} ? 'is-invalid'"></textarea>
+                                    <div class="invalid-feedback" th:errors="*{direccion}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="contrasena" class="form-label">Contraseña</label>
+                                    <input id="contrasena" type="password" class="form-control"
+                                           th:field="*{contrasena}" th:classappend="${#fields.hasErrors('contrasena')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{contrasena}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="confirmarContrasena" class="form-label">Confirmar contraseña</label>
+                                    <input id="confirmarContrasena" type="password" class="form-control"
+                                           th:field="*{confirmarContrasena}" th:classappend="${#fields.hasErrors('confirmarContrasena')} ? 'is-invalid'"/>
+                                    <div class="invalid-feedback" th:errors="*{confirmarContrasena}"></div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-4">Crear cuenta</button>
+                            <a class="btn btn-link mt-4" th:href="@{/login}">Ya tengo una cuenta</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

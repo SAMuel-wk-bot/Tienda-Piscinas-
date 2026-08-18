@@ -156,33 +156,115 @@ Total inicial: **6 tablas reales**. No existen todavía `roles`, `clientes`, `se
 6. Validación SQL: ambas copias sincronizadas: **PASA**.
 
 - **Resultado general:** modelo y relaciones funcionales en prueba automatizada. MySQL real sigue pendiente de credenciales/autorización para ejecutar el script en una base limpia.
-- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Implementar modelo de usuarios roles y entidades transaccionales`.
-- **Hash del commit:** se registrará en la próxima actualización.
+- **Commit realizado:** `Implementar modelo de usuarios roles y entidades transaccionales`.
+- **Hash del commit:** `dc8b1ae7074234e049acc8fdad440b63b1df9b34`.
 - **Rama:** `feature/samuel-segundo-50`.
 - **Push confirmado:** **NO**; el permiso remoto continúa bloqueado por HTTP `403`.
 - **Criterio de rúbrica relacionado:** almacenamiento (más de 8 tablas y tablas transaccionales), uso efectivo de BD, temáticas JPA/relaciones/validación y base para autenticación.
 - **Pendientes:** servicios/controladores/vistas de las entidades; seguridad; BCrypt; registro; transacción de compra; ejecutar el SQL contra MySQL limpio cuando existan credenciales autorizadas.
-- **Estado del bloque:** **HECHO LOCAL / PENDIENTE COMMIT Y PUSH**.
+- **Estado del bloque:** **HECHO Y CONFIRMADO LOCALMENTE / PENDIENTE PUSH**.
+
+## Bloque 2 — Autenticación, registro y control de acceso por roles
+
+- **Fecha:** 17 de agosto de 2026.
+- **Objetivo:** implementar autenticación persistida con Spring Security, roles reales, registro público seguro y restricciones tanto en servidor como en Thymeleaf.
+- **Situación antes del cambio:** existían las tablas `usuarios`, `roles`, `usuarios_roles` y `clientes`, pero no había configuración de seguridad, cifrado, login, logout, registro ni rutas protegidas.
+
+### Archivos creados
+
+- `src/main/java/com/piscinas/gestion_piscinas/config/SecurityConfig.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/config/DatosInicialesConfig.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/controller/InicioController.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/controller/RegistroController.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/controller/AdministracionController.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/domain/RegistroUsuario.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/service/UsuarioDetallesService.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/service/UsuarioService.java`.
+- `src/main/java/com/piscinas/gestion_piscinas/service/UsuarioServiceImpl.java`.
+- `src/main/resources/templates/seguridad/login.html`.
+- `src/main/resources/templates/seguridad/registro.html`.
+- `src/main/resources/templates/administracion/inicio.html`.
+- `src/main/resources/templates/administracion/usuarios.html`.
+- `src/main/resources/templates/error/403.html`.
+- `src/test/java/com/piscinas/gestion_piscinas/RegistroUsuarioTests.java`.
+
+### Archivos modificados
+
+- `pom.xml`.
+- `src/main/resources/templates/fragmentos/encabezado.html`.
+- `docs/bitacora-integrante2.md`.
+
+### Funcionalidad implementada
+
+- Autenticación contra usuarios almacenados en la base de datos mediante `UserDetailsService`.
+- Contraseñas codificadas con `BCryptPasswordEncoder`.
+- Roles `ADMINISTRADOR` y `CLIENTE` transformados en autoridades `ROLE_ADMINISTRADOR` y `ROLE_CLIENTE`.
+- Login propio, mensajes de error, logout POST e invalidación de sesión/cookie.
+- Registro público con nombre, apellido, correo, teléfono, dirección, contraseña y confirmación.
+- Correo normalizado y único; el duplicado se rechaza antes de persistir.
+- El rol público siempre se asigna en el servidor como `CLIENTE`; el formulario no ofrece selección de roles.
+- Creación conjunta y transaccional de `Usuario` y `Cliente`.
+- Rutas `/administracion/**` protegidas para `ADMINISTRADOR`.
+- Rutas `/cliente/**` y `/carrito/**` protegidas para `CLIENTE`.
+- Menú condicionado con Thymeleaf Security y logout mediante formulario protegido por CSRF.
+- Consulta administrativa de usuarios sin mostrar hashes de contraseña.
+- Cuentas ficticias de demostración inicializadas con BCrypt únicamente si no existen.
+
+### Temas del curso relacionados
+
+- Spring Security, autenticación, roles, restricción de rutas, Thymeleaf Security, MVC, formularios, validación, servicios, repositorios, transacciones y sesión HTTP.
+
+### Explicación sencilla
+
+Spring Security recibe el correo y la contraseña del formulario. `UsuarioDetallesService` busca el usuario real y carga sus roles. BCrypt compara la contraseña escrita con el hash almacenado. Las reglas del servidor deciden qué rutas puede abrir cada rol; adicionalmente, Thymeleaf oculta las opciones que no corresponden. En el registro, el servidor ignora cualquier intento de escoger privilegios y asigna únicamente `CLIENTE`.
+
+### Credenciales ficticias exclusivas para demostración académica
+
+| Rol | Usuario | Contraseña |
+| --- | --- | --- |
+| ADMINISTRADOR | `admin@tiendapiscinas.test` | `AdminPiscinas2026!` |
+| CLIENTE | `cliente@tiendapiscinas.test` | `ClientePiscinas2026!` |
+
+La base de datos guarda hashes BCrypt, no las contraseñas anteriores en texto plano.
+
+### Pruebas ejecutadas y resultados
+
+1. `mvn clean test` en copia aislada sin el `target` versionado: **PASA**.
+2. Compilación de 41 fuentes principales y 3 fuentes de prueba: **PASA**.
+3. Carga del contexto con la cadena de seguridad y H2: **PASA**.
+4. Persistencia del modelo anterior: **PASA**.
+5. Registro crea `Usuario` y `Cliente` con rol único `CLIENTE`: **PASA**.
+6. La contraseña guardada no coincide con el texto y `PasswordEncoder.matches` la valida: **PASA**.
+7. Segundo registro con el mismo correo: **RECHAZADO como se esperaba**.
+8. Resultado Maven: 4 pruebas, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+- **Commit realizado:** pendiente al momento de redactar; mensaje previsto `Configurar autenticacion registro y control de acceso por roles`.
+- **Hash del commit:** se registrará en la siguiente actualización.
+- **Rama:** `feature/samuel-segundo-50`.
+- **Push confirmado:** **NO**; GitHub volvió a responder HTTP `403` porque la cuenta autenticada `Erian158` no tiene permiso de escritura en el repositorio de `SAMuel-wk-bot`.
+- **Criterio de rúbrica relacionado:** autenticación y roles (10%), uso efectivo de BD, temáticas del curso y diseño consistente.
+- **Pendientes:** pruebas MockMvc de rutas/login por cada rol, completar módulos administrativos enlazados, incorporar los hashes demo al script SQL final y publicar cuando exista permiso remoto.
+- **Estado del bloque:** **HECHO Y PROBADO LOCALMENTE / PENDIENTE COMMIT Y PUSH**.
 
 ## Checklist oficial del Integrante 2
 
 ### Prioridad 1 — Seguridad y usuarios
 
-- [ ] Integrar Spring Security.
-- [ ] Implementar registro.
-- [ ] Implementar inicio de sesión.
-- [ ] Implementar cierre de sesión.
-- [ ] Usar BCrypt.
-- [ ] Crear rol ADMINISTRADOR.
-- [ ] Crear rol CLIENTE.
-- [ ] Restringir menú.
-- [ ] Restringir rutas.
-- [ ] Restringir acciones.
-- [ ] Administración solo ADMINISTRADOR.
+- [ ] Integrar Spring Security. Implementado y probado localmente; pendiente push.
+- [ ] Implementar registro. Implementado y probado localmente; pendiente push.
+- [ ] Implementar inicio de sesión. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Implementar cierre de sesión. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Usar BCrypt. Implementado y probado localmente; pendiente push.
+- [ ] Crear rol ADMINISTRADOR. Implementado y probado localmente; pendiente push.
+- [ ] Crear rol CLIENTE. Implementado y probado localmente; pendiente push.
+- [ ] Restringir menú. Implementado localmente; pendiente prueba de vista y push.
+- [ ] Restringir rutas. Implementado localmente; pendiente prueba MockMvc y push.
+- [ ] Restringir acciones. Implementado localmente; pendiente completar los CRUD y push.
+- [ ] Administración solo ADMINISTRADOR. Implementado localmente; pendiente prueba MockMvc y push.
 - [ ] Compra para CLIENTE.
 - [ ] Historial para CLIENTE.
-- [ ] Usuarios de prueba.
-- [ ] Credenciales demo documentadas.
+- [ ] Usuarios de prueba. Implementados con BCrypt localmente; pendiente push y SQL final.
+- [ ] Credenciales demo documentadas. Documentadas localmente; pendiente push.
 - [ ] Pruebas de acceso permitido.
 - [ ] Pruebas de acceso denegado.
 
