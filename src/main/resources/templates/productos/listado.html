@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="#{product.catalog}">Catálogo de productos</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <h1 class="h2 mb-1" th:text="#{product.catalog}">Catálogo de productos</h1>
+                <p class="text-muted mb-0" th:text="#{product.catalog.subtitle}">Productos disponibles para el cuidado de su piscina.</p>
+            </div>
+            <a sec:authorize="hasRole('ADMINISTRADOR')" class="btn btn-primary"
+               th:href="@{/administracion/productos}" th:text="#{admin.products}">Gestionar productos</a>
+        </div>
+
+        <form class="card border-0 shadow-sm mb-4" method="get" th:action="@{/productos}">
+            <div class="card-body row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label for="nombre" class="form-label" th:text="#{product.filter.name}">Buscar por nombre</label>
+                    <input id="nombre" name="nombre" type="search" class="form-control"
+                           th:value="${nombreBuscado}" placeholder="Ejemplo: cloro"/>
+                </div>
+                <div class="col-md-4">
+                    <label for="categoria" class="form-label" th:text="#{common.category}">Categoría</label>
+                    <select id="categoria" name="categoria" class="form-select">
+                        <option value="" th:text="#{common.all}">Todas</option>
+                        <option th:each="categoriaItem : ${listaCategorias}"
+                                th:value="${categoriaItem.idCategoria}"
+                                th:text="${categoriaItem.nombreCategoria}"
+                                th:selected="${categoriaSeleccionada == categoriaItem.idCategoria}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-check mb-2">
+                        <input id="disponibles" name="disponibles" value="true" type="checkbox"
+                               class="form-check-input" th:checked="${soloDisponibles}"/>
+                        <label for="disponibles" class="form-check-label" th:text="#{product.filter.available}">Solo disponibles</label>
+                    </div>
+                    <button class="btn btn-primary" type="submit" th:text="#{action.filter}">Filtrar</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/productos}" th:text="#{product.clear}">Limpiar</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="row g-4" th:if="${!#lists.isEmpty(listaProductos)}">
+            <div class="col-sm-6 col-lg-4" th:each="prod : ${listaProductos}">
+                <article class="card h-100 border-0 shadow-sm">
+                    <img th:if="${imagenesProductos.containsKey(prod.nombreProducto)}"
+                         th:src="${imagenesProductos[prod.nombreProducto]}"
+                         th:alt="${prod.nombreProducto}"
+                         class="card-img-top imagen-producto"
+                         loading="lazy"/>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge text-bg-info align-self-start mb-2"
+                              th:text="${prod.categoria.nombreCategoria}">Categoría</span>
+                        <h2 class="h5" th:text="${prod.nombreProducto}">Producto</h2>
+                        <p class="text-muted flex-grow-1" th:text="${prod.descripcion}">Descripción</p>
+                        <p class="fs-5 fw-bold text-primary mb-2"
+                           th:text="${'₡' + #numbers.formatDecimal(prod.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</p>
+                        <p class="mb-3">
+                            <span th:if="${prod.stock > 0}" class="badge text-bg-success"
+                                  th:text="#{product.stockAvailable(${prod.stock})}">Disponible</span>
+                            <span th:if="${prod.stock == 0}" class="badge text-bg-secondary" th:text="#{product.outOfStock}">Agotado</span>
+                        </p>
+                        <form sec:authorize="hasRole('CLIENTE')" method="post"
+                              th:action="@{/carrito/agregar/{id}(id=${prod.idProducto})}">
+                            <input type="hidden" name="cantidad" value="1"/>
+                            <button class="btn btn-primary w-100" type="submit" th:disabled="${prod.stock == 0}">
+                                <span th:text="#{product.addCart}">Agregar al carrito</span>
+                            </button>
+                        </form>
+                        <a sec:authorize="isAnonymous()" class="btn btn-outline-primary" th:href="@{/login}">
+                            <span th:text="#{product.loginBuy}">Ingrese para comprar</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="alert alert-info" th:if="${#lists.isEmpty(listaProductos)}">
+            <span th:text="#{product.empty}">No hay productos registrados en este momento.</span>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

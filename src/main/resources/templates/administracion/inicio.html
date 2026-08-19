@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Administración - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <h1 class="h2" th:text="#{admin.title}">Panel administrativo</h1>
+        <p class="text-muted" th:text="#{admin.subtitle}">Acceso exclusivo para el rol ADMINISTRADOR.</p>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary" th:href="@{/administracion/usuarios}" th:text="#{admin.users}">Consultar usuarios</a>
+            <a class="btn btn-primary" th:href="@{/administracion/categorias}" th:text="#{admin.categories}">Gestionar categorías</a>
+            <a class="btn btn-primary" th:href="@{/administracion/productos}" th:text="#{admin.products}">Gestionar productos</a>
+            <a class="btn btn-primary" th:href="@{/administracion/servicios}" th:text="#{admin.services}">Gestionar servicios</a>
+            <a class="btn btn-primary" th:href="@{/administracion/solicitudes}" th:text="#{admin.requests}">Revisar solicitudes</a>
+            <a class="btn btn-primary" th:href="@{/administracion/pedidos}" th:text="#{admin.orders}">Gestionar pedidos</a>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

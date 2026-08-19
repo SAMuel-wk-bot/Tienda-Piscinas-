@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Productos - Administración</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <h1 class="h2 mb-0" th:text="#{product.management}">Gestión de productos</h1>
+            <div>
+                <a class="btn btn-outline-primary" th:href="@{/administracion/categorias}" th:text="#{admin.categories}">Categorías</a>
+                <a class="btn btn-primary" th:href="@{/administracion/productos/nuevo}" th:text="#{product.new}">Nuevo producto</a>
+            </div>
+        </div>
+        <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${#messages.msg(error)}"></div>
+        <div class="table-responsive shadow-sm">
+            <table class="table table-striped table-hover bg-white mb-0 align-middle">
+                <thead class="table-primary"><tr><th th:text="#{nav.products}">Producto</th><th th:text="#{common.category}">Categoría</th><th th:text="#{common.price}">Precio</th><th th:text="#{common.stock}">Stock</th><th th:text="#{common.actions}">Acciones</th></tr></thead>
+                <tbody>
+                    <tr th:each="producto : ${productos}">
+                        <td><strong th:text="${producto.nombreProducto}">Producto</strong><br/><small th:text="${producto.descripcion}"></small></td>
+                        <td th:text="${producto.categoria.nombreCategoria}">Categoría</td>
+                        <td th:text="${'₡' + #numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
+                        <td th:text="${producto.stock}">0</td>
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/administracion/productos/editar/{id}(id=${producto.idProducto})}" th:text="#{action.edit}">Modificar</a>
+                            <form class="d-inline" method="post"
+                                  th:action="@{/administracion/productos/eliminar/{id}(id=${producto.idProducto})}">
+                                <button class="btn btn-sm btn-outline-danger" type="submit"
+                                        th:onclick="|return confirm('#{product.confirmDelete}')|" th:text="#{action.delete}">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(productos)}"><td colspan="5" class="text-center text-muted" th:text="#{product.emptyAdmin}">No hay productos registrados.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

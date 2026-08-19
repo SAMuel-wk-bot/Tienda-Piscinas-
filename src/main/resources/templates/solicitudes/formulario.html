@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Solicitar servicio - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div class="card border-0 shadow-sm mx-auto" style="max-width: 50rem;">
+            <div class="card-body p-4">
+                <h1 class="h3" th:text="#{request.newTitle}">Nueva solicitud de servicio</h1>
+                <p class="text-muted" th:text="#{request.subtitle}">El equipo revisará la información antes de confirmar el precio final.</p>
+                <form method="post" th:action="@{/cliente/solicitudes/guardar}" th:object="${solicitudForm}">
+                    <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" th:each="error : ${#fields.globalErrors()}" th:text="${error}"></div>
+                    <div class="mb-3">
+                        <label for="idServicio" class="form-label" th:text="#{common.service}">Servicio</label>
+                        <select id="idServicio" class="form-select" th:field="*{idServicio}"
+                                th:classappend="${#fields.hasErrors('idServicio')} ? 'is-invalid'">
+                            <option value="" th:text="#{action.select}">Seleccione</option>
+                            <option th:each="servicio : ${servicios}" th:value="${servicio.idServicio}"
+                                    th:text="|${servicio.nombre} - #{common.from} ₡${#numbers.formatDecimal(servicio.precioBase, 1, 'COMMA', 2, 'POINT')}|"></option>
+                        </select>
+                        <div class="invalid-feedback" th:errors="*{idServicio}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccionServicio" class="form-label" th:text="#{request.address}">Dirección del servicio</label>
+                        <input id="direccionServicio" type="text" class="form-control" th:field="*{direccionServicio}"
+                               th:classappend="${#fields.hasErrors('direccionServicio')} ? 'is-invalid'"/>
+                        <div class="invalid-feedback" th:errors="*{direccionServicio}"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="observaciones" class="form-label" th:text="#{request.notes}">Observaciones</label>
+                        <textarea id="observaciones" class="form-control" rows="4" th:field="*{observaciones}"
+                                  th:classappend="${#fields.hasErrors('observaciones')} ? 'is-invalid'"></textarea>
+                        <div class="invalid-feedback" th:errors="*{observaciones}"></div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" th:text="#{action.sendRequest}">Enviar solicitud</button>
+                    <a class="btn btn-outline-secondary" th:href="@{/cliente/solicitudes}" th:text="#{action.cancel}">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Área de cliente - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <h1 class="h2" th:text="#{customer.title}">Área de cliente</h1>
+        <p class="text-muted" th:text="#{customer.subtitle}">Acceso exclusivo para clientes autenticados.</p>
+        <a class="btn btn-primary" th:href="@{/productos}" th:text="#{home.products}">Consultar productos</a>
+        <a class="btn btn-outline-primary" th:href="@{/cliente/solicitudes}" th:text="#{nav.requests}">Mis solicitudes</a>
+        <a class="btn btn-outline-primary" th:href="@{/cliente/pedidos}" th:text="#{nav.orders}">Mis pedidos</a>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

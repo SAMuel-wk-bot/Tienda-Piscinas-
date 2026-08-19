@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <footer th:fragment="piePagina"
+            class="bg-dark text-white pt-5 pb-3">
+
+        <div class="container">
+
+            <div class="row">
+
+                <!-- Información de la empresa -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="fw-bold" th:text="#{app.brand}">Piscinas Santamaría</h5>
+
+                    <p th:text="#{footer.description}">
+                        Productos, accesorios y servicios para el mantenimiento
+                        y cuidado de piscinas.
+                    </p>
+
+                </div>
+
+                <!-- Enlaces rápidos -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="fw-bold" th:text="#{footer.links}">Enlaces rápidos</h5>
+
+                    <ul class="list-unstyled">
+
+                        <li class="mb-2">
+                            <a th:href="@{/}"
+                               class="text-white text-decoration-none">
+                                <span th:text="#{nav.home}">Inicio</span>
+                            </a>
+                        </li>
+
+                        <li class="mb-2">
+                            <a th:href="@{/servicios}"
+                               class="text-white text-decoration-none">
+                                <span th:text="#{nav.services}">Servicios</span>
+                            </a>
+                        </li>
+
+                        <li class="mb-2">
+                            <a th:href="@{/productos}"
+                               class="text-white text-decoration-none">
+                                <span th:text="#{nav.products}">Productos</span>
+                            </a>
+                        </li>
+
+                        <li class="mb-2">
+                            <a th:href="@{/cotizador}"
+                               class="text-white text-decoration-none">
+                                <span th:text="#{nav.quote}">Cotizador</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Información de contacto -->
+                <div class="col-md-4 mb-4">
+
+                    <h5 class="fw-bold" th:text="#{footer.contact}">Contacto</h5>
+
+                    <p class="mb-2">
+                        <strong th:text="|#{footer.phone}:|">Teléfono:</strong>
+                        8804-1005
+                    </p>
+
+                    <p class="mb-2">
+                        <strong th:text="|#{footer.location}:|">Ubicación:</strong>
+                        Costa Rica
+                    </p>
+
+                    <a href="https://wa.me/50688041005"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn btn-success mt-2">
+
+                        <span th:text="#{footer.whatsapp}">Escribir por WhatsApp</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <hr class="border-secondary"/>
+
+            <!-- Derechos reservados -->
+            <div class="text-center">
+
+                <p class="mb-0">
+                    &copy; 2026 <span th:text="#{app.brand}">Piscinas Santamaría</span>.
+                    <span th:text="#{footer.rights}">Todos los derechos reservados.</span>
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+</body>
+</html>

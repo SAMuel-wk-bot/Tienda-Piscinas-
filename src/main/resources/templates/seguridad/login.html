@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="|#{login.title} - #{app.title}|">Iniciar sesión - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h1 class="h3 text-center mb-4" th:text="#{login.title}">Iniciar sesión</h1>
+
+                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                            <span th:text="#{login.error}">Correo o contraseña incorrectos.</span>
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                            <span th:text="#{login.logout}">La sesión se cerró correctamente.</span>
+                        </div>
+                        <div th:if="${param.registro}" class="alert alert-success" role="alert">
+                            <span th:text="#{register.success}">La cuenta se creó correctamente.</span>
+                        </div>
+
+                        <form th:action="@{/login}" method="post">
+                            <div class="mb-3">
+                                <label for="correo" class="form-label" th:text="#{login.email}">Correo electrónico</label>
+                                <input id="correo" name="correo" type="email"
+                                       class="form-control" autocomplete="username" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contrasena" class="form-label" th:text="#{login.password}">Contraseña</label>
+                                <input id="contrasena" name="contrasena" type="password"
+                                       class="form-control" autocomplete="current-password" required/>
+                            </div>
+                            <button class="btn btn-primary w-100" type="submit" th:text="#{login.submit}">Ingresar</button>
+                        </form>
+
+                        <p class="text-center mt-3 mb-0">
+                            <span th:text="#{login.noAccount}">¿No tiene cuenta?</span>
+                            <a th:href="@{/registro}" th:text="#{login.register}">Registrarse</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

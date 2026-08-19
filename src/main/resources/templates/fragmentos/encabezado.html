@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<body>
+
+    <header th:fragment="encabezado">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+            <div class="container">
+
+                <!-- Nombre o logo de la empresa -->
+                <a class="navbar-brand fw-bold"
+                   th:href="@{/}" th:text="#{app.brand}">
+                    Piscinas Santamaría
+                </a>
+
+                <!-- Botón para dispositivos móviles -->
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#menuPrincipal"
+                        aria-controls="menuPrincipal"
+                        aria-expanded="false"
+                        aria-label="Mostrar menú">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <!-- Opciones del menú -->
+                <div class="collapse navbar-collapse"
+                     id="menuPrincipal">
+
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                               aria-current="page"
+                               th:href="@{/}">
+                                <span th:text="#{nav.home}">Inicio</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               th:href="@{/servicios}">
+                                <span th:text="#{nav.services}">Servicios</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/cotizador}">
+                                <span th:text="#{nav.quote}">Cotizador</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               th:href="@{/productos}">
+                                <span th:text="#{nav.products}">Productos</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link" th:href="@{/cliente/solicitudes}" th:text="#{nav.requests}">Mis solicitudes</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link" th:href="@{/cliente/pedidos}" th:text="#{nav.orders}">Mis pedidos</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasRole('CLIENTE')">
+                            <a class="nav-link"
+                               th:href="@{/carrito}">
+                                <span th:text="#{nav.cart}">Carrito</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="hasRole('ADMINISTRADOR')">
+                            <a class="nav-link" th:href="@{/administracion}" th:text="#{nav.admin}">Administración</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/login}" th:text="#{nav.login}">Ingresar</a>
+                        </li>
+
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link" th:href="@{/registro}" th:text="#{nav.register}">Registro</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="dropdown ms-lg-2">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" th:text="#{language.label}">Idioma</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="?lang=es" th:text="#{language.es}">Español</a></li>
+                            <li><a class="dropdown-item" href="?lang=en" th:text="#{language.en}">English</a></li>
+                        </ul>
+                    </div>
+
+                    <form sec:authorize="isAuthenticated()"
+                          th:action="@{/logout}" method="post" class="ms-lg-3">
+                        <button class="btn btn-outline-light" type="submit" th:text="#{nav.logout}">Cerrar sesión</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+
+</body>
+</html>

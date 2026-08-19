@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="|404 - #{error.404.title}|">Recurso no encontrado - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5 text-center">
+        <div class="card border-0 shadow-sm mx-auto" style="max-width: 40rem;">
+            <div class="card-body p-5">
+                <p class="display-3 fw-bold text-primary mb-2">404</p>
+                <h1 class="h3" th:text="#{error.404.title}">No encontramos el recurso solicitado</h1>
+                <p class="text-muted" th:text="#{error.404.message}">La dirección puede ser incorrecta o el contenido ya no está disponible.</p>
+                <a class="btn btn-primary" th:href="@{/}" th:text="#{error.backHome}">Volver al inicio</a>
+                <a class="btn btn-outline-primary" th:href="@{/productos}" th:text="#{home.products}">Ver productos</a>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Detalle de pedido - Tienda Piscinas</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <h1 class="h2 mb-1" th:text="#{order.number(${pedido.idPedido})}">Pedido</h1>
+                <p class="text-muted mb-0" th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}">Fecha</p>
+            </div>
+            <span class="badge text-bg-primary fs-6" th:text="${#messages.msg('estado.' + pedido.estado.name())}">PENDIENTE</span>
+        </div>
+        <div class="mb-3">
+            <a class="btn btn-outline-secondary" th:if="${vistaAdministrativa}"
+               th:href="@{/administracion/pedidos}" th:text="#{order.backAdmin}">Volver a pedidos</a>
+            <a class="btn btn-outline-secondary" th:unless="${vistaAdministrativa}"
+               th:href="@{/cliente/pedidos}" th:text="#{order.backMine}">Volver a mis pedidos</a>
+        </div>
+
+        <div class="table-responsive shadow-sm mb-4">
+            <table class="table table-hover bg-white mb-0 align-middle">
+                <thead class="table-primary"><tr><th th:text="#{nav.products}">Producto</th><th th:text="#{order.unitPrice}">Precio unitario</th><th th:text="#{common.quantity}">Cantidad</th><th th:text="#{common.subtotal}">Subtotal</th></tr></thead>
+                <tbody>
+                    <tr th:each="detalle : ${detalles}">
+                        <td th:text="${detalle.producto.nombreProducto}">Producto</td>
+                        <td th:text="${'₡' + #numbers.formatDecimal(detalle.precioUnitario, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
+                        <td th:text="${detalle.cantidad}">1</td>
+                        <td th:text="${'₡' + #numbers.formatDecimal(detalle.subtotalLinea, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class="col-md-5 col-lg-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between"><span th:text="#{common.subtotal}">Subtotal</span><strong th:text="${'₡' + #numbers.formatDecimal(pedido.subtotal, 1, 'COMMA', 2, 'POINT')}"></strong></div>
+                        <div class="d-flex justify-content-between"><span th:text="|#{common.tax} (13%)|">IVA (13%)</span><strong th:text="${'₡' + #numbers.formatDecimal(pedido.impuesto, 1, 'COMMA', 2, 'POINT')}"></strong></div>
+                        <hr/>
+                        <div class="d-flex justify-content-between fs-5"><span th:text="#{common.total}">Total</span><strong th:text="${'₡' + #numbers.formatDecimal(pedido.total, 1, 'COMMA', 2, 'POINT')}"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

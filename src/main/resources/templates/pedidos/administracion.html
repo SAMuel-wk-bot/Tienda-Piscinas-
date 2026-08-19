@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pedidos - Administración</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
+</head>
+<body class="bg-light">
+    <header th:replace="~{fragmentos/encabezado :: encabezado}"></header>
+    <main class="container py-5">
+        <h1 class="h2" th:text="#{order.management}">Gestión de pedidos</h1>
+        <form class="row g-2 align-items-end mb-4" method="get" th:action="@{/administracion/pedidos}">
+            <div class="col-sm-6 col-md-4">
+                <label for="estadoFiltro" class="form-label" th:text="#{order.filterStatus}">Filtrar por estado</label>
+                <select id="estadoFiltro" name="estado" class="form-select">
+                    <option value="" th:text="#{common.all}">Todos</option>
+                    <option th:each="estadoItem : ${estados}" th:value="${estadoItem}" th:text="${#messages.msg('estado.' + estadoItem.name())}"
+                            th:selected="${estadoSeleccionado == estadoItem}"></option>
+                </select>
+            </div>
+            <div class="col-auto"><button class="btn btn-primary" type="submit" th:text="#{action.filter}">Filtrar</button></div>
+        </form>
+        <div th:if="${exito}" class="alert alert-success" th:text="${#messages.msg(exito)}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${#messages.msg(error)}"></div>
+        <div class="table-responsive shadow-sm">
+            <table class="table table-striped table-hover bg-white mb-0 align-middle">
+                <thead class="table-primary"><tr><th th:text="#{order.numberHeader}">Número</th><th th:text="#{common.date}">Fecha</th><th th:text="#{common.customer}">Cliente</th><th th:text="#{common.total}">Total</th><th th:text="#{common.status}">Estado</th><th th:text="#{action.details}">Detalle</th></tr></thead>
+                <tbody>
+                    <tr th:each="pedido : ${pedidos}">
+                        <td th:text="${'#' + pedido.idPedido}">#1</td>
+                        <td th:text="${#temporals.format(pedido.fechaPedido, 'dd/MM/yyyy HH:mm')}">Fecha</td>
+                        <td th:text="${pedido.cliente.usuario.nombreUsuario + ' ' + pedido.cliente.usuario.apellidoUsuario}">Cliente</td>
+                        <td th:text="${'₡' + #numbers.formatDecimal(pedido.total, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
+                        <td>
+                            <form class="d-flex gap-2" method="post"
+                                  th:action="@{/administracion/pedidos/{id}/estado(id=${pedido.idPedido})}">
+                                <select name="estado" class="form-select form-select-sm">
+                                    <option th:each="estadoItem : ${estados}" th:value="${estadoItem}" th:text="${#messages.msg('estado.' + estadoItem.name())}"
+                                            th:selected="${pedido.estado == estadoItem}"></option>
+                                </select>
+                                <button class="btn btn-sm btn-outline-primary" type="submit" th:text="#{action.update}">Actualizar</button>
+                            </form>
+                        </td>
+                        <td><a class="btn btn-sm btn-outline-secondary"
+                               th:href="@{/administracion/pedidos/{id}(id=${pedido.idPedido})}" th:text="#{action.details}">Ver</a></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(pedidos)}"><td colspan="6" class="text-center text-muted" th:text="#{order.emptyAdmin}">No hay pedidos para el filtro seleccionado.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer th:replace="~{fragmentos/piePagina :: piePagina}"></footer>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
