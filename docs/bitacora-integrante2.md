@@ -18,7 +18,7 @@ Estado de publicación: **PENDIENTE**. GitHub respondió `403` porque la cuenta 
 
 - **Fecha:** 17 de agosto de 2026.
 - **Objetivo:** localizar el repositorio oficial, proteger el estado existente, seleccionar una base, crear la rama exclusiva y comprobar la estructura, la compilación, las pruebas, MySQL y los materiales del curso.
-- **Situación antes del cambio:** el workspace solo contenía prácticas y recursos del curso. No había un clon de Tienda Piscinas. Se clonó el remoto oficial en una carpeta nueva. El árbol de trabajo de `main` estaba limpio y no existía `codex/tienda-piscinas`.
+- **Situación antes del cambio:** el workspace solo contenía prácticas y recursos del curso. No había un clon de Tienda Piscinas. Se clonó el remoto oficial en una carpeta nueva y el árbol de trabajo de `main` estaba limpio.
 - **Archivos creados:** `docs/bitacora-integrante2.md`.
 - **Archivos modificados:** ninguno del proyecto funcional.
 - **Funcionalidad implementada:** documentación reproducible del estado inicial; rama local exclusiva creada desde `main` actualizado.
@@ -29,7 +29,7 @@ Estado de publicación: **PENDIENTE**. GitHub respondió `403` porque la cuenta 
 
 - Remoto confirmado: `origin https://github.com/SAMuel-wk-bot/Tienda-Piscinas-.git`.
 - Ramas remotas encontradas: `main`, `oscarsolis` y `samuel`.
-- Rama de integración `codex/tienda-piscinas`: no existe.
+- Rama de integración acordada para Samuel: `samuel`.
 - `main`: `8c3fdeb Avance 2`.
 - `samuel`: contiene un primer 50 % divergente y documentación que propone integrar mediante PR hacia `samuel` o una rama acordada. No se fusionó ni reescribió.
 - Decisión de base: `main`, por instrucción expresa de usar la rama principal cuando no exista una rama de integración.
@@ -1191,7 +1191,7 @@ La capa Service entrega una clave en vez de una frase fija. La vista consulta es
 - Lista de 18 commits con hashes completos.
 - Estadística del diff antes del commit de cierre: 157 archivos, 9617 inserciones y 1316 eliminaciones.
 - Estado del push y PR sin afirmar publicación inexistente.
-- Ausencia de rama `codex/tienda-piscinas` y necesidad de acordar destino entre `samuel` y `main`.
+- Necesidad de acordar si la integración final se realizará en `samuel` o directamente en `main`.
 
 ### Comandos de revisión y resultados
 

@@ -218,7 +218,7 @@ Pruebas externas pendientes: script sobre MySQL limpio, QA visual manual respons
 
 ### Rama objetivo del PR
 
-No existe `origin/codex/tienda-piscinas`. Las ramas remotas observadas son `main`, `samuel` y `oscarsolis`. No se debe asumir el destino: el equipo debe confirmar si la rama de integración acordada es `samuel` o si el PR debe dirigirse a `main`. No se realizó merge.
+Las ramas principales de trabajo del equipo son `samuel` y `erian`. El equipo debe confirmar si la integración final se realizará en `samuel` o si el PR debe dirigirse a `main`. No se realizó merge durante esta etapa documental.
 
 ## L. Relación con la rúbrica
 
